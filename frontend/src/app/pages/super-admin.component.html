@@ -1,0 +1,830 @@
+<!-- Super Admin Dashboard Header -->
+<!-- Super Admin Navigation Header -->
+<div [@pageEnter]>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-crown me-2"></i>
+        ELIT ENT - Super Admin
+      </a>
+
+      <div class="navbar-nav ms-auto">
+        <div class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="adminDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-user-circle me-1"></i>
+            Dr. Abiy
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" (click)="refreshDashboard()">
+                <i class="fas fa-sync-alt me-2"></i>Refresh Dashboard
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="goToAdminSelection()">
+                <i class="fas fa-arrow-left me-2"></i>Admin Selection
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="goHome()">
+                <i class="fas fa-home me-2"></i>Go to Homepage
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item text-danger" (click)="logout()">
+                <i class="fas fa-sign-out-alt me-2"></i>Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div
+    class="super-admin-header bg-gradient-primary text-white py-4 mb-4"
+    [@fadeIn]
+  >
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h2 class="mb-0">
+            <i class="fas fa-crown me-2"></i>
+            Super Admin Dashboard
+          </h2>
+          <small class="text-light opacity-75"
+            >Full System Control - Dr. Abiy</small
+          >
+        </div>
+        <div class="col-md-6 text-md-end">
+          <span class="badge bg-success me-2">
+            <i class="fas fa-circle me-1"></i>Online
+          </span>
+          <span class="text-light">Welcome, Dr. Abiy Tekle</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Super Admin Stats Cards -->
+  <div class="container" [@staggerCards]>
+    <div class="row g-4 mb-5">
+      <div class="col-lg-3 col-md-6" [@slideUp]>
+        <div class="stats-card bg-gradient-info text-white">
+          <div class="stats-icon">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <div class="stats-content">
+            <h3>{{ totalAppointments }}</h3>
+            <p>Total Appointments</p>
+            <small class="opacity-75">+{{ newAppointments }} new today</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6" [@slideUp]>
+        <div class="stats-card bg-gradient-success text-white">
+          <div class="stats-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stats-content">
+            <h3>{{ totalPatients }}</h3>
+            <p>Total Patients</p>
+            <small class="opacity-75">{{ activePatients }} active</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6" [@slideUp]>
+        <div class="stats-card bg-gradient-warning text-white">
+          <div class="stats-icon">
+            <i class="fas fa-user-md"></i>
+          </div>
+          <div class="stats-content">
+            <h3>{{ totalStaff }}</h3>
+            <p>Staff Members</p>
+            <small class="opacity-75">{{ activeStaff }} online</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6" [@slideUp]>
+        <div class="stats-card bg-gradient-danger text-white">
+          <div class="stats-icon">
+            <i class="fas fa-dollar-sign"></i>
+          </div>
+          <div class="stats-content">
+            <h3>${{ monthlyRevenue }}</h3>
+            <p>Monthly Revenue</p>
+            <small class="opacity-75"
+              >+{{ revenueGrowth }}% vs last month</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Super Admin Tabs -->
+    <div class="super-admin-tabs">
+      <ul class="nav nav-pills nav-fill mb-4" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            [class.active]="isActiveTab('overview')"
+            (click)="switchTab('overview')"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-tachometer-alt me-2"></i>Overview
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            [class.active]="isActiveTab('staff')"
+            (click)="switchTab('staff')"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-users-cog me-2"></i>Staff Management
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            [class.active]="isActiveTab('patients')"
+            (click)="switchTab('patients')"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-user-injured me-2"></i>Patient Records
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            [class.active]="isActiveTab('financial')"
+            (click)="switchTab('financial')"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-chart-line me-2"></i>Financial Reports
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            [class.active]="isActiveTab('system')"
+            (click)="switchTab('system')"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-cogs me-2"></i>System Settings
+          </button>
+        </li>
+      </ul>
+
+      <!-- Tab Content -->
+      <div class="tab-content">
+        <!-- Overview Tab -->
+        <div
+          class="tab-pane fade"
+          [class.show]="isActiveTab('overview')"
+          [class.active]="isActiveTab('overview')"
+          *ngIf="isActiveTab('overview')"
+          role="tabpanel"
+          [@fadeIn]
+        >
+          <div class="row">
+            <div class="col-md-8">
+              <!-- Recent Activities -->
+              <div class="card mb-4">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <i class="fas fa-clock me-2"></i>Recent Activities
+                  </h5>
+                </div>
+                <div class="card-body">
+                  <div class="activity-list">
+                    <div
+                      class="activity-item"
+                      *ngFor="let activity of recentActivities"
+                    >
+                      <div
+                        class="activity-icon"
+                        [ngClass]="'bg-' + activity.type"
+                      >
+                        <i [class]="activity.icon"></i>
+                      </div>
+                      <div class="activity-content">
+                        <p class="mb-1">{{ activity.description }}</p>
+                        <small class="text-muted"
+                          >{{ activity.time }} ago</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <!-- Quick Actions -->
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <i class="fas fa-bolt me-2"></i>Quick Actions
+                  </h5>
+                </div>
+                <div class="card-body">
+                  <div class="d-grid gap-2">
+                    <button class="btn btn-primary" (click)="addNewStaff()">
+                      <i class="fas fa-user-plus me-2"></i>Add Staff Member
+                    </button>
+                    <button class="btn btn-success" (click)="viewReports()">
+                      <i class="fas fa-chart-bar me-2"></i>Generate Report
+                    </button>
+                    <button class="btn btn-info" (click)="manageSchedule()">
+                      <i class="fas fa-calendar-alt me-2"></i>Manage Schedule
+                    </button>
+                    <button class="btn btn-warning" (click)="systemBackup()">
+                      <i class="fas fa-database me-2"></i>System Backup
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Staff Management Tab -->
+        <div
+          class="tab-pane fade"
+          [class.show]="isActiveTab('staff')"
+          [class.active]="isActiveTab('staff')"
+          *ngIf="isActiveTab('staff')"
+          role="tabpanel"
+          [@fadeIn]
+        >
+          <div class="card">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h5 class="mb-0">Staff Management</h5>
+              <button class="btn btn-primary" (click)="addNewStaff()">
+                <i class="fas fa-plus me-1"></i>Add Staff
+              </button>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Role</th>
+                      <th>Department</th>
+                      <th>Status</th>
+                      <th>Last Login</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let staff of staffMembers">
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img
+                            [src]="staff.avatar"
+                            class="rounded-circle me-2"
+                            width="32"
+                            height="32"
+                            alt=""
+                          />
+                          <span>{{ staff.name }}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <span
+                          class="badge"
+                          [class.bg-danger]="staff.role === 'Super Admin'"
+                          [class.bg-warning]="staff.role === 'Sub Admin'"
+                          [class.bg-info]="staff.role === 'Staff'"
+                        >
+                          {{ staff.role }}
+                        </span>
+                      </td>
+                      <td>{{ staff.department }}</td>
+                      <td>
+                        <span
+                          class="badge"
+                          [class.bg-success]="staff.status === 'active'"
+                          [class.bg-secondary]="staff.status === 'inactive'"
+                        >
+                          {{ staff.status | titlecase }}
+                        </span>
+                      </td>
+                      <td>{{ staff.lastLogin }}</td>
+                      <td>
+                        <div class="btn-group btn-group-sm">
+                          <button
+                            class="btn btn-outline-primary"
+                            (click)="editStaff(staff.id)"
+                          >
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          <button
+                            class="btn btn-outline-danger"
+                            (click)="deactivateStaff(staff.id)"
+                          >
+                            <i class="fas fa-user-times"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Patient Records Tab -->
+        <div
+          class="tab-pane fade"
+          [class.show]="isActiveTab('patients')"
+          [class.active]="isActiveTab('patients')"
+          *ngIf="isActiveTab('patients')"
+          role="tabpanel"
+          [@fadeIn]
+        >
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">Patient Records</h5>
+            </div>
+            <div class="card-body">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search patients..."
+                    [(ngModel)]="patientSearchTerm"
+                  />
+                </div>
+                <div class="col-md-3">
+                  <select class="form-select" [(ngModel)]="patientFilter">
+                    <option value="">All Patients</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <button class="btn btn-primary w-100">
+                    <i class="fas fa-search me-2"></i>Search
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Patient ID</th>
+                      <th>Name</th>
+                      <th>Age</th>
+                      <th>Last Visit</th>
+                      <th>Total Visits</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let patient of patients">
+                      <td>{{ patient.id }}</td>
+                      <td>{{ patient.name }}</td>
+                      <td>{{ patient.age }}</td>
+                      <td>{{ patient.lastVisit }}</td>
+                      <td>{{ patient.totalVisits }}</td>
+                      <td>
+                        <span
+                          class="badge"
+                          [class.bg-success]="patient.status === 'active'"
+                          [class.bg-secondary]="patient.status === 'inactive'"
+                        >
+                          {{ patient.status | titlecase }}
+                        </span>
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-sm btn-outline-primary me-1"
+                          (click)="viewPatientRecord(patient.id)"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-success"
+                          (click)="scheduleAppointment(patient.id)"
+                        >
+                          <i class="fas fa-calendar-plus"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Financial Reports Tab -->
+        <div
+          class="tab-pane fade"
+          [class.show]="isActiveTab('financial')"
+          [class.active]="isActiveTab('financial')"
+          *ngIf="isActiveTab('financial')"
+          role="tabpanel"
+          [@fadeIn]
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">Revenue Overview</h5>
+                </div>
+                <div class="card-body">
+                  <div class="revenue-stats">
+                    <div class="stat-item">
+                      <h4 class="text-success">${{ monthlyRevenue }}</h4>
+                      <p class="mb-0">This Month</p>
+                    </div>
+                    <div class="stat-item">
+                      <h4 class="text-info">${{ yearlyRevenue }}</h4>
+                      <p class="mb-0">This Year</p>
+                    </div>
+                    <div class="stat-item">
+                      <h4 class="text-warning">${{ averagePerPatient }}</h4>
+                      <p class="mb-0">Avg Per Patient</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">Payment Methods</h5>
+                </div>
+                <div class="card-body">
+                  <div class="payment-methods">
+                    <div
+                      class="payment-item"
+                      *ngFor="let method of paymentMethods"
+                    >
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <span>{{ method.name }}</span>
+                        <span class="badge bg-primary"
+                          >{{ method.percentage }}%</span
+                        >
+                      </div>
+                      <div class="progress mt-1">
+                        <div
+                          class="progress-bar"
+                          [style.width.%]="method.percentage"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Settings Tab -->
+        <div
+          class="tab-pane fade"
+          [class.show]="isActiveTab('system')"
+          [class.active]="isActiveTab('system')"
+          *ngIf="isActiveTab('system')"
+          role="tabpanel"
+          [@fadeIn]
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">System Configuration</h5>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="mb-3">
+                      <label class="form-label">System Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        value="ELIT ENT Center Management"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Time Zone</label>
+                      <select class="form-select">
+                        <option>GMT+3 (Ethiopia)</option>
+                        <option>GMT+0 (UTC)</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Default Language</label>
+                      <select class="form-select">
+                        <option value="en">English</option>
+                        <option value="am">Amharic</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                      Save Settings
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">Security Settings</h5>
+                </div>
+                <div class="card-body">
+                  <div class="security-options">
+                    <div class="form-check form-switch mb-3">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="twoFactorAuth"
+                        checked
+                      />
+                      <label class="form-check-label" for="twoFactorAuth">
+                        Two-Factor Authentication
+                      </label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="loginLogging"
+                        checked
+                      />
+                      <label class="form-check-label" for="loginLogging">
+                        Login Activity Logging
+                      </label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="autoLogout"
+                      />
+                      <label class="form-check-label" for="autoLogout">
+                        Auto Logout (30 min)
+                      </label>
+                    </div>
+                    <button class="btn btn-warning">
+                      <i class="fas fa-database me-2"></i>Backup System
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Staff Modal -->
+<div class="modal fade" [class.show]="showStaffModal" [style.display]="showStaffModal ? 'block' : 'none'" *ngIf="showStaffModal" [@scaleIn]>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-user-plus me-2"></i>
+          {{ editingStaff ? 'Edit Staff Member' : 'Add New Staff Member' }}
+        </h5>
+        <button type="button" class="btn-close" (click)="closeStaffModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="saveStaff()">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  [(ngModel)]="newStaff.name" 
+                  name="name"
+                  required
+                >
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Role</label>
+                <select class="form-select" [(ngModel)]="newStaff.role" name="role">
+                  <option value="Staff">Staff</option>
+                  <option value="Sub Admin">Sub Admin</option>
+                  <option value="Super Admin">Super Admin</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Department</label>
+                <select class="form-select" [(ngModel)]="newStaff.department" name="department">
+                  <option value="">Select Department</option>
+                  <option value="Administration">Administration</option>
+                  <option value="Nursing">Nursing</option>
+                  <option value="Reception">Reception</option>
+                  <option value="Laboratory">Laboratory</option>
+                  <option value="Pharmacy">Pharmacy</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input 
+                  type="email" 
+                  class="form-control" 
+                  [(ngModel)]="newStaff.email" 
+                  name="email"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Phone</label>
+                <input 
+                  type="tel" 
+                  class="form-control" 
+                  [(ngModel)]="newStaff.phone" 
+                  name="phone"
+                >
+              </div>
+            </div>
+            <div class="col-md-6" *ngIf="!editingStaff">
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input 
+                  type="password" 
+                  class="form-control" 
+                  [(ngModel)]="newStaff.password" 
+                  name="password"
+                >
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeStaffModal()">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-primary" (click)="saveStaff()">
+          <i class="fas fa-save me-2"></i>
+          {{ editingStaff ? 'Update' : 'Add' }} Staff
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show"></div>
+</div>
+
+<!-- Reports Modal -->
+<div class="modal fade" [class.show]="showReportModal" [style.display]="showReportModal ? 'block' : 'none'" *ngIf="showReportModal" [@scaleIn]>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-chart-bar me-2"></i>
+          Generate Reports
+        </h5>
+        <button type="button" class="btn-close" (click)="closeReportModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="report-options">
+          <div class="d-grid gap-2">
+            <button 
+              class="btn btn-outline-primary" 
+              (click)="generateReport('financial')" 
+              [disabled]="isGeneratingReport"
+            >
+              <i class="fas fa-dollar-sign me-2"></i>
+              Financial Report
+            </button>
+            <button 
+              class="btn btn-outline-success" 
+              (click)="generateReport('patient')" 
+              [disabled]="isGeneratingReport"
+            >
+              <i class="fas fa-users me-2"></i>
+              Patient Report
+            </button>
+            <button 
+              class="btn btn-outline-info" 
+              (click)="generateReport('staff')" 
+              [disabled]="isGeneratingReport"
+            >
+              <i class="fas fa-user-md me-2"></i>
+              Staff Report
+            </button>
+            <button 
+              class="btn btn-outline-warning" 
+              (click)="generateReport('appointment')" 
+              [disabled]="isGeneratingReport"
+            >
+              <i class="fas fa-calendar-check me-2"></i>
+              Appointment Report
+            </button>
+          </div>
+          <div class="mt-3" *ngIf="isGeneratingReport">
+            <div class="text-center">
+              <i class="fas fa-spinner fa-spin me-2"></i>
+              Generating report, please wait...
+            </div>
+            <div class="progress mt-2">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeReportModal()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show"></div>
+</div>
+
+<!-- Backup Modal -->
+<div class="modal fade" [class.show]="showBackupModal" [style.display]="showBackupModal ? 'block' : 'none'" *ngIf="showBackupModal" [@scaleIn]>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-database me-2"></i>
+          System Backup
+        </h5>
+        <button type="button" class="btn-close" (click)="closeBackupModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="backup-info">
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            This will create a complete backup of all system data including:
+            <ul class="mt-2 mb-0">
+              <li>Patient records</li>
+              <li>Staff information</li>
+              <li>Appointment data</li>
+              <li>Financial records</li>
+              <li>System settings</li>
+            </ul>
+          </div>
+          <div class="mt-3" *ngIf="isBackingUp">
+            <div class="text-center">
+              <i class="fas fa-spinner fa-spin me-2"></i>
+              Creating backup, please wait...
+            </div>
+            <div class="progress mt-2">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeBackupModal()" [disabled]="isBackingUp">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-warning" (click)="performBackup()" [disabled]="isBackingUp">
+          <i class="fas fa-database me-2"></i>
+          Start Backup
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show"></div>
+</div>

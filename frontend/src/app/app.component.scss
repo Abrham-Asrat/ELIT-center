@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+main {
+  flex: 1;
+  overflow-y: auto;
+}
+
+// Ensure proper spacing when footer is shown
+main.mt-5 {
+  margin-top: 0 !important;
+  padding-top: 3rem !important;
+}
+
+main.pt-3 {
+  padding-top: 3rem;
+}

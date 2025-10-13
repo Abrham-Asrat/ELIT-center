@@ -1,0 +1,147 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+/* Custom styles for ELIT ENT Center */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+#root,
+app-root {
+  height: 100%;
+}
+
+.btn-primary {
+  background-color: #2c5aa0;
+  border-color: #2c5aa0;
+}
+
+.btn-primary:hover {
+  background-color: #1e3d6f;
+  border-color: #1e3d6f;
+}
+
+.text-primary {
+  color: #2c5aa0 !important;
+}
+
+.bg-primary {
+  background-color: #2c5aa0 !important;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.hero-section {
+  background: linear-gradient(
+      135deg,
+      rgba(0, 123, 255, 0.85) 0%,
+      rgba(0, 87, 179, 0.733) 100%
+    ),
+    url("/images/background.jpg") no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  color: white;
+  padding: 80px 0;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.footer {
+  background-color: #2c3e50;
+  color: white;
+  margin-top: 50px;
+  min-height: 500px;
+  padding: 3rem 0;
+}
+
+.doctor-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+// Fix for admin login pages height issue
+.login-page {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+// Ensure proper height for login containers
+.d-flex.align-items-center.justify-content-center {
+  height: 100%;
+}
+
+// Fix for branding positioning to prevent overflow
+.login-page .branding {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  padding: 5px 0;
+}
+
+// Ensure login card doesn't cause overflow
+.login-page .login-card {
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+  .login-page .branding {
+    position: static;
+    margin-top: 10px;
+  }
+
+  .login-page .login-card {
+    max-height: none;
+    margin: 10px;
+  }
+}
+
+// Ensure all pages take full height
+app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+// Fix for main content area
+main {
+  flex: 1;
+  overflow-y: auto;
+  height: 100%;
+}
+
+// Ensure proper spacing for pages with footer
+main.mt-5 {
+  margin-top: 0 !important;
+  padding-top: 3rem !important;
+}
+
+main.pt-3 {
+  padding-top: 3rem;
+}

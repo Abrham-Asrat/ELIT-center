@@ -1,0 +1,191 @@
+/* Increase navbar vertical spacing and set a min-height */
+.navbar {
+  padding-top: 1rem; /* increase vertical space */
+  padding-bottom: 1.25rem;
+  min-height: 72px; /* ensures a consistent height */
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.06); /* light shadow for depth */
+  background-color: white;
+  position: relative;
+  z-index: 1000;
+}
+
+/* Responsive navbar brand */
+.navbar-brand {
+  font-size: 1.9rem; /* larger brand text */
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1; /* Allow brand to take available space but not overflow */
+  min-width: 0; /* Allow shrinking */
+}
+
+.navbar-brand img {
+  width: 48px; /* logo width */
+  height: 48px; /* logo height */
+  object-fit: contain;
+  flex-shrink: 0; /* Don't shrink the logo */
+}
+
+/* Ensure toggler is always visible and positioned correctly */
+.navbar-toggler {
+  border: none;
+  padding: 0.25rem 0.5rem;
+  margin-left: auto; /* Push to the right */
+  flex-shrink: 0; /* Don't allow shrinking */
+}
+
+.nav-link {
+  font-weight: 500;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #2c5aa0 !important;
+}
+
+// Admin link styling
+.admin-link {
+  font-size: 1.1rem;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+
+  &:hover {
+    opacity: 1;
+    color: #2c5aa0 !important;
+    transform: scale(1.1);
+  }
+
+  i {
+    color: #6c757d;
+    transition: color 0.3s ease;
+  }
+
+  &:hover i {
+    color: #2c5aa0;
+  }
+}
+
+.navbar {
+  padding: 1rem 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 576px) {
+  .navbar-brand {
+    font-size: 1.4rem; /* Smaller font on very small screens */
+  }
+
+  .navbar-brand img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+// Language dropdown styles
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+.dropdown-toggle:after {
+  content: none; // Remove default bootstrap arrow
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1000;
+  display: none;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.375rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 1rem;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  color: #fff;
+  background-color: #2c5aa0;
+}
+
+.dropdown-item.active {
+  color: #fff;
+  background-color: #2c5aa0;
+  font-weight: 600;
+}
+
+.flag-icon {
+  width: 1.33333em;
+  line-height: 1em;
+}
+
+.flag-icon:before {
+  content: "🇺🇸";
+}
+
+.flag-icon-et:before {
+  content: "🇪🇹";
+}
+
+@media (max-width: 991px) {
+  .navbar-collapse {
+    margin-top: 1rem;
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+  }
+
+  .nav-item {
+    text-align: center;
+    margin: 0.25rem 0;
+  }
+
+  .dropdown-menu {
+    position: static;
+    float: none;
+    width: auto;
+    margin-top: 0;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .dropdown-item {
+    text-align: center;
+    padding: 0.5rem 1rem;
+  }
+
+  /* Ensure proper spacing in mobile menu */
+  .navbar-brand {
+    margin-right: 0;
+  }
+}

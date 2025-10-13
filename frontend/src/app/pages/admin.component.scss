@@ -1,0 +1,507 @@
+// Admin Selection Page Styles
+
+.admin-selection-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  position: relative;
+
+  .admin-header {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+    padding-bottom: 3rem;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: inherit;
+      clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
+      z-index: 3;
+    }
+
+    .display-1 {
+      font-size: 4rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .display-4 {
+      font-weight: 600;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .lead {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+  }
+
+  .access-card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: white;
+    overflow: hidden;
+    position: relative;
+    transform: translateY(0);
+    z-index: 1; // Ensure card is above background but below potential overlays
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, #007bff, #28a745);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+      transform-origin: left;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.05)
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    &:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+
+      &::before {
+        transform: scaleX(1);
+      }
+
+      &::after {
+        opacity: 1;
+      }
+
+      .access-icon i {
+        transform: scale(1.15) rotate(10deg);
+        text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    .access-icon {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border: 4px solid #dee2e6;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transform: rotate(45deg);
+        transition: all 0.4s ease;
+      }
+
+      i {
+        font-size: 2.8rem;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 2;
+        position: relative;
+      }
+    }
+
+    .btn {
+      position: relative;
+      z-index: 10; // Ensure button is clickable
+      cursor: pointer !important;
+
+      &:hover:not(:disabled) {
+        cursor: pointer !important;
+      }
+
+      &:disabled {
+        cursor: not-allowed !important;
+      }
+    }
+
+    &.super-admin-card {
+      .access-icon {
+        background: linear-gradient(135deg, #ffd700, #ffed4a);
+        border-color: #ffc107;
+        color: #8b5cf6;
+        box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        border: none;
+        border-radius: 15px;
+        padding: 15px 30px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
+        cursor: pointer !important;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+          );
+          transition: all 0.6s ease;
+        }
+
+        &:hover {
+          background: linear-gradient(135deg, #0056b3, #004085);
+          transform: translateY(-3px);
+          box-shadow: 0 12px 30px rgba(0, 123, 255, 0.5);
+
+          &::before {
+            left: 100%;
+          }
+        }
+      }
+    }
+
+    &.sub-admin-card {
+      .access-icon {
+        background: linear-gradient(135deg, #17a2b8, #138496);
+        border-color: #17a2b8;
+        color: white;
+        box-shadow: 0 10px 25px rgba(23, 162, 184, 0.3);
+      }
+
+      .btn-info {
+        background: linear-gradient(135deg, #17a2b8, #138496);
+        border: none;
+        border-radius: 15px;
+        padding: 15px 30px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(23, 162, 184, 0.4);
+        cursor: pointer !important;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+          );
+          transition: all 0.6s ease;
+        }
+
+        &:hover {
+          background: linear-gradient(135deg, #138496, #117a8b);
+          transform: translateY(-3px);
+          box-shadow: 0 12px 30px rgba(23, 162, 184, 0.5);
+
+          &::before {
+            left: 100%;
+          }
+        }
+      }
+    }
+
+    .card-title {
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-subtitle {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #6c757d;
+    }
+
+    .access-features {
+      .feature-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        font-size: 0.95rem;
+        color: #495057;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .info-card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    background: white;
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #007bff, #28a745);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+      transform-origin: left;
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+
+      &::before {
+        transform: scaleX(1);
+      }
+    }
+
+    .card-body {
+      padding: 2.5rem;
+    }
+
+    h4 {
+      color: #2c3e50;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 1rem;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, #007bff, #0056b3);
+        border-radius: 2px;
+      }
+    }
+
+    .info-item {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      padding: 1.5rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      border: 1px solid #dee2e6;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        border-color: #007bff;
+      }
+
+      h6 {
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      p {
+        line-height: 1.6;
+        color: #6c757d;
+      }
+    }
+  }
+
+  .security-notice {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-top: 2px solid #dee2e6;
+    clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+    padding-top: 2rem !important;
+
+    p {
+      font-size: 1rem;
+      color: #6c757d;
+      margin: 0;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+  }
+
+  // Ensure buttons are always clickable
+  .btn {
+    cursor: pointer !important;
+    position: relative;
+    z-index: 10;
+
+    &:hover:not(:disabled) {
+      cursor: pointer !important;
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed !important;
+    }
+  }
+
+  .fa-spinner {
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  // Responsive design
+  @media (max-width: 768px) {
+    .admin-header {
+      .display-1 {
+        font-size: 2.5rem;
+      }
+
+      .display-4 {
+        font-size: 1.75rem;
+      }
+
+      clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+    }
+
+    .access-card {
+      .card-body {
+        padding: 2rem 1.5rem;
+      }
+
+      .access-icon {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 1rem;
+
+        i {
+          font-size: 2rem;
+        }
+      }
+
+      .btn {
+        padding: 12px 20px !important;
+        font-size: 0.9rem;
+      }
+    }
+
+    .info-card {
+      .card-body {
+        padding: 1.5rem;
+      }
+
+      .info-item {
+        padding: 1rem;
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    .admin-header {
+      padding: 2rem 0 !important;
+
+      .display-1 {
+        font-size: 2rem;
+      }
+
+      .display-4 {
+        font-size: 1.5rem;
+      }
+
+      .lead {
+        font-size: 0.95rem;
+      }
+
+      clip-path: polygon(0 0, 100% 0, 100% 98%, 0 100%);
+    }
+
+    .access-card {
+      .card-body {
+        padding: 1.5rem 1rem;
+      }
+
+      .access-features {
+        .feature-item {
+          font-size: 0.85rem;
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+
+    .info-card {
+      .card-body {
+        padding: 1.25rem;
+      }
+
+      h4 {
+        font-size: 1.25rem;
+      }
+    }
+
+    .security-notice {
+      p {
+        font-size: 0.85rem;
+      }
+    }
+  }
+}

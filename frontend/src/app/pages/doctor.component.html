@@ -1,0 +1,276 @@
+<!-- Doctor Profile Header -->
+<section class="py-5 header text-white" [@pageEnter]>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-4 text-center">
+        <div class="doctor-image-container" [@scaleIn]>
+          <img
+            src="./images/dr.jpg"
+            alt="Dr. Abiy"
+            class="rounded-circle"
+            style="width: 200px; height: 200px; object-fit: cover"
+          />
+        </div>
+      </div>
+      <div class="col-lg-8 mt-4 mt-lg-0">
+        <div [@slideInRight]>
+          <h1 class="display-4 fw-bold mb-2" [@bounceIn]>
+            {{ languageService.getTranslation("doctorTitle") }}
+          </h1>
+          <h3 class="text-light mb-3" [@fadeIn]>
+            {{ languageService.getTranslation("doctorSubtitle") }}
+          </h3>
+          <p class="lead mb-4" [@slideUp]>
+            {{ languageService.getTranslation("doctorDescription") }}
+          </p>
+          <div class="d-flex gap-3 flex-wrap" [@staggerCards]>
+            <a
+              routerLink="/appointment"
+              class="btn btn-light btn-lg"
+              [@scaleIn]
+            >
+              {{ languageService.getTranslation("bookAppointment") }}
+            </a>
+            <a
+              href="tel:+1555123456"
+              class="btn btn-outline-light btn-lg"
+              [@scaleIn]
+            >
+              {{ languageService.getTranslation("callNow") }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Qualifications & Certifications -->
+<section class="py-5" [@containerSlideIn]>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div [@slideInLeft]>
+          <h2 class="fw-bold text-primary mb-4">
+            {{ languageService.getTranslation("educationQualifications") }}
+          </h2>
+          <div class="list-group list-group-flush">
+            <div
+              class="list-group-item border-0 px-0"
+              *ngFor="let qualification of qualifications"
+              [@slideUp]
+            >
+              <i class="fas fa-graduation-cap text-primary me-3"></i>
+              {{ qualification }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 mt-4 mt-lg-0">
+        <div [@slideInRight]>
+          <h2 class="fw-bold text-primary mb-4">
+            {{ languageService.getTranslation("areasOfSpecialization") }}
+          </h2>
+          <div class="row g-2" [@staggerCards]>
+            <div class="col-6" *ngFor="let specialty of specialties">
+              <div
+                class="specialty-badge p-3 text-center bg-light rounded"
+                [@bounceIn]
+              >
+                <i class="fas fa-check-circle text-success mb-2"></i>
+                <small class="d-block">{{ specialty }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Professional Experience -->
+<section class="py-5 bg-light" [@slideUp]>
+  <div class="container">
+    <h2 class="fw-bold text-primary text-center mb-5" [@fadeIn]>
+      {{ languageService.getTranslation("professionalExperience") }}
+    </h2>
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <div class="timeline">
+          <div
+            class="timeline-item"
+            *ngFor="let exp of experience; let i = index"
+            [@slideUp]
+          >
+            <div class="timeline-marker">
+              <div class="timeline-marker-icon">
+                <i class="fas fa-briefcase"></i>
+              </div>
+            </div>
+            <div class="timeline-content">
+              <div class="card p-4" [@scaleIn]>
+                <div
+                  class="d-flex justify-content-between align-items-start mb-2"
+                >
+                  <h5 class="text-primary mb-0">{{ exp.position }}</h5>
+                  <span class="badge bg-primary">{{ exp.year }}</span>
+                </div>
+                <h6 class="text-muted mb-2">{{ exp.institution }}</h6>
+                <p class="mb-0">{{ exp.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Statistics -->
+<section class="py-5" [@containerSlideIn]>
+  <div class="container">
+    <div class="row text-center" [@staggerCards]>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-card p-4" [@bounceIn]>
+          <i
+            class="fas fa-calendar-check text-primary mb-3"
+            style="font-size: 3rem"
+          ></i>
+          <h3 class="text-primary fw-bold">15+</h3>
+          <p class="text-muted mb-0">
+            {{ languageService.getTranslation("yearsExperience") }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-card p-4" [@bounceIn]>
+          <i class="fas fa-users text-primary mb-3" style="font-size: 3rem"></i>
+          <h3 class="text-primary fw-bold">5000+</h3>
+          <p class="text-muted mb-0">
+            {{ languageService.getTranslation("patientsTreated") }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-card p-4" [@bounceIn]>
+          <i
+            class="fas fa-procedures text-primary mb-3"
+            style="font-size: 3rem"
+          ></i>
+          <h3 class="text-primary fw-bold">1200+</h3>
+          <p class="text-muted mb-0">
+            {{ languageService.getTranslation("surgeries") }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-card p-4" [@bounceIn]>
+          <i class="fas fa-star text-primary mb-3" style="font-size: 3rem"></i>
+          <h3 class="text-primary fw-bold">98%</h3>
+          <p class="text-muted mb-0">
+            {{ languageService.getTranslation("patientSatisfaction") }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Awards & Recognition -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2 class="fw-bold text-primary mb-4">
+          {{ languageService.getTranslation("awardsRecognition") }}
+        </h2>
+        <div class="list-group list-group-flush">
+          <div
+            class="list-group-item border-0 px-0 d-flex align-items-center"
+            *ngFor="let award of awards"
+          >
+            <i
+              class="fas fa-trophy text-warning me-3"
+              style="font-size: 1.2rem"
+            ></i>
+            <span>{{ award }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 mt-4 mt-lg-0">
+        <h2 class="fw-bold text-primary mb-4">
+          {{ languageService.getTranslation("recentPublications") }}
+        </h2>
+        <div class="list-group list-group-flush">
+          <div
+            class="list-group-item border-0 px-0 d-flex align-items-start"
+            *ngFor="let publication of publications"
+          >
+            <i
+              class="fas fa-file-medical text-primary me-3 mt-1"
+              style="font-size: 1.1rem"
+            ></i>
+            <small>{{ publication }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Philosophy -->
+<section class="py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div class="text-center mb-4">
+          <div class="bg-primary rounded-4 p-5 text-white">
+            <i class="fas fa-heart text-white mb-3" style="font-size: 4rem"></i>
+            <h4 class="mb-0">
+              {{ languageService.getTranslation("patientCenteredCare") }}
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <h2 class="fw-bold text-primary mb-4">
+          {{ languageService.getTranslation("doctorPhilosophy") }}
+        </h2>
+        <p class="mb-4">
+          {{ languageService.getTranslation("philosophyText") }}
+        </p>
+        <blockquote class="blockquote">
+          <p class="mb-3">
+            {{ languageService.getTranslation("philosophyQuote") }}
+          </p>
+          <footer class="blockquote-footer">
+            <cite title="Dr. Abiy"
+              >{{ languageService.getTranslation("doctorTitle") }},
+              {{ languageService.getTranslation("doctorSubtitle") }}</cite
+            >
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact CTA -->
+<section class="py-5 bg-primary text-white">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-3">
+      {{ languageService.getTranslation("scheduleConsultation") }}
+    </h2>
+    <p class="lead mb-4">
+      {{ languageService.getTranslation("consultationDesc") }}
+    </p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a routerLink="/appointment" class="btn btn-light btn-lg px-5">
+        {{ languageService.getTranslation("bookAppointment") }}
+      </a>
+      <a routerLink="/services" class="btn btn-outline-light btn-lg px-5">
+        {{ languageService.getTranslation("services") }}
+      </a>
+    </div>
+  </div>
+</section>

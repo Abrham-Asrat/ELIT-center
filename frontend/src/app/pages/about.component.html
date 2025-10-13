@@ -1,0 +1,330 @@
+<!-- Page Header -->
+<section class="py-5 text-white header" [@pageEnter]>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center">
+        <h1 class="display-4 fw-bold mb-3" [@bounceIn]>
+          {{ languageService.getTranslation("aboutTitle") }}
+        </h1>
+        <p class="lead" [@slideUp]>
+          {{ languageService.getTranslation("aboutSubtitle") }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mission & Vision -->
+<section class="py-5" [@containerSlideIn]>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div [@slideInLeft]>
+          <h2 class="fw-bold text-primary mb-4">
+            {{ languageService.getTranslation("ourMission") }}
+          </h2>
+          <p class="mb-4">
+            {{ languageService.getTranslation("missionText") }}
+          </p>
+          <p class="mb-4">
+            We strive to create a welcoming environment where patients feel
+            comfortable, informed, and confident in their treatment decisions.
+            Our goal is to be the premier destination for ENT care in our
+            community.
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-6 mt-4 mt-lg-0">
+        <div class="text-center" [@slideInRight]>
+          <div class="bg-light p-5 rounded-4" [@scaleIn]>
+            <i
+              class="fas fa-bullseye text-primary mb-3"
+              style="font-size: 4rem"
+            ></i>
+            <h4 class="text-primary mb-3">
+              {{ languageService.getTranslation("ourVision") }}
+            </h4>
+            <p class="mb-0">
+              {{ languageService.getTranslation("visionText") }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Core Values -->
+<section class="py-5 bg-light" [@slideUp]>
+  <div class="container">
+    <div class="text-center mb-5" [@fadeIn]>
+      <h2 class="fw-bold text-primary mb-3">
+        {{ languageService.getTranslation("coreValues") }}
+      </h2>
+      <p class="lead text-muted">
+        {{ languageService.getTranslation("coreValuesDesc") }}
+      </p>
+    </div>
+
+    <div class="row g-4" [@staggerCards]>
+      <div class="col-lg-6" *ngFor="let value of values">
+        <div class="card h-100 p-4 value-card" [@scaleIn]>
+          <div class="row g-0 align-items-center">
+            <div class="col-2">
+              <div class="text-center">
+                <i
+                  [class]="value.icon + ' text-primary'"
+                  style="font-size: 2.5rem"
+                ></i>
+              </div>
+            </div>
+            <div class="col-10">
+              <div class="card-body p-0 ps-3">
+                <h5 class="card-title text-primary mb-2">{{ value.title }}</h5>
+                <p class="card-text text-muted mb-0">{{ value.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Story Timeline -->
+<section class="py-5" [@containerSlideIn]>
+  <div class="container">
+    <div class="text-center mb-5" [@fadeIn]>
+      <h2 class="fw-bold text-primary mb-3">Our Story</h2>
+      <p class="lead text-muted">
+        A journey of growth, innovation, and commitment to excellence
+      </p>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <div class="timeline">
+          <div
+            class="timeline-item"
+            *ngFor="let milestone of milestones; let i = index"
+            [@slideUp]
+          >
+            <div class="timeline-marker">
+              <div class="timeline-marker-icon">
+                <span class="fw-bold">{{ milestone.year }}</span>
+              </div>
+            </div>
+            <div class="timeline-content">
+              <div class="card p-4" [@scaleIn]>
+                <h5 class="text-primary mb-2">{{ milestone.title }}</h5>
+                <p class="mb-0 text-muted">{{ milestone.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Team -->
+<section class="py-5 bg-light" [@slideUp]>
+  <div class="container">
+    <div class="text-center mb-5" [@fadeIn]>
+      <h2 class="fw-bold text-primary mb-3">Meet Our Team</h2>
+      <p class="lead text-muted">
+        Dedicated professionals committed to your health and well-being
+      </p>
+    </div>
+
+    <div class="row g-4" [@staggerCards]>
+      <div class="col-lg-3 col-md-6" *ngFor="let member of team">
+        <div class="card h-100 text-center p-4 team-card" [@bounceIn]>
+          <div class="mb-3">
+            <div
+              class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center"
+              style="width: 80px; height: 80px"
+            >
+              <i
+                [class]="member.icon + ' text-white'"
+                style="font-size: 2rem"
+              ></i>
+            </div>
+          </div>
+          <h5 class="card-title text-primary">{{ member.name }}</h5>
+          <h6 class="text-muted mb-3">{{ member.position }}</h6>
+          <p class="card-text small">{{ member.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Facility Features -->
+<section class="py-5" [@containerSlideIn]>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div [@slideInLeft]>
+          <h2 class="fw-bold text-primary mb-4">State-of-the-Art Facility</h2>
+          <p class="mb-4">
+            Our modern facility is designed with patient comfort and safety in
+            mind. We feature the latest medical equipment and technology to
+            ensure accurate diagnoses and effective treatments.
+          </p>
+          <div class="row g-3" [@staggerCards]>
+            <div class="col-6">
+              <div class="text-center p-3 bg-light rounded" [@scaleIn]>
+                <i
+                  class="fas fa-hospital text-primary mb-2"
+                  style="font-size: 2rem"
+                ></i>
+                <h6 class="mb-1">Modern Facility</h6>
+                <small class="text-muted">Clean & comfortable</small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="text-center p-3 bg-light rounded" [@scaleIn]>
+                <i
+                  class="fas fa-microscope text-primary mb-2"
+                  style="font-size: 2rem"
+                ></i>
+                <h6 class="mb-1">Advanced Equipment</h6>
+                <small class="text-muted">Latest technology</small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="text-center p-3 bg-light rounded" [@scaleIn]>
+                <i
+                  class="fas fa-shield-alt text-primary mb-2"
+                  style="font-size: 2rem"
+                ></i>
+                <h6 class="mb-1">Safety Protocols</h6>
+                <small class="text-muted">Strict standards</small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="text-center p-3 bg-light rounded" [@scaleIn]>
+                <i
+                  class="fas fa-parking text-primary mb-2"
+                  style="font-size: 2rem"
+                ></i>
+                <h6 class="mb-1">Convenient Access</h6>
+                <small class="text-muted">Easy parking</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 mt-4 mt-lg-0">
+        <div class="facility-highlights" [@slideInRight]>
+          <div class="bg-primary text-white p-5 rounded-4" [@bounceIn]>
+            <h4 class="mb-4 text-center">Facility Highlights</h4>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-3">
+                <i class="fas fa-check-circle me-3"></i>
+                Private consultation rooms
+              </li>
+              <li class="mb-3">
+                <i class="fas fa-check-circle me-3"></i>
+                Advanced diagnostic equipment
+              </li>
+              <li class="mb-3">
+                <i class="fas fa-check-circle me-3"></i>
+                Comfortable waiting areas
+              </li>
+              <li class="mb-3">
+                <i class="fas fa-check-circle me-3"></i>
+                On-site surgical suite
+              </li>
+              <li class="mb-3">
+                <i class="fas fa-check-circle me-3"></i>
+                Digital patient records
+              </li>
+              <li class="mb-0">
+                <i class="fas fa-check-circle me-3"></i>
+                Accessible for all patients
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Information -->
+<section class="py-5 bg-light" [@slideUp]>
+  <div class="container">
+    <div class="text-center mb-5" [@fadeIn]>
+      <h2 class="fw-bold text-primary mb-3">Visit Us Today</h2>
+      <p class="lead text-muted">
+        We're here to help with all your ENT health needs
+      </p>
+    </div>
+
+    <div class="row g-4" [@staggerCards]>
+      <div class="col-lg-4">
+        <div class="card h-100 text-center p-4" [@bounceIn]>
+          <i
+            class="fas fa-map-marker-alt text-primary mb-3"
+            style="font-size: 3rem"
+          ></i>
+          <h5 class="text-primary">Location</h5>
+          <p class="mb-0">
+            123 Medical Plaza<br />
+            Suite 200<br />
+            City, State 12345
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card h-100 text-center p-4" [@bounceIn]>
+          <i class="fas fa-clock text-primary mb-3" style="font-size: 3rem"></i>
+          <h5 class="text-primary">Hours</h5>
+          <p class="mb-0">
+            Monday - Friday: 8:00 AM - 6:00 PM<br />
+            Saturday: 9:00 AM - 2:00 PM<br />
+            Sunday: Closed
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card h-100 text-center p-4" [@bounceIn]>
+          <i class="fas fa-phone text-primary mb-3" style="font-size: 3rem"></i>
+          <h5 class="text-primary">Contact</h5>
+          <p class="mb-0">
+            Phone: (555) 123-4567<br />
+            Email: info&#64;elitentcenter.com<br />
+            Emergency: (555) 911-HELP
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white" [@slideUp]>
+  <div class="container text-center">
+    <h2 class="fw-bold mb-3" [@bounceIn]>
+      Ready to Experience Exceptional ENT Care?
+    </h2>
+    <p class="lead mb-4" [@fadeIn]>
+      Join thousands of satisfied patients who trust ELIT ENT Center for their
+      health needs.
+    </p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap" [@staggerCards]>
+      <a routerLink="/appointment" class="btn btn-light btn-lg px-5" [@scaleIn]>
+        Schedule Appointment
+      </a>
+      <a
+        routerLink="/services"
+        class="btn btn-outline-light btn-lg px-5"
+        [@scaleIn]
+      >
+        Our Services
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,136 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-md fixed-top">
+  <div class="container">
+    <a
+      class="navbar-brand text-primary d-flex align-items-center"
+      routerLink="/"
+      (click)="onNavigationClick()"
+    >
+      <img
+        src="./images/logo.png"
+        alt="ELIT ENT Center"
+        width="50"
+        height="50"
+        class="d-inline-block me-2"
+      />
+      <!-- Full title on medium screens and up -->
+      <span class="d-none d-md-inline">{{
+        languageService.getTranslation("title")
+      }}</span>
+      <!-- Shortened title on small screens -->
+      <span class="d-md-none">ELIT</span>
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="isMenuOpen"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" [class.show]="isMenuOpen">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="onNavigationClick()"
+          >
+            {{ languageService.getTranslation("home") }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/services"
+            routerLinkActive="active"
+            (click)="onNavigationClick()"
+          >
+            {{ languageService.getTranslation("services") }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/doctor"
+            routerLinkActive="active"
+            (click)="onNavigationClick()"
+          >
+            {{ languageService.getTranslation("doctor") }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/about"
+            routerLinkActive="active"
+            (click)="onNavigationClick()"
+          >
+            {{ languageService.getTranslation("about") }}
+          </a>
+        </li>
+
+        <!-- Language Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="languageDropdown"
+            role="button"
+            (click)="toggleLanguageDropdown()"
+            [attr.aria-expanded]="isLanguageDropdownOpen"
+          >
+            <i class="fas fa-globe me-1"></i>
+            {{ languageService.getTranslation("language") }}
+          </a>
+          <ul class="dropdown-menu" [class.show]="isLanguageDropdownOpen">
+            <li>
+              <a
+                class="dropdown-item"
+                href="#"
+                (click)="changeLanguage('en')"
+                [class.active]="languageService.getCurrentLanguage() === 'en'"
+              >
+                <i class="flag-icon flag-icon-us me-2"></i>
+                English
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="#"
+                (click)="changeLanguage('am')"
+                [class.active]="languageService.getCurrentLanguage() === 'am'"
+              >
+                <i class="flag-icon flag-icon-et me-2"></i>
+                አማርኛ
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/appointment"
+            routerLinkActive="active"
+            (click)="onNavigationClick()"
+          >
+            <button class="btn btn-primary">
+              {{ languageService.getTranslation("appointment") }}
+            </button>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Login Modal -->
+<app-login-modal
+  (loginSuccess)="onLoginSuccess($event)"
+  (modalClosed)="onModalClosed()"
+></app-login-modal>

@@ -1,0 +1,214 @@
+<!-- Page Header -->
+<section class="py-5 header text-white" [@pageEnter]>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center">
+        <h1 class="display-4 fw-bold mb-3" [@bounceIn]>
+          {{ languageService.getTranslation("services") }}
+        </h1>
+        <p class="lead" [@slideUp]>
+          {{ languageService.getTranslation("completeENTCareDesc") }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Main Services -->
+<section class="py-5" [@containerSlideIn]>
+  <div class="container">
+    <div class="text-center mb-5" [@fadeIn]>
+      <h2 class="fw-bold text-primary mb-3">
+        {{ languageService.getTranslation("completeENTCare") }}
+      </h2>
+      <p class="lead text-muted">
+        {{ languageService.getTranslation("completeENTCareDesc") }}
+      </p>
+    </div>
+
+    <div class="row g-4" [@staggerCards]>
+      <div class="col-lg-6" *ngFor="let service of services">
+        <div class="card h-100 p-4 service-card" [@scaleIn]>
+          <div class="row g-0 align-items-center">
+            <div class="col-2">
+              <div class="text-center">
+                <i
+                  [class]="service.icon + ' text-primary'"
+                  style="font-size: 2.5rem"
+                ></i>
+              </div>
+            </div>
+            <div class="col-10">
+              <div class="card-body p-0 ps-3">
+                <h5 class="card-title text-primary mb-2">
+                  {{ languageService.getTranslation(service.titleKey) }}
+                </h5>
+                <p class="card-text text-muted mb-3">
+                  {{ languageService.getTranslation(service.descriptionKey) }}
+                </p>
+                <ul class="list-unstyled">
+                  <li *ngFor="let feature of service.features" class="mb-1">
+                    <small>
+                      <i class="fas fa-check text-success me-2"></i>
+                      {{ feature }}
+                    </small>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Specialty Areas -->
+<section class="py-5 bg-light" [@slideUp]>
+  <div class="container">
+    <div class="text-center mb-5" [@fadeIn]>
+      <h2 class="fw-bold text-primary mb-3">Specialty Areas</h2>
+      <p class="lead text-muted">
+        Advanced expertise in specialized ENT conditions
+      </p>
+    </div>
+
+    <div class="row g-4" [@staggerCards]>
+      <div class="col-lg-4" *ngFor="let specialty of specialtyAreas">
+        <div class="card h-100 text-center p-4 specialty-card" [@bounceIn]>
+          <div class="mb-3">
+            <i
+              [class]="specialty.icon + ' text-primary'"
+              style="font-size: 3rem"
+            ></i>
+          </div>
+          <h5 class="card-title text-primary">{{ specialty.title }}</h5>
+          <p class="card-text text-muted">{{ specialty.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Technology & Equipment -->
+<section class="py-5" [@containerSlideIn]>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div [@slideInLeft]>
+          <h2 class="fw-bold text-primary mb-4">State-of-the-Art Technology</h2>
+          <p class="mb-4">
+            At ELIT ENT Center, we utilize the latest medical technology and
+            equipment to ensure accurate diagnosis and effective treatment for
+            all our patients.
+          </p>
+          <div class="row g-3" [@staggerCards]>
+            <div class="col-6">
+              <div class="text-center p-3 bg-light rounded" [@rotateIn]>
+                <i
+                  class="fas fa-microscope text-primary mb-2"
+                  style="font-size: 2rem"
+                ></i>
+                <h6 class="mb-0">Advanced Imaging</h6>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="text-center p-3 bg-light rounded" [@rotateIn]>
+                <i
+                  class="fas fa-stethoscope text-primary mb-2"
+                  style="font-size: 2rem"
+                ></i>
+                <h6 class="mb-0">Precision Tools</h6>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="text-center p-3 bg-light rounded" [@rotateIn]>
+                <i
+                  class="fas fa-laptop-medical text-primary mb-2"
+                  style="font-size: 2rem"
+                ></i>
+                <h6 class="mb-0">Digital Records</h6>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="text-center p-3 bg-light rounded" [@rotateIn]>
+                <i
+                  class="fas fa-shield-alt text-primary mb-2"
+                  style="font-size: 2rem"
+                ></i>
+                <h6 class="mb-0">Safety First</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 mt-4 mt-lg-0">
+        <div class="text-center" [@slideInRight]>
+          <div class="bg-primary p-5 rounded-4 text-white" [@scaleIn]>
+            <i
+              class="fas fa-hospital text-white mb-3"
+              style="font-size: 4rem"
+            ></i>
+            <h4 class="mb-3">Modern Facility</h4>
+            <p class="mb-0">
+              Our clinic features modern equipment and a comfortable environment
+              designed for optimal patient care and experience.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Emergency Care -->
+<section class="py-5 bg-danger text-white" [@slideUp]>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <h3 class="fw-bold mb-3" [@slideInLeft]>
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          {{ languageService.getTranslation("emergencyCare") }}
+        </h3>
+        <p class="mb-0" [@fadeIn]>
+          Experiencing severe ear pain, sudden hearing loss, or breathing
+          difficulties? We provide urgent ENT care for emergency situations.
+        </p>
+      </div>
+      <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+        <a href="tel:+1555123456" class="btn btn-light btn-lg" [@bounceIn]>
+          <i class="fas fa-phone me-2"></i>
+          Call Now: (555) 123-4567
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white" [@slideUp]>
+  <div class="container text-center">
+    <h2 class="fw-bold mb-3" [@bounceIn]>
+      {{ languageService.getTranslation("readyToStart") }}
+    </h2>
+    <p class="lead mb-4" [@fadeIn]>
+      {{ languageService.getTranslation("readyToStartDesc") }}
+    </p>
+    <div [@staggerCards]>
+      <a
+        routerLink="/appointment"
+        class="btn btn-light btn-lg px-5 me-3"
+        [@scaleIn]
+      >
+        {{ languageService.getTranslation("bookAppointment") }}
+      </a>
+      <a
+        routerLink="/doctor"
+        class="btn btn-outline-light btn-lg px-5"
+        [@scaleIn]
+      >
+        {{ languageService.getTranslation("doctor") }}
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,165 @@
+<!-- Sub Admin Login Page -->
+<div class="login-page sub-admin-login">
+  <!-- Background Pattern -->
+  <div class="login-background"></div>
+
+  <!-- Login Container -->
+  <div
+    class="container-fluid d-flex align-items-center justify-content-center"
+    style="min-height: 100vh"
+  >
+    <div class="row w-100 justify-content-center">
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <!-- Login Card -->
+        <div class="login-card compact-login">
+          <!-- Header -->
+          <div class="login-header text-center mb-3">
+            <div class="login-icon sub-admin-icon mb-2">
+              <i class="fas fa-user-cog"></i>
+            </div>
+            <h2 class="login-title">Sub Admin</h2>
+            <p class="login-subtitle">Staff Access</p>
+          </div>
+
+          <!-- Login Form -->
+          <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="login-form">
+            <!-- Staff ID Field -->
+            <div class="form-group mb-2">
+              <label class="form-label">
+                <i class="fas fa-id-badge me-1"></i>Staff ID
+              </label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                [(ngModel)]="loginData.staffId"
+                name="staffId"
+                placeholder="Staff ID"
+                required
+                autocomplete="username"
+                [class.is-invalid]="hasError"
+              />
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group mb-2">
+              <label class="form-label">
+                <i class="fas fa-lock me-1"></i>Password
+              </label>
+              <div class="password-input-group">
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  class="form-control form-control-sm"
+                  [(ngModel)]="loginData.password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                  autocomplete="current-password"
+                  [class.is-invalid]="hasError"
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  (click)="togglePassword()"
+                >
+                  <i
+                    [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"
+                  ></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Shift Selection -->
+            <div class="form-group mb-2">
+              <label class="form-label">
+                <i class="fas fa-clock me-1"></i>Shift
+              </label>
+              <select
+                class="form-control form-control-sm"
+                [(ngModel)]="loginData.shift"
+                name="shift"
+                required
+              >
+                <option value="">Select shift</option>
+                <option value="morning">Morning</option>
+                <option value="afternoon">Afternoon</option>
+                <option value="evening">Evening</option>
+              </select>
+            </div>
+
+            <!-- Remember Me -->
+            <div class="form-group mb-3">
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  [(ngModel)]="rememberMe"
+                  name="rememberMe"
+                  id="rememberMe"
+                />
+                <label class="form-check-label" for="rememberMe">
+                  Remember me
+                </label>
+              </div>
+            </div>
+
+            <!-- Error Message -->
+            <div
+              *ngIf="errorMessage"
+              class="alert alert-danger alert-sm mb-2"
+              role="alert"
+            >
+              <i class="fas fa-exclamation-triangle me-1"></i>
+              {{ errorMessage }}
+            </div>
+
+            <!-- Login Button -->
+            <button
+              type="submit"
+              class="btn btn-primary w-100 login-btn btn-sm"
+              [disabled]="isLoading || !loginForm.valid"
+            >
+              <span *ngIf="!isLoading">
+                <i class="fas fa-sign-in-alt me-1"></i>
+                Login
+              </span>
+              <span *ngIf="isLoading">
+                <i class="fas fa-spinner fa-spin me-1"></i>
+                Authenticating...
+              </span>
+            </button>
+          </form>
+
+          <!-- Security Notice -->
+          <div class="security-notice mt-3">
+            <div class="text-center">
+              <small class="text-muted">
+                <i class="fas fa-shield-alt me-1"></i>
+                Secure area. All attempts logged.
+              </small>
+            </div>
+          </div>
+
+          <!-- Back to Selection -->
+          <div class="text-center mt-2">
+            <a routerLink="/admin" class="back-link small">
+              <i class="fas fa-arrow-left me-1"></i>
+              Back
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELIT ENT Center Branding -->
+  <div class="branding">
+    <div class="container">
+      <div class="text-center">
+        <small class="text-muted">
+          <i class="fas fa-hospital me-1"></i>
+          ELIT ENT Center
+        </small>
+      </div>
+    </div>
+  </div>
+</div>

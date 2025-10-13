@@ -1,0 +1,465 @@
+.footer-section {
+  background: linear-gradient(
+      to bottom right,
+      #1e3a8a 0%,
+      #1e3a8a 10%,
+      transparent 10%,
+      transparent 13%,
+      #3b82f6 13%,
+      #3b82f6 100%
+    ),
+    linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  position: relative;
+  overflow: visible;
+  min-height: 400px;
+  padding: 2rem 0;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 575.98px) {
+    padding: 1.5rem 0;
+    min-height: auto;
+    background: linear-gradient(
+        to bottom right,
+        #1e3a8a 0%,
+        #1e3a8a 5%,
+        transparent 5%,
+        transparent 8%,
+        #3b82f6 8%,
+        #3b82f6 100%
+      ),
+      linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(
+      to bottom right,
+      transparent 0%,
+      transparent 70%,
+      #1e3a8a 70%,
+      #1e3a8a 100%
+    );
+    z-index: 3;
+
+    @media (max-width: 575.98px) {
+      height: 20px;
+      background: linear-gradient(
+        to bottom right,
+        transparent 0%,
+        transparent 80%,
+        #1e3a8a 80%,
+        #1e3a8a 100%
+      );
+    }
+  }
+}
+
+.footer-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.footer-section .container {
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+  padding-top: 2rem;
+
+  @media (max-width: 575.98px) {
+    padding-top: 1rem;
+  }
+}
+
+// Doctor Image Styling
+.doctor-image-container {
+  position: relative;
+  display: inline-block;
+  z-index: 10;
+  transform: translateY(-20px);
+
+  @media (max-width: 767.98px) {
+    transform: translateY(0);
+  }
+}
+
+.doctor-image {
+  position: relative;
+  z-index: 15;
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+  max-width: 100%;
+  height: auto;
+
+  @media (max-width: 991.98px) {
+    transform: scale(1);
+    max-width: 150px;
+  }
+
+  @media (max-width: 575.98px) {
+    max-width: 120px;
+  }
+}
+
+// Social Links
+.social-links-container {
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+  }
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+  }
+
+  @media (max-width: 575.98px) {
+    gap: 8px;
+  }
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.9rem;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    color: white;
+  }
+
+  @media (max-width: 575.98px) {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+}
+
+// Company Info
+.company-info {
+  padding-left: 1rem;
+
+  @media (max-width: 767.98px) {
+    padding-left: 0;
+    text-align: center;
+  }
+}
+
+.company-name {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+
+  @media (max-width: 991.98px) {
+    font-size: 1.6rem;
+  }
+
+  @media (max-width: 767.98px) {
+    font-size: 1.4rem;
+    margin-bottom: 0.3rem;
+  }
+
+  @media (max-width: 575.98px) {
+    font-size: 1.2rem;
+  }
+}
+
+.company-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+
+  @media (max-width: 767.98px) {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.company-description {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+
+  @media (max-width: 767.98px) {
+    font-size: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+}
+
+// Contact Info
+.contact-info {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+
+  @media (max-width: 767.98px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.3rem;
+    justify-items: center;
+  }
+
+  @media (max-width: 575.98px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.8rem;
+  margin-bottom: 0.4rem;
+
+  @media (max-width: 767.98px) {
+    justify-content: center;
+  }
+
+  @media (max-width: 575.98px) {
+    font-size: 0.75rem;
+    margin-bottom: 0.3rem;
+  }
+
+  i {
+    width: 18px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+
+    @media (max-width: 575.98px) {
+      font-size: 0.7rem;
+      width: 15px;
+    }
+  }
+}
+
+// Contact Form & Testimonial Form
+.contact-form-container,
+.testimonial-form-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  height: fit-content;
+  max-height: 450px;
+  overflow-y: auto;
+
+  @media (max-width: 991.98px) {
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 767.98px) {
+    padding: 1.2rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 575.98px) {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+}
+
+.contact-form-title,
+.testimonial-form-title {
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+
+  @media (max-width: 767.98px) {
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 575.98px) {
+    font-size: 1rem;
+  }
+}
+
+.testimonial-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+
+  @media (max-width: 575.98px) {
+    font-size: 0.75rem;
+    margin-bottom: 0.8rem;
+  }
+}
+
+.contact-form,
+.testimonial-form {
+  .form-control {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+
+    &:focus {
+      background: white;
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+    }
+
+    &::placeholder {
+      color: #666;
+    }
+  }
+
+  .form-check-input {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    &:checked {
+      background-color: #0d6efd;
+      border-color: #0d6efd;
+    }
+
+    &:focus {
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+    }
+  }
+
+  .form-check-label {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .btn {
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// Responsive Design - Enhanced
+@media (max-width: 991.98px) {
+  .footer-section {
+    .row {
+      &.align-items-start {
+        align-items: center;
+      }
+    }
+  }
+
+  .company-info {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .doctor-image-container {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .footer-section {
+    padding: 1.5rem 0;
+  }
+
+  .company-info {
+    margin-top: 1rem;
+  }
+
+  .doctor-image {
+    max-width: 120px;
+  }
+
+  .contact-info {
+    margin-top: 1rem;
+  }
+
+  .social-links-container {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .footer-section {
+    padding: 1rem 0;
+  }
+
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .company-name {
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .company-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .company-description {
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .contact-item {
+    font-size: 0.7rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+
+    span {
+      word-break: break-word;
+    }
+  }
+
+  .testimonial-form-container {
+    margin-top: 1rem;
+  }
+}

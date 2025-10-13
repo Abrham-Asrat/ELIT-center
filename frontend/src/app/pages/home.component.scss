@@ -1,0 +1,704 @@
+// Hero Section - Responsive Design
+.hero-section {
+  /* Keep bottom padding — do not remove it. Use a CSS variable to control
+    the hero height on large screens while including padding via box-sizing. */
+  --hero-height: 400px;
+  // margin-top: 1rem;
+  padding: 2rem 0;
+  box-sizing: border-box;
+  min-height: var(--hero-height);
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 991.98px) {
+    padding: 1.5rem 0;
+    min-height: auto;
+  }
+
+  @media (max-width: 767.98px) {
+    padding: 1rem 0;
+    min-height: 50vh;
+    text-align: center;
+  }
+
+  @media (max-width: 575.98px) {
+    padding: 0.5rem 0;
+    min-height: auto;
+  }
+}
+
+// Welcome Title Animation
+.welcome-title {
+  background: linear-gradient(90deg, #ffffff, #0056b3, #eceeef, #0056b3);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 4s ease infinite, fadeInScale 1s ease-out;
+  text-shadow:none;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+
+  @media (max-width: 768px) {
+    // Fallback for better mobile compatibility
+    -webkit-text-fill-color: #007bff;
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero-section .container {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+// Hero Content - Responsive Typography
+.hero-content-wrapper {
+  @media (max-width: 767.98px) {
+    margin-bottom: 2rem;
+  }
+}
+
+.hero-text {
+  h1.display-4 {
+    font-size: 3.5rem;
+    line-height: 1.2;
+
+    @media (max-width: 1199.98px) {
+      font-size: 3rem;
+    }
+
+    @media (max-width: 991.98px) {
+      font-size: 2.5rem;
+    }
+
+    @media (max-width: 767.98px) {
+      font-size: 2rem;
+      margin-bottom: 1rem !important;
+    }
+
+    @media (max-width: 575.98px) {
+      font-size: 1.75rem;
+    }
+  }
+
+  p.lead {
+    font-size: 1.25rem;
+    line-height: 1.6;
+
+    @media (max-width: 991.98px) {
+      font-size: 1.15rem;
+    }
+
+    @media (max-width: 767.98px) {
+      font-size: 1rem;
+      margin-bottom: 1.5rem !important;
+    }
+
+    @media (max-width: 575.98px) {
+      font-size: 0.95rem;
+    }
+  }
+
+  .btn {
+    @media (max-width: 575.98px) {
+      font-size: 0.9rem;
+      padding: 0.6rem 1.5rem !important;
+    }
+
+    @media (min-width: 576px) {
+      min-width: 180px;
+    }
+  }
+}
+
+// Image overlay container styles
+.image-overlay-container {
+  width: 100%;
+  max-width: 480px; /* even larger image area for big screens */
+  position: relative;
+  display: inline-block;
+}
+
+.image-overlay-container .base-image {
+  /* make base image smaller on large screens and center it */
+  width: 50%;
+  max-width: 250px;
+  margin: 0 auto;
+  display: block;
+  height: auto;
+  // border-radius: 0.5rem;
+  object-fit: cover;
+  right: -12%;
+  margin-top: 1.9rem;
+}
+
+.image-overlay-container .top-image {
+  position: absolute;
+  right: -5%;
+  top: 8%;
+  width: 63%;
+  height: auto;
+  object-fit: contain;
+  // box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  transform: translateZ(0);
+  padding-top: 2rem;
+  margin-top: 3.25rem;
+}
+
+.overlay-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.base-image {
+  position: relative;
+  z-index: 1;
+}
+
+.top-image {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+  opacity: 0.9;
+  transform: scale(0.8);
+}
+
+// Services Section - Responsive Grid
+.services-section {
+  padding: 3rem 0;
+
+  @media (max-width: 767.98px) {
+    padding: 2rem 0;
+  }
+
+  @media (max-width: 575.98px) {
+    padding: 1.5rem 0;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+
+    @media (max-width: 991.98px) {
+      font-size: 2rem;
+    }
+
+    @media (max-width: 767.98px) {
+      font-size: 1.75rem;
+    }
+
+    @media (max-width: 575.98px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  p.lead {
+    font-size: 1.15rem;
+
+    @media (max-width: 767.98px) {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 575.98px) {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.card {
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 767.98px) {
+    padding: 1.5rem !important;
+  }
+
+  @media (max-width: 575.98px) {
+    padding: 1rem !important;
+  }
+
+  i {
+    @media (max-width: 767.98px) {
+      font-size: 2.5rem !important;
+    }
+
+    @media (max-width: 575.98px) {
+      font-size: 2rem !important;
+    }
+  }
+
+  .card-title {
+    @media (max-width: 575.98px) {
+      font-size: 1rem;
+    }
+  }
+
+  .card-text {
+    @media (max-width: 575.98px) {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.doctor-card {
+  transition: all 0.3s ease;
+  padding: 2rem;
+
+  @media (max-width: 991.98px) {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 767.98px) {
+    padding: 1.25rem;
+  }
+
+  @media (max-width: 575.98px) {
+    padding: 1rem;
+  }
+
+  img {
+    @media (max-width: 575.98px) {
+      width: 80px !important;
+      height: 80px !important;
+    }
+  }
+
+  h3 {
+    @media (max-width: 767.98px) {
+      font-size: 1.5rem;
+    }
+
+    @media (max-width: 575.98px) {
+      font-size: 1.25rem;
+    }
+  }
+
+  p {
+    @media (max-width: 575.98px) {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.doctor-card:hover {
+  transform: scale(1.02);
+}
+
+// About Section Responsive
+.about-section {
+  .row {
+    @media (max-width: 991.98px) {
+      flex-direction: column-reverse;
+    }
+  }
+
+  h2 {
+    font-size: 2.25rem;
+
+    @media (max-width: 991.98px) {
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    @media (max-width: 767.98px) {
+      font-size: 1.75rem;
+    }
+
+    @media (max-width: 575.98px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  p {
+    @media (max-width: 991.98px) {
+      text-align: center;
+    }
+
+    @media (max-width: 575.98px) {
+      font-size: 0.9rem;
+    }
+  }
+
+  .bg-white {
+    @media (max-width: 575.98px) {
+      padding: 0.75rem !important;
+    }
+
+    h4 {
+      @media (max-width: 575.98px) {
+        font-size: 1.25rem;
+      }
+    }
+
+    small {
+      @media (max-width: 575.98px) {
+        font-size: 0.75rem;
+      }
+    }
+  }
+}
+
+.bg-light {
+  background-color: #f8f9fa !important;
+}
+
+.rounded-4 {
+  border-radius: 1.5rem !important;
+}
+
+// Testimonials Section Styles
+.testimonials-section {
+  background-color: #f8f9fa;
+}
+
+.testimonials-grid-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 1rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+
+  @media (min-width: 992px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+.testimonial-card {
+  transition: all 0.3s ease;
+  opacity: 0.7;
+  transform: scale(0.95);
+
+  &.active {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  &:hover {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+.testimonial-card-inner {
+  height: 100%;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+  }
+}
+
+.avatar-circle {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    font-size: 1.2rem;
+  }
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+  justify-content: center;
+}
+
+.testimonial-text {
+  font-style: italic;
+  line-height: 1.6;
+  color: #6c757d;
+}
+
+.testimonials-navigation {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-btn {
+  background: #007bff;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+
+  &:hover {
+    background: #0056b3;
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  @media (max-width: 575.98px) {
+    width: 45px;
+    height: 45px;
+    font-size: 1rem;
+  }
+}
+
+// CTA Section Responsive
+.cta-section {
+  padding: 3rem 0;
+
+  @media (max-width: 767.98px) {
+    padding: 2rem 0;
+  }
+
+  @media (max-width: 575.98px) {
+    padding: 1.5rem 0;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+
+    @media (max-width: 991.98px) {
+      font-size: 2rem;
+    }
+
+    @media (max-width: 767.98px) {
+      font-size: 1.75rem;
+    }
+
+    @media (max-width: 575.98px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  p.lead {
+    @media (max-width: 767.98px) {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 575.98px) {
+      font-size: 0.9rem;
+    }
+  }
+
+  .btn {
+    @media (max-width: 575.98px) {
+      font-size: 1rem;
+      padding: 0.75rem 2rem !important;
+    }
+  }
+}
+
+// Alternative Flexbox layout (you can switch between grid and flex)
+.testimonials-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: stretch;
+
+  .testimonial-card {
+    flex: 1 1 300px;
+    max-width: 400px;
+    min-width: 280px;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+
+    .testimonial-card {
+      flex: none;
+      width: 100%;
+      max-width: 500px;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .hero-section {
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+
+  .image-overlay-container {
+    max-width: 320px;
+  }
+
+  .image-overlay-container .top-image {
+    position: static;
+    width: 48%;
+    margin-top: -1.2rem;
+    display: inline-block;
+    right: auto;
+    top: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    .container {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+  }
+
+  // Responsive image overlay adjustments
+  .image-overlay-container {
+    max-width: 90%;
+  }
+
+  .top-image {
+    top: 10px;
+    left: 10px;
+    transform: scale(0.7);
+  }
+
+  .image-overlay-container:hover .top-image {
+    transform: scale(0.75);
+  }
+
+  // Responsive button groups
+  .d-flex.gap-3 {
+    gap: 0.5rem !important;
+
+    .btn {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+// Additional responsive breakpoints
+@media (max-width: 576px) {
+  .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .image-overlay-container {
+    max-width: 95%;
+  }
+
+  .top-image {
+    top: 8px;
+    left: 8px;
+    transform: scale(0.6);
+  }
+
+  .image-overlay-container:hover .top-image {
+    transform: scale(0.65);
+  }
+
+  // Compact spacing
+  .py-5 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .mb-5 {
+    margin-bottom: 2rem !important;
+  }
+
+  .mt-5 {
+    margin-top: 2rem !important;
+  }
+
+  .g-4 {
+    --bs-gutter-x: 1rem;
+    --bs-gutter-y: 1rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .hero-section {
+    padding-top: 0.3rem; /* minimal top padding on large screens */
+    /* Set a fixed height on large screens but keep bottom padding because
+     box-sizing is set to border-box. Override by setting --hero-height inline
+     or via utility class on the element. */
+    --hero-height: 450px;
+    height: var(--hero-height);
+    min-height: 450px;
+  }
+
+  .image-overlay-container {
+    max-width: 550px; /* much larger images on big screens */
+  }
+
+  .top-image {
+    top: 30px;
+    left: 30px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .hero-section {
+    padding-top: 0.2rem; /* even less top padding on extra large screens */
+    --hero-height: 500px;
+    height: var(--hero-height);
+    min-height: 500px;
+  }
+
+  .image-overlay-container {
+    max-width: 600px; /* maximum size for very large screens */
+  }
+}

@@ -1,0 +1,239 @@
+<!-- Hero Section -->
+<section class="hero-section" [@pageEnter]>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div class="hero-content-wrapper position-relative" [@slideInLeft]>
+          <div class="hero-text position-relative">
+            <h1 class="display-4 fw-bold mb-4 welcome-title" [@slideInLeft]>
+              {{ languageService.getTranslation("welcomeTitle") }}
+            </h1>
+            <p class="lead mb-4" [@slideUp]>
+              {{ languageService.getTranslation("welcomeSubtitle") }}
+            </p>
+            <div
+              class="d-flex flex-column flex-sm-row gap-3 gap-sm-2 justify-content-center justify-content-lg-start"
+              [@fadeIn]
+            >
+              <a
+                routerLink="/appointment"
+                class="btn btn-light btn-lg px-4 w-100 w-sm-auto"
+                [@bounceIn]
+              >
+                {{ languageService.getTranslation("bookAppointment") }}
+              </a>
+              <a
+                routerLink="/services"
+                class="btn btn-outline-light btn-lg px-4 w-100 w-sm-auto"
+                [@scaleIn]
+              >
+                {{ languageService.getTranslation("ourServices") }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 pb-0 mb-0">
+        <div class="text-center">
+          <div
+            class="image-overlay-container rounded-4 d-none d-lg-inline-block"
+            [@slideInRight]
+          >
+            <img
+              src="./images/left.png"
+              alt="Left Image"
+              class="overlay-image base-image"
+            />
+            <img
+              src="./images/right.png"
+              alt="Right Image"
+              class="overlay-image top-image"
+            />
+          </div>
+          <!-- large-screen overlay remains in this column; small-screen image moved above welcome text -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Overview -->
+<section class="py-5 services-section" [@slideUp]>
+  <div class="container">
+    <div class="text-center mb-5 mb-md-4 mb-sm-3" [@fadeIn]>
+      <h2 class="fw-bold text-primary mb-3">
+        {{ languageService.getTranslation("specializedServices") }}
+      </h2>
+      <p class="lead text-muted">
+        {{ languageService.getTranslation("specializedServicesDesc") }}
+      </p>
+    </div>
+
+    <div class="row g-4 g-md-3 g-sm-2" [@staggerCards]>
+      <div
+        class="col-lg-3 col-md-6 col-sm-12"
+        *ngFor="let service of services; let i = index"
+      >
+        <div
+          class="card h-100 text-center p-4 animate-card"
+          #animateCard
+          [attr.data-delay]="i * 150"
+          [@scaleIn]
+        >
+          <div class="mb-3">
+            <i
+              [class]="service.icon + ' text-primary'"
+              style="font-size: 3rem"
+            ></i>
+          </div>
+          <h5 class="card-title">
+            {{ languageService.getTranslation(service.titleKey) }}
+          </h5>
+          <p class="card-text text-muted">
+            {{ languageService.getTranslation(service.descriptionKey) }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5" [@bounceIn]>
+      <a routerLink="/services" class="btn btn-primary btn-lg">
+        {{ languageService.getTranslation("viewAllServices") }}
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- About Dr. Abiy Preview -->
+<section class="py-5 bg-light about-section" [@slideUp]>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 col-md-12">
+        <div class="doctor-card" [@slideInLeft]>
+          <div class="text-center mb-4" [@scaleIn]>
+            <img
+              src="./images/dr.jpg"
+              class="rounded-circle"
+              alt=""
+              style="width: 100px; height: 100px"
+            />
+          </div>
+          <h3 class="text-center mb-3" [@fadeIn]>Dr. Abiy</h3>
+          <p class="text-center text-primary fw-semibold mb-3" [@fadeIn]>
+            ENT Specialist
+          </p>
+          <p class="text-muted text-center" [@slideUp]>
+            Board-certified ENT specialist with over 15 years of experience in
+            treating complex ear, nose, and throat conditions.
+          </p>
+          <div class="text-center" [@bounceIn]>
+            <a routerLink="/doctor" class="btn btn-outline-primary">
+              {{ languageService.getTranslation("viewFullProfile") }}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 mt-4 mt-lg-0 col-md-12">
+        <div [@slideInRight]>
+          <h2 class="fw-bold text-primary mb-4 mb-md-3">
+            {{ languageService.getTranslation("meetSpecialist") }}
+          </h2>
+          <p class="mb-4 mb-md-3">
+            {{ languageService.getTranslation("meetSpecialistDesc") }}
+          </p>
+          <div class="row g-3 g-sm-2" [@staggerCards]>
+            <div class="col-6">
+              <div class="text-center p-3 bg-white rounded" [@scaleIn]>
+                <h4 class="text-primary mb-1">15+</h4>
+                <small class="text-muted">{{
+                  languageService.getTranslation("yearsExperience")
+                }}</small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="text-center p-3 bg-white rounded" [@scaleIn]>
+                <h4 class="text-primary mb-1">5000+</h4>
+                <small class="text-muted">{{
+                  languageService.getTranslation("patientsTreated")
+                }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Patient Testimonials -->
+<section class="py-5 testimonials-section" [@slideUp]>
+  <div class="container">
+    <div class="text-center mb-5" [@fadeIn]>
+      <h2 class="fw-bold text-primary mb-3">What Parents Say</h2>
+    </div>
+
+    <div class="testimonials-grid-container" [@scaleIn]>
+      <div class="testimonials-grid">
+        <div
+          class="testimonial-card"
+          *ngFor="let testimonial of visibleTestimonials; let i = index"
+          [class.active]="i === 1"
+          [class.side]="i !== 1"
+          [@slideUp]
+        >
+          <div class="card testimonial-card-inner">
+            <div
+              class="card-header bg-primary text-white d-flex align-items-center"
+            >
+              <div class="avatar-circle me-3">
+                <i class="fas fa-user"></i>
+              </div>
+              <div>
+                <h6 class="mb-0 text-white">{{ testimonial.name }}</h6>
+                <small class="text-white-50">Testimonial</small>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="stars mb-3">
+                <i
+                  class="fas fa-star text-warning"
+                  *ngFor="let star of [1, 2, 3, 4, 5]"
+                ></i>
+              </div>
+              <p class="testimonial-text mb-0">{{ testimonial.text }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation buttons -->
+      <div class="testimonials-navigation">
+        <button class="carousel-btn prev-btn" (click)="previousTestimonial()">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-btn next-btn" (click)="nextTestimonial()">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white cta-section" [@slideUp]>
+  <div class="container text-center">
+    <h2 class="fw-bold mb-3 mb-md-2" [@bounceIn]>
+      {{ languageService.getTranslation("readyToStart") }}
+    </h2>
+    <p class="lead mb-4 mb-md-3" [@fadeIn]>
+      {{ languageService.getTranslation("readyToStartDesc") }}
+    </p>
+    <a
+      routerLink="/appointment"
+      class="btn btn-light btn-lg px-5 px-sm-4"
+      [@scaleIn]
+    >
+      {{ languageService.getTranslation("bookAppointment") }}
+    </a>
+  </div>
+</section>
