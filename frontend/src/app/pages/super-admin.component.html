@@ -5,41 +5,52 @@
     <div class="container">
       <a class="navbar-brand" href="#">
         <i class="fas fa-crown me-2"></i>
-        ELIT ENT - Super Admin
+        ELIT ENT - Super Admin Portal
       </a>
 
       <div class="navbar-nav ms-auto">
         <div class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
-            href="#"
             id="adminDropdown"
             role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+            (click)="toggleDropdown($event)"
+            [attr.aria-expanded]="isDropdownOpen"
           >
             <i class="fas fa-user-circle me-1"></i>
             Dr. Abiy
           </a>
-          <ul class="dropdown-menu dropdown-menu-end">
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            [class.show]="isDropdownOpen"
+          >
             <li>
-              <a class="dropdown-item" (click)="refreshDashboard()">
+              <a
+                class="dropdown-item"
+                (click)="refreshDashboard(); closeDropdown()"
+              >
                 <i class="fas fa-sync-alt me-2"></i>Refresh Dashboard
               </a>
             </li>
             <li>
-              <a class="dropdown-item" (click)="goToAdminSelection()">
+              <a
+                class="dropdown-item"
+                (click)="goToAdminSelection(); closeDropdown()"
+              >
                 <i class="fas fa-arrow-left me-2"></i>Admin Selection
               </a>
             </li>
             <li>
-              <a class="dropdown-item" (click)="goHome()">
+              <a class="dropdown-item" (click)="goHome(); closeDropdown()">
                 <i class="fas fa-home me-2"></i>Go to Homepage
               </a>
             </li>
             <li><hr class="dropdown-divider" /></li>
             <li>
-              <a class="dropdown-item text-danger" (click)="logout()">
+              <a
+                class="dropdown-item text-danger"
+                (click)="logout(); closeDropdown()"
+              >
                 <i class="fas fa-sign-out-alt me-2"></i>Logout
               </a>
             </li>
@@ -190,6 +201,17 @@
             <i class="fas fa-cogs me-2"></i>System Settings
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            [class.active]="isActiveTab('lab-tests')"
+            (click)="switchTab('lab-tests')"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-vial me-2"></i>Lab Tests
+          </button>
+        </li>
       </ul>
 
       <!-- Tab Content -->
@@ -246,17 +268,37 @@
                 </div>
                 <div class="card-body">
                   <div class="d-grid gap-2">
-                    <button class="btn btn-primary" (click)="addNewStaff()">
-                      <i class="fas fa-user-plus me-2"></i>Add Staff Member
+                    <button
+                      class="btn btn-outline-primary"
+                      (click)="generateReport()"
+                      [disabled]="isGeneratingReport"
+                    >
+                      <i class="fas fa-dollar-sign me-2"></i>
+                      Financial Report
                     </button>
-                    <button class="btn btn-success" (click)="viewReports()">
-                      <i class="fas fa-chart-bar me-2"></i>Generate Report
+                    <button
+                      class="btn btn-outline-success"
+                      (click)="generateReport()"
+                      [disabled]="isGeneratingReport"
+                    >
+                      <i class="fas fa-users me-2"></i>
+                      Patient Report
                     </button>
-                    <button class="btn btn-info" (click)="manageSchedule()">
-                      <i class="fas fa-calendar-alt me-2"></i>Manage Schedule
+                    <button
+                      class="btn btn-outline-info"
+                      (click)="generateReport()"
+                      [disabled]="isGeneratingReport"
+                    >
+                      <i class="fas fa-user-md me-2"></i>
+                      Staff Report
                     </button>
-                    <button class="btn btn-warning" (click)="systemBackup()">
-                      <i class="fas fa-database me-2"></i>System Backup
+                    <button
+                      class="btn btn-outline-warning"
+                      (click)="generateReport()"
+                      [disabled]="isGeneratingReport"
+                    >
+                      <i class="fas fa-calendar-check me-2"></i>
+                      Appointment Report
                     </button>
                   </div>
                 </div>
@@ -604,21 +646,87 @@
             </div>
           </div>
         </div>
+
+        <!-- Lab Tests Tab -->
+        <div
+          class="tab-pane fade"
+          [class.show]="isActiveTab('lab-tests')"
+          [class.active]="isActiveTab('lab-tests')"
+          id="lab-tests"
+          role="tabpanel"
+          [@fadeIn]
+        >
+          <div class="card" [@slideInLeft]>
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h5 class="mb-0">Lab Test Management</h5>
+              <button class="btn btn-primary" (click)="showAddLabTestForm()">
+                <i class="fas fa-plus me-1"></i>Add New Lab Test
+              </button>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Test Name</th>
+                      <th>Standard Price</th>
+                      <th>Alternative Price</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let testType of labTestTypes">
+                      <td>{{ testType.name }}</td>
+                      <td>${{ testType.standardPrice.toFixed(2) }}</td>
+                      <td>${{ testType.alternativePrice.toFixed(2) }}</td>
+                      <td>
+                        <button
+                          class="btn btn-sm btn-primary me-1"
+                          (click)="showEditLabTestForm(testType)"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-danger"
+                          (click)="deleteLabTestType(testType.id)"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Staff Modal -->
-<div class="modal fade" [class.show]="showStaffModal" [style.display]="showStaffModal ? 'block' : 'none'" *ngIf="showStaffModal" [@scaleIn]>
+<div
+  class="modal fade"
+  [class.show]="showStaffModal"
+  [style.display]="showStaffModal ? 'block' : 'none'"
+  *ngIf="showStaffModal"
+  [@scaleIn]
+>
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">
           <i class="fas fa-user-plus me-2"></i>
-          {{ editingStaff ? 'Edit Staff Member' : 'Add New Staff Member' }}
+          {{ editingStaff ? "Edit Staff Member" : "Add New Staff Member" }}
         </h5>
-        <button type="button" class="btn-close" (click)="closeStaffModal()"></button>
+        <button
+          type="button"
+          class="btn-close"
+          (click)="closeStaffModal()"
+        ></button>
       </div>
       <div class="modal-body">
         <form (ngSubmit)="saveStaff()">
@@ -626,19 +734,23 @@
             <div class="col-md-6">
               <div class="mb-3">
                 <label class="form-label">Full Name</label>
-                <input 
-                  type="text" 
-                  class="form-control" 
-                  [(ngModel)]="newStaff.name" 
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="newStaff.name"
                   name="name"
                   required
-                >
+                />
               </div>
             </div>
             <div class="col-md-6">
               <div class="mb-3">
                 <label class="form-label">Role</label>
-                <select class="form-select" [(ngModel)]="newStaff.role" name="role">
+                <select
+                  class="form-select"
+                  [(ngModel)]="newStaff.role"
+                  name="role"
+                >
                   <option value="Staff">Staff</option>
                   <option value="Sub Admin">Sub Admin</option>
                   <option value="Super Admin">Super Admin</option>
@@ -650,25 +762,63 @@
             <div class="col-md-6">
               <div class="mb-3">
                 <label class="form-label">Department</label>
-                <select class="form-select" [(ngModel)]="newStaff.department" name="department">
+                <select
+                  class="form-select"
+                  [(ngModel)]="newStaff.department"
+                  name="department"
+                >
                   <option value="">Select Department</option>
                   <option value="Administration">Administration</option>
                   <option value="Nursing">Nursing</option>
-                  <option value="Reception">Reception</option>
                   <option value="Laboratory">Laboratory</option>
                   <option value="Pharmacy">Pharmacy</option>
+                  <option value="Reception">Reception</option>
+                  <option value="Doctor">Doctor</option>
+                  <option value="Surgery">Surgery</option>
                 </select>
               </div>
             </div>
             <div class="col-md-6">
               <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input 
-                  type="email" 
-                  class="form-control" 
-                  [(ngModel)]="newStaff.email" 
-                  name="email"
+                <label class="form-label">Work Type</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="newStaff.workType"
+                  name="workType"
                 >
+                  <option value="">Select Work Type</option>
+                  <option value="reception">Reception</option>
+                  <option value="doctor">Doctor</option>
+                  <option value="surgeon">Surgeon</option>
+                  <option value="lab">Lab Technician</option>
+                  <option value="pharmacy">Pharmacist</option>
+                  <option value="employer">Employer</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  [(ngModel)]="newStaff.email"
+                  name="email"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Phone</label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  [(ngModel)]="newStaff.phone"
+                  name="phone"
+                />
               </div>
             </div>
           </div>
@@ -676,35 +826,39 @@
             <div class="col-md-6">
               <div class="mb-3">
                 <label class="form-label">Phone</label>
-                <input 
-                  type="tel" 
-                  class="form-control" 
-                  [(ngModel)]="newStaff.phone" 
+                <input
+                  type="tel"
+                  class="form-control"
+                  [(ngModel)]="newStaff.phone"
                   name="phone"
-                >
+                />
               </div>
             </div>
             <div class="col-md-6" *ngIf="!editingStaff">
               <div class="mb-3">
                 <label class="form-label">Password</label>
-                <input 
-                  type="password" 
-                  class="form-control" 
-                  [(ngModel)]="newStaff.password" 
+                <input
+                  type="password"
+                  class="form-control"
+                  [(ngModel)]="newStaff.password"
                   name="password"
-                >
+                />
               </div>
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeStaffModal()">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closeStaffModal()"
+        >
           Cancel
         </button>
         <button type="button" class="btn btn-primary" (click)="saveStaff()">
           <i class="fas fa-save me-2"></i>
-          {{ editingStaff ? 'Update' : 'Add' }} Staff
+          {{ editingStaff ? "Update" : "Add" }} Staff
         </button>
       </div>
     </div>
@@ -712,8 +866,201 @@
   <div class="modal-backdrop fade show"></div>
 </div>
 
+<!-- Add Lab Test Type Modal -->
+<div
+  class="modal fade show d-block"
+  *ngIf="showLabTestModal"
+  tabindex="-1"
+  role="dialog"
+  style="background-color: rgba(0, 0, 0, 0.5)"
+  [@fadeIn]
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-vial me-2"></i>
+          {{ editingLabTestType ? "Edit Lab Test" : "Add New Lab Test" }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          (click)="closeLabTestModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="saveLabTestType()">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Test Name *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="newLabTestType.name"
+                  name="testName"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Standard Price ($) *</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="newLabTestType.standardPrice"
+                  name="standardPrice"
+                  min="0"
+                  step="0.01"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Alternative Price ($)</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="newLabTestType.alternativePrice"
+                  name="alternativePrice"
+                  min="0"
+                  step="0.01"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end gap-2">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="closeLabTestModal()"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="
+                !newLabTestType.name || newLabTestType.standardPrice <= 0
+              "
+            >
+              {{ editingLabTestType ? "Update" : "Add" }} Test
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Report Generation Modal -->
+<div
+  class="modal fade show d-block"
+  *ngIf="showReportModal"
+  tabindex="-1"
+  role="dialog"
+  style="background-color: rgba(0, 0, 0, 0.5)"
+  [@fadeIn]
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-file-export me-2"></i>
+          Generate Report
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          (click)="closeReportModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="generateReport()">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Report Type *</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="reportType"
+                  name="reportType"
+                  required
+                >
+                  <option value="daily">Daily Report</option>
+                  <option value="weekly">Weekly Report</option>
+                  <option value="monthly">Monthly Report</option>
+                  <option value="yearly">Yearly Report</option>
+                  <option value="finance">Finance Report</option>
+                  <option value="medical">Medical Report</option>
+                  <option value="patient">Patient History Report</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Start Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="reportStartDate"
+                  name="startDate"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">End Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="reportEndDate"
+                  name="endDate"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end gap-2">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="closeReportModal()"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="isGeneratingReport"
+            >
+              <span *ngIf="isGeneratingReport">
+                <i class="fas fa-spinner fa-spin me-1"></i> Generating...
+              </span>
+              <span *ngIf="!isGeneratingReport">
+                <i class="fas fa-download me-1"></i> Generate Report
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Reports Modal -->
-<div class="modal fade" [class.show]="showReportModal" [style.display]="showReportModal ? 'block' : 'none'" *ngIf="showReportModal" [@scaleIn]>
+<div
+  class="modal fade"
+  [class.show]="showReportModal"
+  [style.display]="showReportModal ? 'block' : 'none'"
+  *ngIf="showReportModal"
+  [@scaleIn]
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -721,38 +1068,42 @@
           <i class="fas fa-chart-bar me-2"></i>
           Generate Reports
         </h5>
-        <button type="button" class="btn-close" (click)="closeReportModal()"></button>
+        <button
+          type="button"
+          class="btn-close"
+          (click)="closeReportModal()"
+        ></button>
       </div>
       <div class="modal-body">
         <div class="report-options">
           <div class="d-grid gap-2">
-            <button 
-              class="btn btn-outline-primary" 
-              (click)="generateReport('financial')" 
+            <button
+              class="btn btn-outline-primary"
+              (click)="generateReport()"
               [disabled]="isGeneratingReport"
             >
               <i class="fas fa-dollar-sign me-2"></i>
               Financial Report
             </button>
-            <button 
-              class="btn btn-outline-success" 
-              (click)="generateReport('patient')" 
+            <button
+              class="btn btn-outline-success"
+              (click)="generateReport()"
               [disabled]="isGeneratingReport"
             >
               <i class="fas fa-users me-2"></i>
               Patient Report
             </button>
-            <button 
-              class="btn btn-outline-info" 
-              (click)="generateReport('staff')" 
+            <button
+              class="btn btn-outline-info"
+              (click)="generateReport()"
               [disabled]="isGeneratingReport"
             >
               <i class="fas fa-user-md me-2"></i>
               Staff Report
             </button>
-            <button 
-              class="btn btn-outline-warning" 
-              (click)="generateReport('appointment')" 
+            <button
+              class="btn btn-outline-warning"
+              (click)="generateReport()"
               [disabled]="isGeneratingReport"
             >
               <i class="fas fa-calendar-check me-2"></i>
@@ -765,13 +1116,20 @@
               Generating report, please wait...
             </div>
             <div class="progress mt-2">
-              <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+              <div
+                class="progress-bar progress-bar-striped progress-bar-animated"
+                style="width: 100%"
+              ></div>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeReportModal()">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closeReportModal()"
+        >
           Close
         </button>
       </div>
@@ -781,7 +1139,13 @@
 </div>
 
 <!-- Backup Modal -->
-<div class="modal fade" [class.show]="showBackupModal" [style.display]="showBackupModal ? 'block' : 'none'" *ngIf="showBackupModal" [@scaleIn]>
+<div
+  class="modal fade"
+  [class.show]="showBackupModal"
+  [style.display]="showBackupModal ? 'block' : 'none'"
+  *ngIf="showBackupModal"
+  [@scaleIn]
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -789,7 +1153,11 @@
           <i class="fas fa-database me-2"></i>
           System Backup
         </h5>
-        <button type="button" class="btn-close" (click)="closeBackupModal()"></button>
+        <button
+          type="button"
+          class="btn-close"
+          (click)="closeBackupModal()"
+        ></button>
       </div>
       <div class="modal-body">
         <div class="backup-info">
@@ -810,16 +1178,29 @@
               Creating backup, please wait...
             </div>
             <div class="progress mt-2">
-              <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+              <div
+                class="progress-bar progress-bar-striped progress-bar-animated"
+                style="width: 100%"
+              ></div>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeBackupModal()" [disabled]="isBackingUp">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closeBackupModal()"
+          [disabled]="isBackingUp"
+        >
           Cancel
         </button>
-        <button type="button" class="btn btn-warning" (click)="performBackup()" [disabled]="isBackingUp">
+        <button
+          type="button"
+          class="btn btn-warning"
+          (click)="performBackup()"
+          [disabled]="isBackingUp"
+        >
           <i class="fas fa-database me-2"></i>
           Start Backup
         </button>

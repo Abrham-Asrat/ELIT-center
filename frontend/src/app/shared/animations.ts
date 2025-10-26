@@ -123,9 +123,13 @@ export const float = trigger('float', [
   state('floating', style({ transform: 'translateY(0px)' })),
   transition('* => floating', [
     animate(
-      '2s ease-in-out infinite alternate',
-      style({ transform: 'translateY(-10px)' })
-    ),
+      '1s ease-in-out',
+      keyframes([
+        style({ transform: 'translateY(0px)', offset: 0 }),
+        style({ transform: 'translateY(-10px)', offset: 0.5 }),
+        style({ transform: 'translateY(0px)', offset: 1 })
+      ])
+    )
   ]),
 ]);
 
@@ -173,6 +177,30 @@ export const containerSlideIn = trigger('containerSlideIn', [
     animate(
       '800ms cubic-bezier(0.4, 0, 0.2, 1)',
       style({ opacity: 1, transform: 'translateY(0)' })
+    ),
+  ]),
+]);
+
+// Shake animation for error states
+export const shake = trigger('shake', [
+  state('inactive', style({ transform: 'translateX(0)' })),
+  state('active', style({ transform: 'translateX(0)' })),
+  transition('inactive => active', [
+    animate(
+      '500ms',
+      keyframes([
+        style({ transform: 'translateX(0)', offset: 0 }),
+        style({ transform: 'translateX(-10px)', offset: 0.1 }),
+        style({ transform: 'translateX(10px)', offset: 0.2 }),
+        style({ transform: 'translateX(-10px)', offset: 0.3 }),
+        style({ transform: 'translateX(10px)', offset: 0.4 }),
+        style({ transform: 'translateX(-10px)', offset: 0.5 }),
+        style({ transform: 'translateX(10px)', offset: 0.6 }),
+        style({ transform: 'translateX(-10px)', offset: 0.7 }),
+        style({ transform: 'translateX(10px)', offset: 0.8 }),
+        style({ transform: 'translateX(-10px)', offset: 0.9 }),
+        style({ transform: 'translateX(0)', offset: 1 }),
+      ])
     ),
   ]),
 ]);

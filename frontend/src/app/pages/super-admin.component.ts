@@ -42,6 +42,13 @@ interface PaymentMethod {
   percentage: number;
 }
 
+interface LabTestType {
+  id: string;
+  name: string;
+  standardPrice: number;
+  alternativePrice: number;
+}
+
 @Component({
   selector: 'app-super-admin',
   standalone: true,
@@ -53,10 +60,10 @@ interface PaymentMethod {
 export class SuperAdminComponent implements OnInit {
   // Active tab management
   activeTab = 'overview';
-  
+
   // Dropdown state
   isDropdownOpen = false;
-  
+
   // Statistics
   totalAppointments = 234;
   newAppointments = 12;
@@ -81,7 +88,12 @@ export class SuperAdminComponent implements OnInit {
   isGeneratingReport = false;
   isBackingUp = false;
 
-  // Form data
+  // Add new properties for enhanced functionality
+  reportType: string = 'daily';
+  reportStartDate: string = '';
+  reportEndDate: string = '';
+
+  // Add form data for staff management
   newStaff: any = {
     name: '',
     role: 'Staff',
@@ -89,6 +101,7 @@ export class SuperAdminComponent implements OnInit {
     email: '',
     phone: '',
     password: '',
+    workType: '', // Added work type
   };
 
   staffMembers: StaffMember[] = [
@@ -197,6 +210,38 @@ export class SuperAdminComponent implements OnInit {
     { name: 'Bank Transfer', percentage: 5 },
   ];
 
+  // Add lab test types management
+  labTestTypes: LabTestType[] = [
+    {
+      id: 'LT001',
+      name: 'Complete Blood Count',
+      standardPrice: 25.0,
+      alternativePrice: 20.0,
+    },
+    {
+      id: 'LT002',
+      name: 'Liver Function Test',
+      standardPrice: 35.0,
+      alternativePrice: 30.0,
+    },
+    {
+      id: 'LT003',
+      name: 'Kidney Function Test',
+      standardPrice: 30.0,
+      alternativePrice: 25.0,
+    },
+  ];
+
+  // Add form data for lab test management
+  newLabTestType = {
+    name: '',
+    standardPrice: 0,
+    alternativePrice: 0,
+  };
+
+  editingLabTestType: LabTestType | null = null;
+  showLabTestModal = false;
+
   constructor(
     public languageService: LanguageService,
     private router: Router
@@ -213,6 +258,16 @@ export class SuperAdminComponent implements OnInit {
 
   isActiveTab(tabName: string): boolean {
     return this.activeTab === tabName;
+  }
+
+  // Dropdown Management
+  toggleDropdown(event?: Event) {
+    event?.preventDefault();
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  closeDropdown() {
+    this.isDropdownOpen = false;
   }
 
   // Quick Actions
@@ -273,7 +328,7 @@ export class SuperAdminComponent implements OnInit {
     sessionStorage.removeItem('currentUser');
     sessionStorage.removeItem('currentShift');
     sessionStorage.removeItem('staffId');
-    
+
     // Navigate back to admin selection
     this.router.navigate(['/admin']);
   }
@@ -293,61 +348,263 @@ export class SuperAdminComponent implements OnInit {
     });
   }
 
-  // Modal Management
-  closeStaffModal() {
-    this.showStaffModal = false;
+  // Enhanced staff management methods
+  showAddStaffForm() {
     this.editingStaff = false;
+    this.newStaff = {
+      name: '',
+      role: 'Staff',
+      department: '',
+      email: '',
+      phone: '',
+      password: '',
+      workType: '',
+    };
+    this.showStaffModal = true;
   }
 
-  closeReportModal() {
-    this.showReportModal = false;
-  }
-
-  closeBackupModal() {
-    this.showBackupModal = false;
+  showEditStaffForm(staff: StaffMember) {
+    this.editingStaff = true;
+    // In a real implementation, you would populate the form with staff data
+    this.newStaff = { ...staff };
+    this.showStaffModal = true;
   }
 
   saveStaff() {
     if (this.editingStaff) {
       console.log('Updating staff:', this.newStaff);
       // Update existing staff
+      this.openModal(
+        'Staff Updated',
+        `Staff member "${this.newStaff.name}" has been updated.`,
+        'info'
+      );
     } else {
       console.log('Adding new staff:', this.newStaff);
       // Add new staff to the list
       this.staffMembers.push({
         id: (this.staffMembers.length + 1).toString(),
         name: this.newStaff.name,
-        role: this.newStaff.role,
+        role: this.newStaff.role as 'Super Admin' | 'Sub Admin' | 'Staff',
         department: this.newStaff.department,
         status: 'active',
         lastLogin: 'Never',
         avatar: './images/staff-avatar.png',
       });
+
+      this.openModal(
+        'Staff Added',
+        `New staff member "${this.newStaff.name}" has been added.`,
+        'info'
+      );
     }
+
     this.closeStaffModal();
   }
 
-  generateReport(reportType: string) {
+  // Testimonial management methods
+  approveTestimonial(id: string) {
+    // In a real implementation, you would update the testimonial status
+    console.log('Approving testimonial:', id);
+    this.openModal(
+      'Testimonial Approved',
+      'The testimonial has been approved and is now visible to patients.',
+      'info'
+    );
+  }
+
+  rejectTestimonial(id: string) {
+    // In a real implementation, you would remove or mark the testimonial as rejected
+    console.log('Rejecting testimonial:', id);
+    this.openModal(
+      'Testimonial Rejected',
+      'The testimonial has been rejected and removed.',
+      'info'
+    );
+  }
+
+  removeTestimonial(id: string) {
+    // In a real implementation, you would completely remove the testimonial
+    console.log('Removing testimonial:', id);
+    this.openModal(
+      'Testimonial Removed',
+      'The testimonial has been permanently removed.',
+      'info'
+    );
+  }
+
+  // Patient management methods
+  viewPatientHistory(id: string) {
+    console.log('Viewing patient history:', id);
+    // Implement view patient history
+    this.openModal(
+      'Patient History',
+      'Patient history would be displayed here.',
+      'info'
+    );
+  }
+
+  downloadPatientList() {
+    console.log('Downloading patient list');
+    // Implement download patient list
+    this.openModal(
+      'Download Started',
+      'Patient list download has started. The file will be available shortly.',
+      'info'
+    );
+  }
+
+  // Report generation methods
+  showReportModalFunc() {
+    this.showReportModal = true;
+  }
+
+  closeReportModal() {
+    this.showReportModal = false;
+  }
+
+  // Add the missing closeStaffModal method
+  closeStaffModal() {
+    this.showStaffModal = false;
+    this.editingStaff = false;
+  }
+
+  generateReport() {
+    console.log('Generating report:', this.reportType);
     this.isGeneratingReport = true;
-    console.log('Generating report:', reportType);
-    
+
     // Simulate report generation
     setTimeout(() => {
       this.isGeneratingReport = false;
-      alert(`${reportType} report generated successfully!`);
       this.closeReportModal();
+
+      this.openModal(
+        'Report Generated',
+        `The ${this.reportType} report has been generated and is ready for download.`,
+        'info'
+      );
     }, 2000);
+  }
+
+  // Lab test management methods
+  showAddLabTestForm() {
+    this.editingLabTestType = null;
+    this.newLabTestType = {
+      name: '',
+      standardPrice: 0,
+      alternativePrice: 0,
+    };
+    this.showLabTestModal = true;
+  }
+
+  showEditLabTestForm(testType: LabTestType) {
+    this.editingLabTestType = testType;
+    this.newLabTestType = { ...testType };
+    this.showLabTestModal = true;
+  }
+
+  saveLabTestType() {
+    if (this.newLabTestType.name && this.newLabTestType.standardPrice > 0) {
+      if (this.editingLabTestType) {
+        // Update existing lab test type
+        const index = this.labTestTypes.findIndex(
+          (t) => t.id === this.editingLabTestType!.id
+        );
+        if (index !== -1) {
+          this.labTestTypes[index] = {
+            ...this.editingLabTestType!,
+            name: this.newLabTestType.name,
+            standardPrice: this.newLabTestType.standardPrice,
+            alternativePrice: this.newLabTestType.alternativePrice,
+          };
+        }
+
+        this.openModal(
+          'Lab Test Updated',
+          `Lab test "${this.newLabTestType.name}" has been updated.`,
+          'info'
+        );
+      } else {
+        // Add new lab test type
+        const labTestType: LabTestType = {
+          id: 'LT' + (this.labTestTypes.length + 1).toString().padStart(3, '0'),
+          name: this.newLabTestType.name,
+          standardPrice: this.newLabTestType.standardPrice,
+          alternativePrice: this.newLabTestType.alternativePrice,
+        };
+
+        this.labTestTypes.push(labTestType);
+
+        this.openModal(
+          'Lab Test Added',
+          `New lab test "${labTestType.name}" has been added.`,
+          'info'
+        );
+      }
+
+      this.closeLabTestModal();
+    } else {
+      this.openModal(
+        'Validation Error',
+        'Please fill in all required fields (Name and Standard Price).',
+        'info'
+      );
+    }
+  }
+
+  deleteLabTestType(id: string) {
+    const testType = this.labTestTypes.find((t) => t.id === id);
+    if (testType) {
+      if (confirm(`Are you sure you want to delete "${testType.name}"?`)) {
+        this.labTestTypes = this.labTestTypes.filter((t) => t.id !== id);
+
+        this.openModal(
+          'Lab Test Deleted',
+          `Lab test "${testType.name}" has been removed.`,
+          'info'
+        );
+      }
+    }
+  }
+
+  closeLabTestModal() {
+    this.showLabTestModal = false;
+    this.editingLabTestType = null;
+    this.newLabTestType = {
+      name: '',
+      standardPrice: 0,
+      alternativePrice: 0,
+    };
+  }
+
+  // Add missing backup methods
+  closeBackupModal() {
+    this.showBackupModal = false;
   }
 
   performBackup() {
     this.isBackingUp = true;
-    console.log('Starting backup...');
-    
+
     // Simulate backup process
     setTimeout(() => {
       this.isBackingUp = false;
-      alert('System backup completed successfully!');
       this.closeBackupModal();
+
+      this.openModal(
+        'Backup Completed',
+        'System backup has been completed successfully.',
+        'info'
+      );
     }, 3000);
+  }
+
+  // Helper method to open modals
+  openModal(
+    title: string,
+    content: string,
+    type: 'info' | 'confirm' | 'form' = 'info'
+  ) {
+    // This would integrate with your existing modal system
+    alert(`${title}: ${content}`);
   }
 }

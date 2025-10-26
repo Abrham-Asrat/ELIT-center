@@ -11,9 +11,9 @@ app-sub-admin-login .sub-admin-login {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.08)"/></svg>')
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="1" fill="rgba(205,255,155,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.08)"/></svg>')
       repeat;
-    animation: float 2s infinite linear;
+    animation: float 25s infinite linear;
     pointer-events: none;
   }
 
@@ -240,7 +240,7 @@ app-sub-admin-login .sub-admin-login {
 
   .branding {
     position: absolute;
-    bottom: 20px;
+    bottom: 1px;
     left: 0;
     right: 0;
   }

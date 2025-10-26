@@ -80,7 +80,7 @@
             href="#"
             id="languageDropdown"
             role="button"
-            (click)="toggleLanguageDropdown()"
+            (click)="toggleLanguageDropdown(); $event.preventDefault()"
             [attr.aria-expanded]="isLanguageDropdownOpen"
           >
             <i class="fas fa-globe me-1"></i>
@@ -91,7 +91,11 @@
               <a
                 class="dropdown-item"
                 href="#"
-                (click)="changeLanguage('en')"
+                (click)="
+                  changeLanguage('en');
+                  $event.preventDefault();
+                  $event.stopPropagation()
+                "
                 [class.active]="languageService.getCurrentLanguage() === 'en'"
               >
                 <i class="flag-icon flag-icon-us me-2"></i>
@@ -102,7 +106,11 @@
               <a
                 class="dropdown-item"
                 href="#"
-                (click)="changeLanguage('am')"
+                (click)="
+                  changeLanguage('am');
+                  $event.preventDefault();
+                  $event.stopPropagation()
+                "
                 [class.active]="languageService.getCurrentLanguage() === 'am'"
               >
                 <i class="flag-icon flag-icon-et me-2"></i>

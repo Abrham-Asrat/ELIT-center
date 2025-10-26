@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // Listen to route changes to hide header and footer on admin pages
+    // and scroll to top
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
@@ -36,6 +37,9 @@ export class AppComponent implements OnInit {
         );
         this.showHeader = !isAdminRoute;
         this.showFooter = !isAdminRoute;
+
+        // Scroll to top on every navigation
+        window.scrollTo(0, 0);
       });
   }
 }

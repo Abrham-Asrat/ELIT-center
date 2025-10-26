@@ -1,30 +1,43 @@
 <!-- Super Admin Login Page -->
-<div class="login-page super-admin-login">
+<div class="login-page super-admin-login" [@pageEnter]>
   <!-- Background Pattern -->
   <div class="login-background"></div>
 
   <!-- Login Container -->
   <div
     class="container-fluid d-flex align-items-center justify-content-center"
-    style="min-height: 100vh;"
+    style="min-height: 100vh"
   >
     <div class="row w-100 justify-content-center">
       <div class="col-lg-3 col-md-4 col-sm-6">
         <!-- Login Card -->
-        <div class="login-card compact-login">
+        <div
+          class="login-card compact-login"
+          [@bounceIn]
+          [@shake]="showErrorAnimation ? 'active' : 'inactive'"
+        >
           <!-- Header -->
-          <div class="login-header text-center mb-3">
-            <div class="login-icon super-admin-icon mb-2">
+          <div class="login-header text-center mb-3" [@fadeIn]>
+            <div
+              class="login-icon super-admin-icon mb-2"
+              [@slideUp]
+              [@float]="'floating'"
+            >
               <i class="fas fa-crown"></i>
             </div>
-            <h2 class="login-title">Super Admin</h2>
-            <p class="login-subtitle">Dr. Abiy Access</p>
+            <h2 class="login-title" [@slideUp]>Super Admin</h2>
+            <p class="login-subtitle" [@fadeIn]>Dr. Abiy Access</p>
           </div>
 
           <!-- Login Form -->
-          <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="login-form">
+          <form
+            (ngSubmit)="onLogin()"
+            #loginForm="ngForm"
+            class="login-form"
+            [@fadeIn]
+          >
             <!-- Username Field -->
-            <div class="form-group mb-2">
+            <div class="form-group mb-2" [@fadeIn]>
               <label class="form-label">
                 <i class="fas fa-user me-1"></i>Username
               </label>
@@ -37,11 +50,12 @@
                 required
                 autocomplete="username"
                 [class.is-invalid]="hasError"
+                [@scaleIn]
               />
             </div>
 
             <!-- Password Field -->
-            <div class="form-group mb-2">
+            <div class="form-group mb-2" [@fadeIn]>
               <label class="form-label">
                 <i class="fas fa-lock me-1"></i>Password
               </label>
@@ -55,11 +69,13 @@
                   required
                   autocomplete="current-password"
                   [class.is-invalid]="hasError"
+                  [@scaleIn]
                 />
                 <button
                   type="button"
                   class="password-toggle"
                   (click)="togglePassword()"
+                  [@scaleIn]
                 >
                   <i
                     [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"
@@ -69,7 +85,7 @@
             </div>
 
             <!-- Remember Me -->
-            <div class="form-group mb-3">
+            <div class="form-group mb-3" [@fadeIn]>
               <div class="form-check">
                 <input
                   type="checkbox"
@@ -77,8 +93,9 @@
                   [(ngModel)]="rememberMe"
                   name="rememberMe"
                   id="rememberMe"
+                  [@scaleIn]
                 />
-                <label class="form-check-label" for="rememberMe">
+                <label class="form-check-label" for="rememberMe" [@fadeIn]>
                   Remember me
                 </label>
               </div>
@@ -89,6 +106,8 @@
               *ngIf="errorMessage"
               class="alert alert-danger alert-sm mb-2"
               role="alert"
+              [@fadeIn]
+              [@shake]="showErrorAnimation ? 'active' : 'inactive'"
             >
               <i class="fas fa-exclamation-triangle me-1"></i>
               {{ errorMessage }}
@@ -99,6 +118,10 @@
               type="submit"
               class="btn btn-primary w-100 login-btn btn-sm"
               [disabled]="isLoading || !loginForm.valid"
+              [@fadeIn]
+              [@buttonHover]="buttonState"
+              (mouseenter)="onButtonHover('hovered')"
+              (mouseleave)="onButtonHover('normal')"
             >
               <span *ngIf="!isLoading">
                 <i class="fas fa-sign-in-alt me-1"></i>
@@ -112,7 +135,7 @@
           </form>
 
           <!-- Security Notice -->
-          <div class="security-notice mt-3">
+          <div class="security-notice mt-3" [@fadeIn]>
             <div class="text-center">
               <small class="text-muted">
                 <i class="fas fa-shield-alt me-1"></i>
@@ -122,8 +145,8 @@
           </div>
 
           <!-- Back to Selection -->
-          <div class="text-center mt-2">
-            <a routerLink="/admin" class="back-link small">
+          <div class="text-center mt-2" [@fadeIn]>
+            <a routerLink="/admin" class="back-link small" [@scaleIn]>
               <i class="fas fa-arrow-left me-1"></i>
               Back
             </a>
@@ -134,7 +157,7 @@
   </div>
 
   <!-- ELIT ENT Center Branding -->
-  <div class="branding">
+  <div class="branding" [@fadeIn]>
     <div class="container">
       <div class="text-center">
         <small class="text-muted">

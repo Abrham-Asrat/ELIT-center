@@ -1,534 +1,396 @@
 <!-- Sub Admin Dashboard Header -->
 <!-- Sub Admin Navigation Header -->
 <div [@pageEnter]>
-<nav class="navbar navbar-expand-lg navbar-dark bg-success">
-  <div class="container">
-    <a class="navbar-brand" href="#">
-      <i class="fas fa-user-cog me-2"></i>
-      ELIT ENT - Staff Portal
-    </a>
-    
-    <div class="navbar-nav ms-auto">
-      <div class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          role="button"
-          (click)="toggleDropdown()"
-          [attr.aria-expanded]="isDropdownOpen"
-        >
-          <i class="fas fa-user-circle me-1"></i>
-          {{ currentUser.name }}
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end" [class.show]="isDropdownOpen">
-          <li>
-            <a class="dropdown-item" (click)="refreshDashboard(); closeDropdown()">
-              <i class="fas fa-sync-alt me-2"></i>Refresh Dashboard
-            </a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#" [@slideInLeft]>
+        <i class="fas fa-user-cog me-2"></i>
+        ELIT ENT - {{ getPortalTitle() }}
+      </a>
+
+      <div class="navbar-nav ms-auto">
+        <div class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            role="button"
+            (click)="toggleDropdown($event)"
+            [attr.aria-expanded]="isDropdownOpen"
+            [@slideInRight]
+          >
+            <i class="fas fa-user-circle me-1"></i>
+            {{ currentUser.name }}
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            [class.show]="isDropdownOpen"
+            (clickOutside)="closeDropdown()"
+            [@fadeIn]
+          >
+            <li>
+              <a
+                class="dropdown-item"
+                (click)="refreshDashboard(); closeDropdown()"
+                [@slideInRight]git
+              >
+                <i class="fas fa-sync-alt me-2"></i>Refresh Dashboard
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                (click)="goToAdminSelection(); closeDropdown()"
+                [@slideInRight]
+              >
+                <i class="fas fa-arrow-left me-2"></i>Admin Selection
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                (click)="goHome(); closeDropdown()"
+                [@slideInRight]
+              >
+                <i class="fas fa-home me-2"></i>Go to Homepage
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item text-danger"
+                (click)="logout(); closeDropdown()"
+                [@slideInRight]
+              >
+                <i class="fas fa-sign-out-alt me-2"></i>Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Area with Sub Admin Stats Cards -->
+  <div class="main-content-wrapper">
+    <!-- Sub Admin Stats Cards -->
+    <div
+      class="container-fluid subAdmin"
+      [class.tabs-sticky]="isNavSticky"
+      [@staggerCards]
+    >
+      <!-- Default stats cards for non-doctor staff -->
+      <div class="row g-4 mb-5" *ngIf="currentUser.workType !== 'doctor'">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" [@slideUp]>
+          <div class="stats-card bg-gradient-primary text-white" [@scaleIn]>
+            <div class="stats-icon">
+              <i class="fas fa-calendar-day"></i>
+            </div>
+            <div class="stats-content">
+              <h3>{{ todayAppointments }}</h3>
+              <p>Appointments</p>
+              <small class="opacity-75">{{ completedToday }} completed</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" [@slideUp]>
+          <div class="stats-card bg-gradient-info text-white" [@scaleIn]>
+            <div class="stats-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="stats-content">
+              <h3>{{ pendingTasks }}</h3>
+              <p>Pending Tasks</p>
+              <small class="opacity-75">{{ urgentTasks }} urgent</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" [@slideUp]>
+          <div class="stats-card bg-gradient-info text-white" [@scaleIn]>
+            <div class="stats-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stats-content">
+              <h3>{{ patients.length }}</h3>
+              <p>Total Patients</p>
+              <small class="opacity-75">{{ activePatients }} active</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" [@slideUp]>
+          <div class="stats-card bg-gradient-success text-white" [@scaleIn]>
+            <div class="stats-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="stats-content">
+              <h3>{{ completedTasks }}%</h3>
+              <p>Tasks Completed</p>
+              <small class="opacity-75">This week</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doctor-specific stats cards -->
+      <div class="row g-4 mb-5" *ngIf="currentUser.workType === 'doctor'">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" [@slideUp]>
+          <div class="stats-card bg-gradient-primary text-white" [@scaleIn]>
+            <div class="stats-icon">
+              <i class="fas fa-user-clock"></i>
+            </div>
+            <div class="stats-content">
+              <h3>{{ pendingPatients }}</h3>
+              <p>Pending Patients</p>
+              <small class="opacity-75">Waiting for consultation</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" [@slideUp]>
+          <div class="stats-card bg-gradient-info text-white" [@scaleIn]>
+            <div class="stats-icon">
+              <i class="fas fa-user-md"></i>
+            </div>
+            <div class="stats-content">
+              <h3>{{ ongoingPatients }}</h3>
+              <p>Ongoing Patients</p>
+              <small class="opacity-75">Currently in consultation</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" [@slideUp]>
+          <div class="stats-card bg-gradient-success text-white" [@scaleIn]>
+            <div class="stats-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stats-content">
+              <h3>{{ totalPatientsSeen }}</h3>
+              <p>Total Patients Seen</p>
+              <small class="opacity-75">By this doctor</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" [@slideUp]>
+          <div class="stats-card bg-gradient-warning text-white" [@scaleIn]>
+            <div class="stats-icon">
+              <i class="fas fa-vial"></i>
+            </div>
+            <div class="stats-content">
+              <h3>{{ labResultsCount }}</h3>
+              <p>Lab Results</p>
+              <small class="opacity-75">New notifications</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub Admin Tabs -->
+      <div class="sub-admin-tabs sticky-nav" [class.sticky]="isNavSticky">
+        <ul class="nav nav-tabs mb-4" role="tablist">
+          <li
+            class="nav-item"
+            role="presentation"
+            [@slideInLeft]
+            *ngIf="
+              hasAccessTo('appointments') && currentUser.workType !== 'doctor'
+            "
+          >
+            <button
+              class="nav-link"
+              [class.active]="isActiveTab('appointments')"
+              (click)="switchTab('appointments')"
+              type="button"
+              role="tab"
+              [@buttonHover]="buttonHover"
+              (mouseenter)="buttonHover = 'hovered'"
+              (mouseleave)="buttonHover = 'normal'"
+            >
+              <i class="fas fa-calendar-alt me-2"></i>Appointments
+            </button>
           </li>
-          <li>
-            <a class="dropdown-item" (click)="goToAdminSelection(); closeDropdown()">
-              <i class="fas fa-arrow-left me-2"></i>Admin Selection
-            </a>
+          <li
+            class="nav-item"
+            role="presentation"
+            [@slideInLeft]
+            *ngIf="hasAccessTo('patients')"
+          >
+            <button
+              class="nav-link"
+              [class.active]="isActiveTab('patients')"
+              (click)="switchTab('patients')"
+              type="button"
+              role="tab"
+              [@buttonHover]="buttonHover"
+              (mouseenter)="buttonHover = 'hovered'"
+              (mouseleave)="buttonHover = 'normal'"
+            >
+              <i class="fas fa-users me-2"></i>Patients
+            </button>
           </li>
-          <li>
-            <a class="dropdown-item" (click)="goHome(); closeDropdown()">
-              <i class="fas fa-home me-2"></i>Go to Homepage
-            </a>
+          <li
+            class="nav-item"
+            role="presentation"
+            [@slideInLeft]
+            *ngIf="hasAccessTo('patients') && currentUser.workType === 'doctor'"
+          >
+            <button
+              class="nav-link"
+              [class.active]="isActiveTab('results')"
+              (click)="switchTab('results')"
+              type="button"
+              role="tab"
+              [@buttonHover]="buttonHover"
+              (mouseenter)="buttonHover = 'hovered'"
+              (mouseleave)="buttonHover = 'normal'"
+            >
+              <i class="fas fa-file-medical me-2"></i>Results
+            </button>
           </li>
-          <li><hr class="dropdown-divider" /></li>
-          <li>
-            <a class="dropdown-item text-danger" (click)="logout(); closeDropdown()">
-              <i class="fas fa-sign-out-alt me-2"></i>Logout
-            </a>
+          <li
+            class="nav-item"
+            role="presentation"
+            [@slideInLeft]
+            *ngIf="hasAccessTo('testimonials')"
+          >
+            <button
+              class="nav-link"
+              [class.active]="isActiveTab('testimonials')"
+              (click)="switchTab('testimonials')"
+              type="button"
+              role="tab"
+              [@buttonHover]="buttonHover"
+              (mouseenter)="buttonHover = 'hovered'"
+              (mouseleave)="buttonHover = 'normal'"
+            >
+              <i class="fas fa-star me-2"></i>Testimonials
+            </button>
+          </li>
+          <li
+            class="nav-item"
+            role="presentation"
+            [@slideInLeft]
+            *ngIf="hasAccessTo('tasks')"
+          >
+            <button
+              class="nav-link"
+              [class.active]="isActiveTab('tasks')"
+              (click)="switchTab('tasks')"
+              type="button"
+              role="tab"
+              [@buttonHover]="buttonHover"
+              (mouseenter)="buttonHover = 'hovered'"
+              (mouseleave)="buttonHover = 'normal'"
+            >
+              <i class="fas fa-tasks me-2"></i>My Tasks
+            </button>
           </li>
         </ul>
       </div>
+
+      <!-- Placeholder to maintain space when tabs are sticky -->
+      <div
+        class="sticky-tabs-placeholder"
+        *ngIf="isNavSticky"
+        [style.height.px]="stickyTabsHeight"
+      ></div>
+
+      <!-- Tab Content -->
+      <app-tab-content
+        [activeTab]="activeTab"
+        [currentUser]="currentUser"
+        [todayAppointmentsList]="todayAppointmentsList"
+        [waitingList]="waitingList"
+        [patients]="patients"
+        [testimonials]="testimonials"
+        [myTasks]="myTasks"
+        [serviceOptions]="serviceOptions"
+        [timeOptions]="timeOptions"
+        [totalTasks]="totalTasks"
+        [completedTasksCount]="completedTasksCount"
+        [pendingTasksCount]="pendingTasksCount"
+        [overdueTasks]="overdueTasks"
+        [showNewAppointmentForm]="showNewAppointmentForm"
+        [showViewAppointmentModal]="showViewAppointmentModal"
+        [showRescheduleModal]="showRescheduleModal"
+        [showAddPatientModal]="showAddPatientModal"
+        [showPatientHistoryModal]="showPatientHistoryModal"
+        [showScheduleFollowUpModal]="showScheduleFollowUpModal"
+        [showAddTaskModal]="showAddTaskModal"
+        [newAppointment]="newAppointment"
+        [newPatient]="newPatient"
+        [followUpData]="followUpData"
+        [rescheduleData]="rescheduleData"
+        [newTask]="newTask"
+        [viewedAppointment]="viewedAppointment"
+        [viewedPatient]="viewedPatient"
+        [patientSearch]="patientSearch"
+        [patientHistory]="getFilteredPatientHistory()"
+        (switchTab)="switchTab($event)"
+        (addAppointment)="addAppointment()"
+        (saveNewAppointment)="saveNewAppointment()"
+        (cancelNewAppointment)="cancelNewAppointment()"
+        (viewAppointment)="viewAppointment($event)"
+        (closeViewAppointmentModal)="closeViewAppointmentModal()"
+        (reschedule)="reschedule($event)"
+        (saveReschedule)="saveReschedule()"
+        (cancelReschedule)="cancelReschedule()"
+        (markComplete)="markComplete($event)"
+        (showAddPatientForm)="showAddPatientForm()"
+        (saveNewPatient)="saveNewPatient()"
+        (cancelAddPatient)="cancelAddPatient()"
+        (searchPatients)="searchPatients()"
+        (viewPatientHistory)="viewPatientHistory($event)"
+        (closePatientHistoryModal)="closePatientHistoryModal()"
+        (scheduleFollowUp)="scheduleFollowUp($event)"
+        (saveFollowUp)="saveFollowUp()"
+        (cancelScheduleFollowUp)="cancelScheduleFollowUp()"
+        (approveTestimonial)="approveTestimonial($event)"
+        (rejectTestimonial)="rejectTestimonial($event)"
+        (addTask)="addTask()"
+        (saveNewTask)="saveNewTask()"
+        (cancelAddTask)="cancelAddTask()"
+        (toggleTask)="toggleTask($event)"
+        (editTask)="editTask($event)"
+        (deleteTask)="deleteTask($event)"
+      ></app-tab-content>
     </div>
   </div>
-</nav>
+</div>
 
-<div class="sub-admin-header bg-gradient-success text-white py-3 mb-4" [@fadeIn]>
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-md-6">
-        <h2 class="mb-0">
-          <i class="fas fa-user-cog me-2"></i>
-          Staff Dashboard
-        </h2>
-        <small class="text-light opacity-75"
-          >Clinic Operations Management</small
-        >
+<!-- Modal Dialog -->
+<div
+  class="modal fade"
+  [class.show]="modalState.isOpen"
+  [style.display]="modalState.isOpen ? 'block' : 'none'"
+  tabindex="-1"
+  role="dialog"
+  *ngIf="modalState.isOpen"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ modalState.title }}</h5>
+        <button
+          type="button"
+          class="btn-close"
+          (click)="closeModal()"
+          aria-label="Close"
+        ></button>
       </div>
-      <div class="col-md-6 text-md-end">
-        <span class="badge bg-success me-2">
-          <i class="fas fa-circle me-1"></i>Online
-        </span>
-        <span class="text-light">Welcome, {{ currentUser.name }}</span>
+      <div class="modal-body">
+        <p>{{ modalState.content }}</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Sub Admin Stats Cards -->
-<div class="container" [@staggerCards]>
-  <div class="row g-4 mb-5">
-    <div class="col-lg-3 col-md-6" [@slideUp]>
-      <div class="stats-card bg-gradient-primary text-white">
-        <div class="stats-icon">
-          <i class="fas fa-calendar-day"></i>
-        </div>
-        <div class="stats-content">
-          <h3>{{ todayAppointments }}</h3>
-          <p>Today's Appointments</p>
-          <small class="opacity-75">{{ completedToday }} completed</small>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6" [@slideUp]>
-      <div class="stats-card bg-gradient-info text-white">
-        <div class="stats-icon">
-          <i class="fas fa-clock"></i>
-        </div>
-        <div class="stats-content">
-          <h3>{{ pendingTasks }}</h3>
-          <p>Pending Tasks</p>
-          <small class="opacity-75">{{ urgentTasks }} urgent</small>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6" [@slideUp]>
-      <div class="stats-card bg-gradient-warning text-white">
-        <div class="stats-icon">
-          <i class="fas fa-comments"></i>
-        </div>
-        <div class="stats-content">
-          <h3>{{ newMessages }}</h3>
-          <p>New Messages</p>
-          <small class="opacity-75">{{ unreadCount }} unread</small>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6" [@slideUp]>
-      <div class="stats-card bg-gradient-success text-white">
-        <div class="stats-icon">
-          <i class="fas fa-check-circle"></i>
-        </div>
-        <div class="stats-content">
-          <h3>{{ completedTasks }}%</h3>
-          <p>Tasks Completed</p>
-          <small class="opacity-75">This week</small>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Sub Admin Tabs -->
-  <div class="sub-admin-tabs">
-    <ul class="nav nav-tabs mb-4" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button
-          class="nav-link"
-          [class.active]="isActiveTab('appointments')"
-          (click)="switchTab('appointments')"
-          type="button"
-          role="tab"
-        >
-          <i class="fas fa-calendar-alt me-2"></i>Appointments
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button
-          class="nav-link"
-          [class.active]="isActiveTab('patients')"
-          (click)="switchTab('patients')"
-          type="button"
-          role="tab"
-        >
-          <i class="fas fa-users me-2"></i>Patients
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button
-          class="nav-link"
-          [class.active]="isActiveTab('testimonials')"
-          (click)="switchTab('testimonials')"
-          type="button"
-          role="tab"
-        >
-          <i class="fas fa-star me-2"></i>Testimonials
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button
-          class="nav-link"
-          [class.active]="isActiveTab('tasks')"
-          (click)="switchTab('tasks')"
-          type="button"
-          role="tab"
-        >
-          <i class="fas fa-tasks me-2"></i>My Tasks
-        </button>
-      </li>
-    </ul>
-
-    <!-- Tab Content -->
-    <div class="tab-content">
-      <!-- Appointments Tab -->
-      <div class="tab-pane fade show active" id="appointments" role="tabpanel" [@fadeIn] *ngIf="isActiveTab('appointments')">
-        <div class="row">
-          <div class="col-md-8">
-            <div class="card">
-              <div
-                class="card-header d-flex justify-content-between align-items-center"
-              >
-                <h5 class="mb-0">Today's Appointments</h5>
-                <button
-                  class="btn btn-primary btn-sm"
-                  (click)="addAppointment()"
-                >
-                  <i class="fas fa-plus me-1"></i>New Appointment
-                </button>
-              </div>
-              <div class="card-body">
-                <div class="appointment-list">
-                  <div
-                    class="appointment-item"
-                    *ngFor="let appointment of todayAppointmentsList"
-                  >
-                    <div class="appointment-time">
-                      <div class="time">{{ appointment.time }}</div>
-                      <div class="duration">{{ appointment.duration }}</div>
-                    </div>
-                    <div class="appointment-details">
-                      <h6 class="patient-name">
-                        {{ appointment.patientName }}
-                      </h6>
-                      <p class="service-type">{{ appointment.service }}</p>
-                      <div class="appointment-meta">
-                        <span
-                          class="badge"
-                          [class.bg-success]="
-                            appointment.status === 'confirmed'
-                          "
-                          [class.bg-warning]="appointment.status === 'pending'"
-                          [class.bg-info]="appointment.status === 'in-progress'"
-                          [class.bg-secondary]="
-                            appointment.status === 'completed'
-                          "
-                        >
-                          {{ appointment.status | titlecase }}
-                        </span>
-                        <span class="ms-2 text-muted">{{
-                          appointment.phone
-                        }}</span>
-                      </div>
-                    </div>
-                    <div class="appointment-actions">
-                      <button
-                        class="btn btn-sm btn-outline-primary"
-                        (click)="viewAppointment(appointment.id)"
-                      >
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button
-                        class="btn btn-sm btn-outline-success"
-                        (click)="markComplete(appointment.id)"
-                      >
-                        <i class="fas fa-check"></i>
-                      </button>
-                      <button
-                        class="btn btn-sm btn-outline-info"
-                        (click)="reschedule(appointment.id)"
-                      >
-                        <i class="fas fa-clock"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-header">
-                <h5 class="mb-0">Quick Actions</h5>
-              </div>
-              <div class="card-body">
-                <div class="d-grid gap-2">
-                  <button class="btn btn-primary" (click)="checkInPatient()">
-                    <i class="fas fa-sign-in-alt me-2"></i>Check-in Patient
-                  </button>
-                  <button class="btn btn-success" (click)="addWalkIn()">
-                    <i class="fas fa-user-plus me-2"></i>Add Walk-in
-                  </button>
-                  <button class="btn btn-info" (click)="viewSchedule()">
-                    <i class="fas fa-calendar-week me-2"></i>View Schedule
-                  </button>
-                  <button class="btn btn-warning" (click)="emergencyAlert()">
-                    <i class="fas fa-exclamation-triangle me-2"></i>Emergency
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="card mt-3">
-              <div class="card-header">
-                <h5 class="mb-0">Waiting List</h5>
-              </div>
-              <div class="card-body">
-                <div class="waiting-list">
-                  <div class="waiting-item" *ngFor="let patient of waitingList">
-                    <div
-                      class="d-flex justify-content-between align-items-center"
-                    >
-                      <div>
-                        <h6 class="mb-0">{{ patient.name }}</h6>
-                        <small class="text-muted">{{ patient.service }}</small>
-                      </div>
-                      <span class="badge bg-warning">{{
-                        patient.waitTime
-                      }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Patients Tab -->
-      <div class="tab-pane fade" id="patients" role="tabpanel" [@fadeIn] *ngIf="isActiveTab('patients')">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="mb-0">Patient Management</h5>
-          </div>
-          <div class="card-body">
-            <div class="row mb-3">
-              <div class="col-md-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Search patients..."
-                  [(ngModel)]="patientSearch"
-                />
-              </div>
-              <div class="col-md-4">
-                <button
-                  class="btn btn-primary w-100"
-                  (click)="searchPatients()"
-                >
-                  <i class="fas fa-search me-2"></i>Search
-                </button>
-              </div>
-            </div>
-
-            <div class="patient-grid">
-              <div class="patient-card" *ngFor="let patient of patients">
-                <div class="patient-header">
-                  <h6 class="patient-name">{{ patient.name }}</h6>
-                  <span class="patient-id">ID: {{ patient.id }}</span>
-                </div>
-                <div class="patient-info">
-                  <p>
-                    <i class="fas fa-birthday-cake me-2"></i
-                    >{{ patient.age }} years old
-                  </p>
-                  <p><i class="fas fa-phone me-2"></i>{{ patient.phone }}</p>
-                  <p>
-                    <i class="fas fa-calendar me-2"></i>Last visit:
-                    {{ patient.lastVisit }}
-                  </p>
-                </div>
-                <div class="patient-actions">
-                  <button
-                    class="btn btn-sm btn-primary"
-                    (click)="viewPatientHistory(patient.id)"
-                  >
-                    <i class="fas fa-history"></i> History
-                  </button>
-                  <button
-                    class="btn btn-sm btn-success"
-                    (click)="scheduleFollowUp(patient.id)"
-                  >
-                    <i class="fas fa-calendar-plus"></i> Schedule
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Testimonials Tab -->
-      <div class="tab-pane fade" id="testimonials" role="tabpanel" [@fadeIn] *ngIf="isActiveTab('testimonials')">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="mb-0">Patient Testimonials</h5>
-          </div>
-          <div class="card-body">
-            <div class="row g-3">
-              <div class="col-md-6" *ngFor="let testimonial of testimonials">
-                <div class="testimonial-card">
-                  <div class="testimonial-header">
-                    <div
-                      class="d-flex justify-content-between align-items-start"
-                    >
-                      <h6 class="mb-0">{{ testimonial.name }}</h6>
-                      <span
-                        class="badge"
-                        [class.bg-success]="testimonial.approved"
-                        [class.bg-warning]="!testimonial.approved"
-                      >
-                        {{ testimonial.approved ? "Approved" : "Pending" }}
-                      </span>
-                    </div>
-                    <div class="rating mt-1">
-                      <span
-                        *ngFor="let star of [1, 2, 3, 4, 5]"
-                        [class.text-warning]="star <= testimonial.rating"
-                        [class.text-muted]="star > testimonial.rating"
-                      >
-                        <i class="fas fa-star"></i>
-                      </span>
-                      <small class="text-muted ms-2">{{
-                        testimonial.service
-                      }}</small>
-                    </div>
-                  </div>
-                  <div class="testimonial-body">
-                    <p class="testimonial-text">{{ testimonial.text }}</p>
-                    <div class="testimonial-footer">
-                      <small class="text-muted">{{ testimonial.date }}</small>
-                      <div class="testimonial-actions">
-                        <button
-                          class="btn btn-sm btn-success"
-                          (click)="approveTestimonial(testimonial.id)"
-                          *ngIf="!testimonial.approved"
-                        >
-                          <i class="fas fa-check"></i>
-                        </button>
-                        <button
-                          class="btn btn-sm btn-danger"
-                          (click)="rejectTestimonial(testimonial.id)"
-                        >
-                          <i class="fas fa-times"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tasks Tab -->
-      <div class="tab-pane fade" id="tasks" role="tabpanel" [@fadeIn] *ngIf="isActiveTab('tasks')">
-        <div class="row">
-          <div class="col-md-8">
-            <div class="card">
-              <div
-                class="card-header d-flex justify-content-between align-items-center"
-              >
-                <h5 class="mb-0">My Tasks</h5>
-                <button class="btn btn-primary btn-sm" (click)="addTask()">
-                  <i class="fas fa-plus me-1"></i>Add Task
-                </button>
-              </div>
-              <div class="card-body">
-                <div class="task-list">
-                  <div class="task-item" *ngFor="let task of myTasks">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        [checked]="task.completed"
-                        (change)="toggleTask(task.id)"
-                      />
-                      <label
-                        class="form-check-label"
-                        [class.text-decoration-line-through]="task.completed"
-                      >
-                        {{ task.title }}
-                      </label>
-                    </div>
-                    <div class="task-meta">
-                      <span
-                        class="badge"
-                        [class.bg-danger]="task.priority === 'high'"
-                        [class.bg-warning]="task.priority === 'medium'"
-                        [class.bg-info]="task.priority === 'low'"
-                      >
-                        {{ task.priority | titlecase }}
-                      </span>
-                      <small class="text-muted ms-2"
-                        >Due: {{ task.dueDate }}</small
-                      >
-                    </div>
-                    <div class="task-actions">
-                      <button
-                        class="btn btn-sm btn-outline-primary"
-                        (click)="editTask(task.id)"
-                      >
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button
-                        class="btn btn-sm btn-outline-danger"
-                        (click)="deleteTask(task.id)"
-                      >
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-header">
-                <h5 class="mb-0">Task Summary</h5>
-              </div>
-              <div class="card-body">
-                <div class="task-summary">
-                  <div class="summary-item">
-                    <div class="summary-count text-primary">
-                      {{ totalTasks }}
-                    </div>
-                    <div class="summary-label">Total Tasks</div>
-                  </div>
-                  <div class="summary-item">
-                    <div class="summary-count text-success">
-                      {{ completedTasksCount }}
-                    </div>
-                    <div class="summary-label">Completed</div>
-                  </div>
-                  <div class="summary-item">
-                    <div class="summary-count text-warning">
-                      {{ pendingTasksCount }}
-                    </div>
-                    <div class="summary-label">Pending</div>
-                  </div>
-                  <div class="summary-item">
-                    <div class="summary-count text-danger">
-                      {{ overdueTasks }}
-                    </div>
-                    <div class="summary-label">Overdue</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- Modal Backdrop -->
+<div
+  class="modal-backdrop fade"
+  [class.show]="modalState.isOpen"
+  *ngIf="modalState.isOpen"
+  (click)="closeModal()"
+></div>

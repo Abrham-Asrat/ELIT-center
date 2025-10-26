@@ -1,15 +1,17 @@
 <!-- Admin Access Selection Page -->
-<div class="admin-selection-page">
-  
+<div class="admin-selection-page" [@pageEnter]>
   <!-- Header Section -->
-  <div class="admin-header header text-white">
+  <div class="admin-header header text-white" [@fadeIn]>
     <div class="container text-center">
       <div class="row justify-content-center">
         <div class="col-lg-8">
-          <i class="fas fa-user-shield display-1 opacity-75"></i>
-          <h3 class="display-4 mb-3">ELIT ENT Center</h3>
-          <h4 class="h3 mb-4">Administrative Access Portal</h4>
-          <p class="lead mb-0">
+          <i
+            class="fas fa-user-shield display-1 opacity-75"
+            [@float]="'floating'"
+          ></i>
+          <h4 class="display-4 mb-3" [@slideUp]>ELIT ENT Center</h4>
+          <h5 class="h3 mb-4" [@slideUp]>Administrative Access Portal</h5>
+          <p class="lead mb-0" [@fadeIn]>
             Select your access level to continue to the dashboard
           </p>
         </div>
@@ -21,34 +23,23 @@
   <div class="container my-5">
     <div class="row justify-content-center g-4">
       <!-- Super Admin Card -->
-      <div class="col-lg-5 col-md-6">
-        <div class="access-card super-admin-card h-100">
+      <div class="col-lg-5 col-md-6" [@staggerCards]>
+        <div class="access-card super-admin-card h-100" [@bounceIn]>
           <div class="card-body text-center p-5">
-            <div class="access-icon mb-4">
+            <div class="access-icon mb-4" [@fadeIn]>
               <i class="fas fa-crown"></i>
             </div>
-            <h3 class="card-title mb-3">Super Administrator</h3>
-            <p class="card-subtitle text-muted mb-4">Dr. Abiy Teshome</p>
-            <div class="access-features mb-4">
-              <div class="feature-item">
+            <h3 class="card-title mb-3" [@slideUp]>Super Administrator</h3>
+            <p class="card-subtitle text-muted mb-4" [@fadeIn]>
+              Dr. Abiy Teshome
+            </p>
+            <div class="access-features mb-4" [@fadeIn]>
+              <div
+                class="feature-item"
+                *ngFor="let feature of superAdminFeatures"
+              >
                 <i class="fas fa-check text-success me-2"></i>
-                <span>Full System Management</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check text-success me-2"></i>
-                <span>Staff & User Management</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check text-success me-2"></i>
-                <span>Financial Reports</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check text-success me-2"></i>
-                <span>System Configuration</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check text-success me-2"></i>
-                <span>Security Settings</span>
+                <span>{{ feature }}</span>
               </div>
             </div>
             <button
@@ -57,6 +48,7 @@
               [disabled]="isLoading"
               type="button"
               id="super-admin-btn"
+              [@fadeIn]
             >
               <i class="fas fa-sign-in-alt me-2"></i>
               <span *ngIf="!isLoading">Access Super Admin</span>
@@ -69,34 +61,23 @@
       </div>
 
       <!-- Sub Admin Card -->
-      <div class="col-lg-5 col-md-6">
-        <div class="access-card sub-admin-card h-100">
+      <div class="col-lg-5 col-md-6" [@staggerCards]>
+        <div class="access-card sub-admin-card h-100" [@bounceIn]>
           <div class="card-body text-center p-5">
-            <div class="access-icon mb-4">
+            <div class="access-icon mb-4" [@fadeIn]>
               <i class="fas fa-user-cog"></i>
             </div>
-            <h3 class="card-title mb-3">Sub Administrator</h3>
-            <p class="card-subtitle text-muted mb-4">Clinic Staff & Workers</p>
-            <div class="access-features mb-4">
-              <div class="feature-item">
+            <h3 class="card-title mb-3" [@slideUp]>Sub Administrator</h3>
+            <p class="card-subtitle text-muted mb-4" [@fadeIn]>
+              Clinic Staff & Workers
+            </p>
+            <div class="access-features mb-4" [@fadeIn]>
+              <div
+                class="feature-item"
+                *ngFor="let feature of subAdminFeatures"
+              >
                 <i class="fas fa-check text-info me-2"></i>
-                <span>Appointment Management</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check text-info me-2"></i>
-                <span>Patient Care Tasks</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check text-info me-2"></i>
-                <span>Daily Operations</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check text-info me-2"></i>
-                <span>Task Management</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check text-info me-2"></i>
-                <span>Patient Records View</span>
+                <span>{{ feature }}</span>
               </div>
             </div>
             <button
@@ -105,6 +86,7 @@
               [disabled]="isLoading"
               type="button"
               id="sub-admin-btn"
+              [@fadeIn]
             >
               <i class="fas fa-sign-in-alt me-2"></i>
               <span *ngIf="!isLoading">Access Sub Admin</span>
@@ -119,18 +101,18 @@
   </div>
 
   <!-- Information Section -->
-  <div class="container mb-5">
+  <div class="container mb-5" [@fadeIn]>
     <div class="row justify-content-center">
       <div class="col-lg-8">
-        <div class="info-card">
+        <div class="info-card" [@slideUp]>
           <div class="card-body text-center p-4">
-            <h4 class="mb-3">
+            <h4 class="mb-3" [@fadeIn]>
               <i class="fas fa-info-circle text-primary me-2"></i>
               Access Information
             </h4>
             <div class="row g-3">
               <div class="col-md-6">
-                <div class="info-item">
+                <div class="info-item" [@fadeIn]>
                   <h6 class="text-primary mb-2">Super Admin Access</h6>
                   <p class="mb-0 small text-muted">
                     Reserved for Dr. Abiy with full administrative privileges
@@ -140,7 +122,7 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="info-item">
+                <div class="info-item" [@fadeIn]>
                   <h6 class="text-info mb-2">Sub Admin Access</h6>
                   <p class="mb-0 small text-muted">
                     Designed for clinic staff and workers to manage daily
@@ -156,7 +138,7 @@
   </div>
 
   <!-- Security Notice -->
-  <div class="security-notice py-4 bg-light">
+  <div class="security-notice py-4 bg-light" [@fadeIn]>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center">

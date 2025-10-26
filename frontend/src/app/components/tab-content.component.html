@@ -1,0 +1,1106 @@
+<!-- Tab Content -->
+<div class="tab-content">
+  <!-- Results Tab for Doctors -->
+  <div
+    class="tab-pane fade"
+    [class.show]="isActiveTab('results')"
+    [class.active]="isActiveTab('results')"
+    id="results"
+    role="tabpanel"
+    [@fadeIn]
+    *ngIf="isActiveTab('results') && currentUser.workType === 'doctor'"
+  >
+    <div class="card" [@slideInLeft]>
+      <div class="card-header">
+        <h5 class="mb-0">Medical Results</h5>
+      </div>
+      <div class="card-body">
+        <p>Medical results will be displayed here.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Appointments Tab (only for non-doctors) -->
+  <div
+    class="tab-pane fade show active"
+    id="appointments"
+    role="tabpanel"
+    [@fadeIn]
+    *ngIf="isActiveTab('appointments') && currentUser.workType !== 'doctor'"
+  >
+    <div class="row">
+      <div class="col-lg-8 col-md-12">
+        <div class="card" [@slideInLeft]>
+          <div
+            class="card-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2"
+          >
+            <h5 class="mb-0">Today's Appointments</h5>
+            <button
+              class="btn btn-primary btn-sm"
+              (click)="addAppointment.emit()"
+              [@buttonHover]="buttonHover"
+              (mouseenter)="buttonHover = 'hovered'"
+              (mouseleave)="buttonHover = 'normal'"
+            >
+              <i class="fas fa-plus me-1"></i>New Appointment
+            </button>
+          </div>
+          <div class="card-body">
+            <!-- New Appointment Form -->
+            <div
+              class="appointment-form mb-4"
+              *ngIf="showNewAppointmentForm"
+              [@fadeIn]
+            >
+              <div class="card bg-light">
+                <div class="card-header">
+                  <h6 class="mb-0">Add New Appointment</h6>
+                </div>
+                <div class="card-body">
+                  <form
+                    (ngSubmit)="saveNewAppointment.emit()"
+                    #appointmentForm="ngForm"
+                  >
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="patientName" class="form-label"
+                          >Patient Name *</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="patientName"
+                          [(ngModel)]="newAppointment.patientName"
+                          name="patientName"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="phone" class="form-label"
+                          >Phone Number *</label
+                        >
+                        <input
+                          type="tel"
+                          class="form-control"
+                          id="phone"
+                          [(ngModel)]="newAppointment.phone"
+                          name="phone"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="service" class="form-label"
+                          >Service *</label
+                        >
+                        <select
+                          class="form-select"
+                          id="service"
+                          [(ngModel)]="newAppointment.service"
+                          name="service"
+                          required
+                        >
+                          <option value="">Select a service</option>
+                          <option
+                            *ngFor="let service of serviceOptions"
+                            [value]="service"
+                          >
+                            {{ service }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <label for="time" class="form-label">Time *</label>
+                        <select
+                          class="form-select"
+                          id="time"
+                          [(ngModel)]="newAppointment.time"
+                          name="time"
+                          required
+                        >
+                          <option value="">Select time</option>
+                          <option
+                            *ngFor="let time of timeOptions"
+                            [value]="time"
+                          >
+                            {{ time }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <label for="duration" class="form-label"
+                          >Duration</label
+                        >
+                        <select
+                          class="form-select"
+                          id="duration"
+                          [(ngModel)]="newAppointment.duration"
+                          name="duration"
+                        >
+                          <option value="15 min">15 min</option>
+                          <option value="30 min">30 min</option>
+                          <option value="45 min">45 min</option>
+                          <option value="60 min">60 min</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        (click)="cancelNewAppointment.emit()"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        class="btn btn-primary"
+                        [disabled]="!appointmentForm.form.valid"
+                      >
+                        Save Appointment
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- View Appointment Modal -->
+            <div
+              class="appointment-modal"
+              *ngIf="showViewAppointmentModal && viewedAppointment"
+              [@fadeIn]
+            >
+              <div class="card bg-light mb-4">
+                <div
+                  class="card-header d-flex justify-content-between align-items-center"
+                >
+                  <h6 class="mb-0">Appointment Details</h6>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    (click)="closeViewAppointmentModal.emit()"
+                  ></button>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Patient Name</label>
+                      <p class="form-control-plaintext">
+                        {{ viewedAppointment.patientName }}
+                      </p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Phone Number</label>
+                      <p class="form-control-plaintext">
+                        {{ viewedAppointment.phone }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Service</label>
+                      <p class="form-control-plaintext">
+                        {{ viewedAppointment.service }}
+                      </p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label">Time</label>
+                      <p class="form-control-plaintext">
+                        {{ viewedAppointment.time }}
+                      </p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label">Duration</label>
+                      <p class="form-control-plaintext">
+                        {{ viewedAppointment.duration }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Status</label>
+                      <p class="form-control-plaintext">
+                        <span
+                          class="badge"
+                          [class.bg-success]="
+                            viewedAppointment.status === 'confirmed'
+                          "
+                          [class.bg-warning]="
+                            viewedAppointment.status === 'pending'
+                          "
+                          [class.bg-info]="
+                            viewedAppointment.status === 'in-progress'
+                          "
+                          [class.bg-secondary]="
+                            viewedAppointment.status === 'completed'
+                          "
+                        >
+                          {{ viewedAppointment.status | titlecase }}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-end gap-2">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      (click)="closeViewAppointmentModal.emit()"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reschedule Appointment Modal -->
+            <div
+              class="appointment-modal"
+              *ngIf="showRescheduleModal && viewedAppointment"
+              [@fadeIn]
+            >
+              <div class="card bg-light mb-4">
+                <div class="card-header">
+                  <h6 class="mb-0">Reschedule Appointment</h6>
+                </div>
+                <div class="card-body">
+                  <form
+                    (ngSubmit)="saveReschedule.emit()"
+                    #rescheduleForm="ngForm"
+                  >
+                    <div class="row">
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label">Patient Name</label>
+                        <p class="form-control-plaintext">
+                          {{ viewedAppointment.patientName }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="rescheduleDate" class="form-label"
+                          >Date *</label
+                        >
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="rescheduleDate"
+                          [(ngModel)]="rescheduleData.date"
+                          name="rescheduleDate"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <label for="rescheduleTime" class="form-label"
+                          >Time *</label
+                        >
+                        <select
+                          class="form-select"
+                          id="rescheduleTime"
+                          [(ngModel)]="rescheduleData.time"
+                          name="rescheduleTime"
+                          required
+                        >
+                          <option value="">Select time</option>
+                          <option
+                            *ngFor="let time of timeOptions"
+                            [value]="time"
+                          >
+                            {{ time }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <label for="rescheduleDuration" class="form-label"
+                          >Duration</label
+                        >
+                        <select
+                          class="form-select"
+                          id="rescheduleDuration"
+                          [(ngModel)]="rescheduleData.duration"
+                          name="rescheduleDuration"
+                        >
+                          <option value="15 min">15 min</option>
+                          <option value="30 min">30 min</option>
+                          <option value="45 min">45 min</option>
+                          <option value="60 min">60 min</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        (click)="cancelReschedule.emit()"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        class="btn btn-primary"
+                        [disabled]="!rescheduleForm.form.valid"
+                      >
+                        Save Changes
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- Appointments List -->
+            <div class="appointment-list" [@staggerCards]>
+              <div
+                class="appointment-item"
+                *ngFor="let appointment of todayAppointmentsList; let i = index"
+                [@slideUp]
+              >
+                <div class="appointment-time">
+                  <div class="time">{{ appointment.time }}</div>
+                  <div class="duration">{{ appointment.duration }}</div>
+                </div>
+                <div class="appointment-details">
+                  <h6 class="patient-name">
+                    {{ appointment.patientName }}
+                  </h6>
+                  <p class="service-type">{{ appointment.service }}</p>
+                  <div class="appointment-meta">
+                    <span
+                      class="badge"
+                      [class.bg-success]="appointment.status === 'confirmed'"
+                      [class.bg-warning]="appointment.status === 'pending'"
+                      [class.bg-info]="appointment.status === 'in-progress'"
+                      [class.bg-secondary]="appointment.status === 'completed'"
+                    >
+                      {{ appointment.status | titlecase }}
+                    </span>
+                    <span class="ms-2 text-muted">{{ appointment.phone }}</span>
+                  </div>
+                </div>
+                <div class="appointment-actions">
+                  <button
+                    class="btn btn-sm btn-outline-primary"
+                    (click)="viewAppointment.emit(appointment.id)"
+                    [@buttonHover]="buttonHover"
+                    (mouseenter)="buttonHover = 'hovered'"
+                    (mouseleave)="buttonHover = 'normal'"
+                  >
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-success"
+                    (click)="markComplete.emit(appointment.id)"
+                    [@buttonHover]="buttonHover"
+                    (mouseenter)="buttonHover = 'hovered'"
+                    (mouseleave)="buttonHover = 'normal'"
+                    *ngIf="appointment.status !== 'completed'"
+                  >
+                    <i class="fas fa-check"></i>
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-info"
+                    (click)="reschedule.emit(appointment.id)"
+                    [@buttonHover]="buttonHover"
+                    (mouseenter)="buttonHover = 'hovered'"
+                    (mouseleave)="buttonHover = 'normal'"
+                  >
+                    <i class="fas fa-clock"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-12">
+        <div class="card" [@slideInRight]>
+          <div class="card-header">
+            <h5 class="mb-0">Waiting List</h5>
+          </div>
+          <div class="card-body">
+            <div class="waiting-list" [@staggerCards]>
+              <div
+                class="waiting-item"
+                *ngFor="let patient of waitingList"
+                [@fadeIn]
+              >
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="mb-0">{{ patient.name }}</h6>
+                    <small class="text-muted">{{ patient.service }}</small>
+                  </div>
+                  <span class="badge bg-warning">{{ patient.waitTime }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Patient Management Tab -->
+  <div
+    class="tab-pane fade"
+    [class.show]="isActiveTab('patients')"
+    [class.active]="isActiveTab('patients')"
+    id="patients"
+    role="tabpanel"
+    [@fadeIn]
+    *ngIf="isActiveTab('patients')"
+  >
+    <div class="card" [@slideInLeft]>
+      <div
+        class="card-header d-flex justify-content-between align-items-center"
+      >
+        <h5 class="mb-0">Patient Management</h5>
+        <button
+          class="btn btn-primary"
+          (click)="showAddPatientForm.emit()"
+          [@buttonHover]="buttonHover"
+          (mouseenter)="buttonHover = 'hovered'"
+          (mouseleave)="buttonHover = 'normal'"
+        >
+          <i class="fas fa-plus me-1"></i>Add New Patient
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-lg-8 col-md-12 mb-2 mb-md-0">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search patients..."
+              [(ngModel)]="patientSearch"
+              (keydown.enter)="searchPatients.emit()"
+              [@fadeIn]
+            />
+          </div>
+          <div class="col-lg-4 col-md-12">
+            <button
+              class="btn btn-primary w-100"
+              (click)="searchPatients.emit()"
+              [@buttonHover]="buttonHover"
+              (mouseenter)="buttonHover = 'hovered'"
+              (mouseleave)="buttonHover = 'normal'"
+            >
+              <i class="fas fa-search me-2"></i>Search
+            </button>
+          </div>
+        </div>
+
+        <!-- Add New Patient Modal -->
+        <div class="patient-modal" *ngIf="showAddPatientModal" [@fadeIn]>
+          <div class="card bg-light mb-4">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h6 class="mb-0">Add New Patient</h6>
+              <button
+                type="button"
+                class="btn-close"
+                (click)="cancelAddPatient.emit()"
+              ></button>
+            </div>
+            <div class="card-body">
+              <form (ngSubmit)="saveNewPatient.emit()" #addPatientForm="ngForm">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="newPatientName" class="form-label"
+                      >Full Name *</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="newPatientName"
+                      [(ngModel)]="newPatient.name"
+                      name="name"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="newPatientAge" class="form-label">Age *</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="newPatientAge"
+                      [(ngModel)]="newPatient.age"
+                      name="age"
+                      required
+                      min="1"
+                      max="120"
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="newPatientPhone" class="form-label"
+                      >Phone Number *</label
+                    >
+                    <input
+                      type="tel"
+                      class="form-control"
+                      id="newPatientPhone"
+                      [(ngModel)]="newPatient.phone"
+                      name="phone"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="newPatientId" class="form-label"
+                      >Patient ID *</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="newPatientId"
+                      [(ngModel)]="newPatient.id"
+                      name="id"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="newPatientLastVisit" class="form-label"
+                      >Last Visit Date</label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="newPatientLastVisit"
+                      [(ngModel)]="newPatient.lastVisit"
+                      name="lastVisit"
+                    />
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    (click)="cancelAddPatient.emit()"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    [disabled]="!addPatientForm.form.valid"
+                  >
+                    Add Patient
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Patient History Modal -->
+        <div
+          class="patient-modal"
+          *ngIf="showPatientHistoryModal && viewedPatient"
+          [@fadeIn]
+        >
+          <div class="card bg-light mb-4">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h6 class="mb-0">Patient History: {{ viewedPatient.name }}</h6>
+              <button
+                type="button"
+                class="btn-close"
+                (click)="closePatientHistoryModal.emit()"
+              ></button>
+            </div>
+            <div class="card-body">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">Patient ID</label>
+                  <p class="form-control-plaintext">
+                    {{ viewedPatient.id }}
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Phone</label>
+                  <p class="form-control-plaintext">
+                    {{ viewedPatient.phone }}
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Age</label>
+                  <p class="form-control-plaintext">
+                    {{ viewedPatient.age }} years old
+                  </p>
+                </div>
+              </div>
+
+              <h6>Medical History</h6>
+              <div class="history-list">
+                <div
+                  class="history-item border-bottom pb-3 mb-3"
+                  *ngFor="let history of patientHistory"
+                >
+                  <div class="d-flex justify-content-between">
+                    <strong>{{ history.service }}</strong>
+                    <span>{{ history.date }}</span>
+                  </div>
+                  <div class="mt-2">
+                    <small class="text-muted"
+                      >Doctor: {{ history.doctor }}</small
+                    >
+                  </div>
+                  <p class="mt-2 mb-0">{{ history.notes }}</p>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  (click)="closePatientHistoryModal.emit()"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Schedule Follow-up Modal -->
+        <div
+          class="patient-modal"
+          *ngIf="showScheduleFollowUpModal && viewedPatient"
+          [@fadeIn]
+        >
+          <div class="card bg-light mb-4">
+            <div class="card-header">
+              <h6 class="mb-0">Schedule Follow-up: {{ viewedPatient.name }}</h6>
+            </div>
+            <div class="card-body">
+              <form (ngSubmit)="saveFollowUp.emit()" #followUpForm="ngForm">
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <label class="form-label">Patient</label>
+                    <p class="form-control-plaintext">
+                      {{ viewedPatient.name }} (ID: {{ viewedPatient.id }})
+                    </p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="followUpDate" class="form-label">Date *</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="followUpDate"
+                      [(ngModel)]="followUpData.date"
+                      name="followUpDate"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="followUpTime" class="form-label">Time *</label>
+                    <select
+                      class="form-select"
+                      id="followUpTime"
+                      [(ngModel)]="followUpData.time"
+                      name="followUpTime"
+                      required
+                    >
+                      <option value="">Select time</option>
+                      <option *ngFor="let time of timeOptions" [value]="time">
+                        {{ time }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="followUpService" class="form-label"
+                      >Service *</label
+                    >
+                    <select
+                      class="form-select"
+                      id="followUpService"
+                      [(ngModel)]="followUpData.service"
+                      name="followUpService"
+                      required
+                    >
+                      <option value="">Select service</option>
+                      <option
+                        *ngFor="let service of serviceOptions"
+                        [value]="service"
+                      >
+                        {{ service }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <label for="followUpNotes" class="form-label">Notes</label>
+                    <textarea
+                      class="form-control"
+                      id="followUpNotes"
+                      [(ngModel)]="followUpData.notes"
+                      name="followUpNotes"
+                      rows="3"
+                    ></textarea>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    (click)="cancelScheduleFollowUp.emit()"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    [disabled]="!followUpForm.form.valid"
+                  >
+                    Schedule Follow-up
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="patient-grid" [@staggerCards]>
+          <div class="patient-card" *ngFor="let patient of patients" [@scaleIn]>
+            <div class="patient-header">
+              <h6 class="patient-name">{{ patient.name }}</h6>
+              <span class="patient-id">ID: {{ patient.id }}</span>
+            </div>
+            <div class="patient-info">
+              <p>
+                <i class="fas fa-birthday-cake me-2"></i>{{ patient.age }} years
+                old
+              </p>
+              <p><i class="fas fa-phone me-2"></i>{{ patient.phone }}</p>
+              <p>
+                <i class="fas fa-calendar me-2"></i>Last visit:
+                {{ patient.lastVisit }}
+              </p>
+            </div>
+            <div class="patient-actions">
+              <button
+                class="btn btn-sm btn-primary"
+                (click)="viewPatientHistory.emit(patient.id)"
+                [@buttonHover]="buttonHover"
+                (mouseenter)="buttonHover = 'hovered'"
+                (mouseleave)="buttonHover = 'normal'"
+              >
+                <i class="fas fa-history"></i> History
+              </button>
+              <button
+                class="btn btn-sm btn-success"
+                (click)="scheduleFollowUp.emit(patient.id)"
+                [@buttonHover]="buttonHover"
+                (mouseenter)="buttonHover = 'hovered'"
+                (mouseleave)="buttonHover = 'normal'"
+              >
+                <i class="fas fa-calendar-plus"></i> Schedule
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials Tab -->
+  <div
+    class="tab-pane fade"
+    [class.show]="isActiveTab('testimonials')"
+    [class.active]="isActiveTab('testimonials')"
+    id="testimonials"
+    role="tabpanel"
+    [@fadeIn]
+    *ngIf="isActiveTab('testimonials')"
+  >
+    <div class="card" [@slideInLeft]>
+      <div class="card-header">
+        <h5 class="mb-0">Patient Testimonials</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3" [@staggerCards]>
+          <div
+            class="col-xl-6 col-lg-6 col-md-12"
+            *ngFor="let testimonial of testimonials"
+            [@scaleIn]
+          >
+            <div class="testimonial-card">
+              <div class="testimonial-header">
+                <div class="d-flex justify-content-between align-items-start">
+                  <h6 class="mb-0">{{ testimonial.name }}</h6>
+                  <span
+                    class="badge"
+                    [class.bg-success]="testimonial.approved"
+                    [class.bg-warning]="!testimonial.approved"
+                  >
+                    {{ testimonial.approved ? "Approved" : "Pending" }}
+                  </span>
+                </div>
+                <div class="rating mt-1">
+                  <span
+                    *ngFor="let star of [1, 2, 3, 4, 5]"
+                    [class.text-warning]="star <= testimonial.rating"
+                    [class.text-muted]="star > testimonial.rating"
+                  >
+                    <i class="fas fa-star"></i>
+                  </span>
+                  <small class="text-muted ms-2">{{
+                    testimonial.service
+                  }}</small>
+                </div>
+              </div>
+              <div class="testimonial-body">
+                <p class="testimonial-text">{{ testimonial.text }}</p>
+                <div
+                  class="testimonial-footer d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2"
+                >
+                  <small class="text-muted">{{ testimonial.date }}</small>
+                  <div class="testimonial-actions">
+                    <button
+                      class="btn btn-sm btn-success"
+                      (click)="approveTestimonial.emit(testimonial.id)"
+                      *ngIf="!testimonial.approved"
+                      [@buttonHover]="buttonHover"
+                      (mouseenter)="buttonHover = 'hovered'"
+                      (mouseleave)="buttonHover = 'normal'"
+                    >
+                      <i class="fas fa-check"></i>
+                    </button>
+                    <button
+                      class="btn btn-sm btn-danger"
+                      (click)="rejectTestimonial.emit(testimonial.id)"
+                      [@buttonHover]="buttonHover"
+                      (mouseenter)="buttonHover = 'hovered'"
+                      (mouseleave)="buttonHover = 'normal'"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tasks Tab -->
+  <div
+    class="tab-pane fade"
+    [class.show]="isActiveTab('tasks')"
+    [class.active]="isActiveTab('tasks')"
+    id="tasks"
+    role="tabpanel"
+    [@fadeIn]
+    *ngIf="isActiveTab('tasks')"
+  >
+    <div class="row">
+      <div class="col-lg-8 col-md-12">
+        <div class="card" [@slideInLeft]>
+          <div
+            class="card-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2"
+          >
+            <h5 class="mb-0">My Tasks</h5>
+            <button
+              class="btn btn-primary btn-sm"
+              (click)="addTask.emit()"
+              [@buttonHover]="buttonHover"
+              (mouseenter)="buttonHover = 'hovered'"
+              (mouseleave)="buttonHover = 'normal'"
+            >
+              <i class="fas fa-plus me-1"></i>Add Task
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="task-modal" *ngIf="showAddTaskModal" [@fadeIn]>
+              <div class="card bg-light mb-4">
+                <div class="card-header">
+                  <h6 class="mb-0">Add New Task</h6>
+                </div>
+                <div class="card-body">
+                  <form (ngSubmit)="saveNewTask.emit()" #taskForm="ngForm">
+                    <div class="mb-3">
+                      <label for="taskTitle" class="form-label"
+                        >Task Title *</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="taskTitle"
+                        [(ngModel)]="newTask.title"
+                        name="taskTitle"
+                        required
+                      />
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="taskPriority" class="form-label"
+                          >Priority</label
+                        >
+                        <select
+                          class="form-select"
+                          id="taskPriority"
+                          [(ngModel)]="newTask.priority"
+                          name="taskPriority"
+                        >
+                          <option value="high">High</option>
+                          <option value="medium">Medium</option>
+                          <option value="low">Low</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="taskDueDate" class="form-label"
+                          >Due Date *</label
+                        >
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="taskDueDate"
+                          [(ngModel)]="newTask.dueDate"
+                          name="taskDueDate"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        (click)="cancelAddTask.emit()"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        class="btn btn-primary"
+                        [disabled]="!taskForm.form.valid"
+                      >
+                        Save Task
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tasks List -->
+            <div class="task-list" [@staggerCards]>
+              <div class="task-item" *ngFor="let task of myTasks" [@fadeIn]>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="task.completed"
+                    (change)="toggleTask.emit(task.id)"
+                  />
+                  <label
+                    class="form-check-label"
+                    [class.text-decoration-line-through]="task.completed"
+                  >
+                    {{ task.title }}
+                  </label>
+                </div>
+                <div class="task-meta">
+                  <span
+                    class="badge"
+                    [class.bg-danger]="task.priority === 'high'"
+                    [class.bg-warning]="task.priority === 'medium'"
+                    [class.bg-info]="task.priority === 'low'"
+                  >
+                    {{ task.priority | titlecase }}
+                  </span>
+                  <small class="text-muted ms-2">Due: {{ task.dueDate }}</small>
+                </div>
+                <div class="task-actions">
+                  <button
+                    class="btn btn-sm btn-outline-primary"
+                    (click)="editTask.emit(task.id)"
+                    [@buttonHover]="buttonHover"
+                    (mouseenter)="buttonHover = 'hovered'"
+                    (mouseleave)="buttonHover = 'normal'"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-danger"
+                    (click)="deleteTask.emit(task.id)"
+                    [@buttonHover]="buttonHover"
+                    (mouseenter)="buttonHover = 'hovered'"
+                    (mouseleave)="buttonHover = 'normal'"
+                  >
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-12">
+        <div class="card" [@slideInRight]>
+          <div class="card-header">
+            <h5 class="mb-0">Task Summary</h5>
+          </div>
+          <div class="card-body">
+            <div class="task-summary" [@staggerCards]>
+              <div class="summary-item" [@scaleIn]>
+                <div class="summary-count text-primary">
+                  {{ totalTasks }}
+                </div>
+                <div class="summary-label">Total Tasks</div>
+              </div>
+              <div class="summary-item" [@scaleIn]>
+                <div class="summary-count text-success">
+                  {{ completedTasksCount }}
+                </div>
+                <div class="summary-label">Completed</div>
+              </div>
+              <div class="summary-item" [@scaleIn]>
+                <div class="summary-count text-warning">
+                  {{ pendingTasksCount }}
+                </div>
+                <div class="summary-label">Pending</div>
+              </div>
+              <div class="summary-item" [@scaleIn]>
+                <div class="summary-count text-danger">
+                  {{ overdueTasks }}
+                </div>
+                <div class="summary-label">Overdue</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

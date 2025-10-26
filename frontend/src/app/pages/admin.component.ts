@@ -3,6 +3,14 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { LanguageService } from '../services/language.service';
 import { FormsModule } from '@angular/forms';
+import {
+  pageEnter,
+  fadeIn,
+  slideUp,
+  staggerCards,
+  bounceIn,
+  float,
+} from '../shared/animations';
 
 @Component({
   selector: 'app-admin',
@@ -10,9 +18,26 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
+  animations: [pageEnter, fadeIn, slideUp, staggerCards, bounceIn, float],
 })
 export class AdminComponent {
   isLoading = false;
+
+  superAdminFeatures = [
+    'Full System Management',
+    'Staff & User Management',
+    'Financial Reports',
+    'System Configuration',
+    'Security Settings',
+  ];
+
+  subAdminFeatures = [
+    'Appointment Management',
+    'Patient Care Tasks',
+    'Daily Operations',
+    'Task Management',
+    'Patient Records View',
+  ];
 
   constructor(private router: Router) {}
 
@@ -38,7 +63,7 @@ export class AdminComponent {
   accessSubAdmin() {
     console.log('Access Sub Admin clicked');
     this.isLoading = true;
-
+    
     // Navigate to Sub Admin Login
     this.router.navigate(['/sub-admin-login']).then(
       (success) => {
@@ -48,9 +73,15 @@ export class AdminComponent {
       },
       (error) => {
         console.error('Navigation failed:', error);
+        
         // Reset loading state on error
+        
         this.isLoading = false;
+        
       }
+      
     );
+    
   }
+  
 }

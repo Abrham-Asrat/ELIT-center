@@ -2,6 +2,16 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import {
+  pageEnter,
+  fadeIn,
+  slideUp,
+  bounceIn,
+  scaleIn,
+  float,
+  buttonHover,
+  shake,
+} from '../shared/animations';
 
 @Component({
   selector: 'app-super-admin-login',
@@ -9,6 +19,16 @@ import { Router, RouterModule } from '@angular/router';
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './super-admin-login.component.html',
   styleUrls: ['./super-admin-login.component.scss'],
+  animations: [
+    pageEnter,
+    fadeIn,
+    slideUp,
+    bounceIn,
+    scaleIn,
+    float,
+    buttonHover,
+    shake,
+  ],
 })
 export class SuperAdminLoginComponent {
   loginData = {
@@ -21,6 +41,8 @@ export class SuperAdminLoginComponent {
   isLoading = false;
   hasError = false;
   errorMessage = '';
+  buttonState = 'normal'; // For button hover animation
+  showErrorAnimation = false; // For shake animation
 
   constructor(private router: Router) {}
 
@@ -28,10 +50,16 @@ export class SuperAdminLoginComponent {
     this.showPassword = !this.showPassword;
   }
 
+  // Handle button hover for animation
+  onButtonHover(state: string) {
+    this.buttonState = state;
+  }
+
   onLogin() {
     this.isLoading = true;
     this.hasError = false;
     this.errorMessage = '';
+    this.showErrorAnimation = false;
 
     // Simulate authentication delay
     setTimeout(() => {
@@ -48,6 +76,7 @@ export class SuperAdminLoginComponent {
         this.hasError = true;
         this.errorMessage = 'Invalid username or password. Please try again.';
         this.loginData.password = ''; // Clear password field
+        this.showErrorAnimation = true; // Trigger shake animation
       }
 
       this.isLoading = false;
