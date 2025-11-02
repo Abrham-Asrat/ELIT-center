@@ -1,7 +1,7 @@
 <!-- Sub Admin Dashboard Header -->
 <!-- Sub Admin Navigation Header -->
 <div [@pageEnter]>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top shadow-sm">
     <div class="container">
       <a class="navbar-brand" href="#" [@slideInLeft]>
         <i class="fas fa-user-cog me-2"></i>
@@ -30,7 +30,7 @@
               <a
                 class="dropdown-item"
                 (click)="refreshDashboard(); closeDropdown()"
-                [@slideInRight]git
+                [@slideInRight]
               >
                 <i class="fas fa-sync-alt me-2"></i>Refresh Dashboard
               </a>
@@ -50,7 +50,7 @@
                 (click)="goHome(); closeDropdown()"
                 [@slideInRight]
               >
-                <i class="fas fa-home me-2"></i>Go to Homepage
+                <i class="fas fa-home me-2"></i>Go to HomePage
               </a>
             </li>
             <li><hr class="dropdown-divider" /></li>

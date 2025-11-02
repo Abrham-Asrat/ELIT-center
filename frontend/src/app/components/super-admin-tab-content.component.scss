@@ -1,0 +1,234 @@
+/* Super Admin Tab Content Styles */
+
+.tab-content {
+  margin-top: 20px;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 1rem 1.25rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+/* Activity List Styles */
+.activity-list {
+  .activity-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .activity-content {
+    flex: 1;
+
+    p {
+      margin-bottom: 0.25rem;
+    }
+  }
+}
+
+/* Revenue Stats Styles */
+.revenue-stats {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .stat-item {
+    text-align: center;
+    padding: 1rem;
+    flex: 1;
+    min-width: 120px;
+
+    h4 {
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 0;
+      color: #6c757d;
+    }
+  }
+}
+
+/* Payment Methods Styles */
+.payment-methods {
+  .payment-item {
+    margin-bottom: 1rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .progress {
+    height: 8px;
+    margin-top: 0.5rem;
+    border-radius: 4px;
+    background-color: #e9ecef;
+
+    .progress-bar {
+      border-radius: 4px;
+    }
+  }
+}
+
+/* Security Options Styles */
+.security-options {
+  .form-check {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Lab Tests Table Styles */
+.table {
+  thead th {
+    border-top: none;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+  }
+
+  tbody td {
+    vertical-align: middle;
+  }
+}
+
+/* Modal Styles */
+.modal {
+  z-index: 1050;
+
+  &.fade {
+    opacity: 0;
+    transition: opacity 0.15s linear;
+
+    &.show {
+      opacity: 1;
+    }
+  }
+
+  .modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 0.5rem;
+    pointer-events: none;
+
+    &.modal-lg {
+      max-width: 800px;
+    }
+  }
+
+  .modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+    outline: 0;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: calc(0.3rem - 1px);
+    border-top-right-radius: calc(0.3rem - 1px);
+  }
+
+  .modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+  }
+
+  .modal-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.75rem;
+    border-top: 1px solid #dee2e6;
+    border-bottom-right-radius: calc(0.3rem - 1px);
+    border-bottom-left-radius: calc(0.3rem - 1px);
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+
+  &.fade {
+    opacity: 0;
+  }
+
+  &.show {
+    opacity: 0.5;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .revenue-stats {
+    flex-direction: column;
+
+    .stat-item {
+      border-bottom: 1px solid #dee2e6;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .activity-item {
+    flex-direction: column;
+
+    .activity-icon {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .modal-dialog {
+    margin: 1rem;
+  }
+}

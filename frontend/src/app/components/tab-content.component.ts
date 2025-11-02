@@ -1,15 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  fadeIn,
-  slideUp,
-  scaleIn,
-  staggerCards,
-  slideInLeft,
-  slideInRight,
-  buttonHover,
-} from '../shared/animations';
 
 interface User {
   id: string;
@@ -85,15 +76,6 @@ interface PatientHistory {
   imports: [CommonModule, FormsModule],
   templateUrl: './tab-content.component.html',
   styleUrls: ['./tab-content.component.scss'],
-  animations: [
-    fadeIn,
-    slideUp,
-    scaleIn,
-    staggerCards,
-    slideInLeft,
-    slideInRight,
-    buttonHover,
-  ],
 })
 export class TabContentComponent {
   @Input() activeTab: string = 'appointments';
@@ -166,9 +148,11 @@ export class TabContentComponent {
   @Output() editTask = new EventEmitter<string>();
   @Output() deleteTask = new EventEmitter<string>();
   
-  buttonHover = 'normal';
-  
   isActiveTab(tabName: string): boolean {
     return this.activeTab === tabName;
+  }
+  
+  onTaskToggle(taskId: string): void {
+    this.toggleTask.emit(taskId);
   }
 }

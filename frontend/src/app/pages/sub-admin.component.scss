@@ -164,7 +164,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 10px 20px;
     margin: 0;
-    z-index: 1000;
+    z-index: 1050; // Increased z-index to ensure it's above other elements
     border-radius: 0;
 
     .nav-tabs {
@@ -226,7 +226,7 @@
         font-weight: 700;
         box-shadow: 0 5px 15px rgba(17, 153, 142, 0.3);
         transform: translateY(-3px);
-        border-color: rgba(17, 153, 142, 0.3);
+        border-color: rgba(17, 15   3, 142, 0.3);
       }
 
       i {
@@ -235,6 +235,10 @@
       }
     }
   }
+}
+
+.dropdown-item{ 
+  cursor: pointer;
 }
 
 // Placeholder for sticky tabs to maintain layout
@@ -360,11 +364,6 @@
 }
 
 // Patient Grid
-.patient-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
-}
 
 .patient-card {
   border: 1px solid #e9ecef;
@@ -866,10 +865,11 @@
 
 .subAdmin {
   padding-top: 5rem;
+  transition: padding-top 0.3s ease;
 
-  // Remove the fixed padding as we're using a dynamic approach
+  // Add extra padding when tabs are sticky to account for the fixed navbar
   &.tabs-sticky {
-    padding-top: 5rem; // Reset to original padding
+    padding-top: calc(5rem + 80px); // Original padding + height of sticky tabs
   }
 }
 

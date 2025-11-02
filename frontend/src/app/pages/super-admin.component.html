@@ -72,7 +72,7 @@
             Super Admin Dashboard
           </h2>
           <small class="text-light opacity-75"
-            >Full System Control - Dr. Abiy</small
+            >Full System Control - Dr. Abiy Tekle</small
           >
         </div>
         <div class="col-md-6 text-md-end">
@@ -86,7 +86,7 @@
   </div>
 
   <!-- Super Admin Stats Cards -->
-  <div class="container" [@staggerCards]>
+  <div class="container-xl" [@staggerCards]>
     <div class="row g-4 mb-5">
       <div class="col-lg-3 col-md-6" [@slideUp]>
         <div class="stats-card bg-gradient-info text-white">
@@ -94,7 +94,7 @@
             <i class="fas fa-calendar-check"></i>
           </div>
           <div class="stats-content">
-            <h3>{{ totalAppointments }}</h3>
+            <h5>{{ totalAppointments }}</h5>
             <p>Total Appointments</p>
             <small class="opacity-75">+{{ newAppointments }} new today</small>
           </div>
@@ -215,494 +215,70 @@
       </ul>
 
       <!-- Tab Content -->
-      <div class="tab-content">
-        <!-- Overview Tab -->
-        <div
-          class="tab-pane fade"
-          [class.show]="isActiveTab('overview')"
-          [class.active]="isActiveTab('overview')"
-          *ngIf="isActiveTab('overview')"
-          role="tabpanel"
-          [@fadeIn]
-        >
-          <div class="row">
-            <div class="col-md-8">
-              <!-- Recent Activities -->
-              <div class="card mb-4">
-                <div class="card-header">
-                  <h5 class="mb-0">
-                    <i class="fas fa-clock me-2"></i>Recent Activities
-                  </h5>
-                </div>
-                <div class="card-body">
-                  <div class="activity-list">
-                    <div
-                      class="activity-item"
-                      *ngFor="let activity of recentActivities"
-                    >
-                      <div
-                        class="activity-icon"
-                        [ngClass]="'bg-' + activity.type"
-                      >
-                        <i [class]="activity.icon"></i>
-                      </div>
-                      <div class="activity-content">
-                        <p class="mb-1">{{ activity.description }}</p>
-                        <small class="text-muted"
-                          >{{ activity.time }} ago</small
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <!-- Quick Actions -->
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="mb-0">
-                    <i class="fas fa-bolt me-2"></i>Quick Actions
-                  </h5>
-                </div>
-                <div class="card-body">
-                  <div class="d-grid gap-2">
-                    <button
-                      class="btn btn-outline-primary"
-                      (click)="generateReport()"
-                      [disabled]="isGeneratingReport"
-                    >
-                      <i class="fas fa-dollar-sign me-2"></i>
-                      Financial Report
-                    </button>
-                    <button
-                      class="btn btn-outline-success"
-                      (click)="generateReport()"
-                      [disabled]="isGeneratingReport"
-                    >
-                      <i class="fas fa-users me-2"></i>
-                      Patient Report
-                    </button>
-                    <button
-                      class="btn btn-outline-info"
-                      (click)="generateReport()"
-                      [disabled]="isGeneratingReport"
-                    >
-                      <i class="fas fa-user-md me-2"></i>
-                      Staff Report
-                    </button>
-                    <button
-                      class="btn btn-outline-warning"
-                      (click)="generateReport()"
-                      [disabled]="isGeneratingReport"
-                    >
-                      <i class="fas fa-calendar-check me-2"></i>
-                      Appointment Report
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Staff Management Tab -->
-        <div
-          class="tab-pane fade"
-          [class.show]="isActiveTab('staff')"
-          [class.active]="isActiveTab('staff')"
-          *ngIf="isActiveTab('staff')"
-          role="tabpanel"
-          [@fadeIn]
-        >
-          <div class="card">
-            <div
-              class="card-header d-flex justify-content-between align-items-center"
-            >
-              <h5 class="mb-0">Staff Management</h5>
-              <button class="btn btn-primary" (click)="addNewStaff()">
-                <i class="fas fa-plus me-1"></i>Add Staff
-              </button>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Role</th>
-                      <th>Department</th>
-                      <th>Status</th>
-                      <th>Last Login</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let staff of staffMembers">
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <img
-                            [src]="staff.avatar"
-                            class="rounded-circle me-2"
-                            width="32"
-                            height="32"
-                            alt=""
-                          />
-                          <span>{{ staff.name }}</span>
-                        </div>
-                      </td>
-                      <td>
-                        <span
-                          class="badge"
-                          [class.bg-danger]="staff.role === 'Super Admin'"
-                          [class.bg-warning]="staff.role === 'Sub Admin'"
-                          [class.bg-info]="staff.role === 'Staff'"
-                        >
-                          {{ staff.role }}
-                        </span>
-                      </td>
-                      <td>{{ staff.department }}</td>
-                      <td>
-                        <span
-                          class="badge"
-                          [class.bg-success]="staff.status === 'active'"
-                          [class.bg-secondary]="staff.status === 'inactive'"
-                        >
-                          {{ staff.status | titlecase }}
-                        </span>
-                      </td>
-                      <td>{{ staff.lastLogin }}</td>
-                      <td>
-                        <div class="btn-group btn-group-sm">
-                          <button
-                            class="btn btn-outline-primary"
-                            (click)="editStaff(staff.id)"
-                          >
-                            <i class="fas fa-edit"></i>
-                          </button>
-                          <button
-                            class="btn btn-outline-danger"
-                            (click)="deactivateStaff(staff.id)"
-                          >
-                            <i class="fas fa-user-times"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Patient Records Tab -->
-        <div
-          class="tab-pane fade"
-          [class.show]="isActiveTab('patients')"
-          [class.active]="isActiveTab('patients')"
-          *ngIf="isActiveTab('patients')"
-          role="tabpanel"
-          [@fadeIn]
-        >
-          <div class="card">
-            <div class="card-header">
-              <h5 class="mb-0">Patient Records</h5>
-            </div>
-            <div class="card-body">
-              <div class="row mb-3">
-                <div class="col-md-6">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search patients..."
-                    [(ngModel)]="patientSearchTerm"
-                  />
-                </div>
-                <div class="col-md-3">
-                  <select class="form-select" [(ngModel)]="patientFilter">
-                    <option value="">All Patients</option>
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <button class="btn btn-primary w-100">
-                    <i class="fas fa-search me-2"></i>Search
-                  </button>
-                </div>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>Patient ID</th>
-                      <th>Name</th>
-                      <th>Age</th>
-                      <th>Last Visit</th>
-                      <th>Total Visits</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let patient of patients">
-                      <td>{{ patient.id }}</td>
-                      <td>{{ patient.name }}</td>
-                      <td>{{ patient.age }}</td>
-                      <td>{{ patient.lastVisit }}</td>
-                      <td>{{ patient.totalVisits }}</td>
-                      <td>
-                        <span
-                          class="badge"
-                          [class.bg-success]="patient.status === 'active'"
-                          [class.bg-secondary]="patient.status === 'inactive'"
-                        >
-                          {{ patient.status | titlecase }}
-                        </span>
-                      </td>
-                      <td>
-                        <button
-                          class="btn btn-sm btn-outline-primary me-1"
-                          (click)="viewPatientRecord(patient.id)"
-                        >
-                          <i class="fas fa-eye"></i>
-                        </button>
-                        <button
-                          class="btn btn-sm btn-outline-success"
-                          (click)="scheduleAppointment(patient.id)"
-                        >
-                          <i class="fas fa-calendar-plus"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Financial Reports Tab -->
-        <div
-          class="tab-pane fade"
-          [class.show]="isActiveTab('financial')"
-          [class.active]="isActiveTab('financial')"
-          *ngIf="isActiveTab('financial')"
-          role="tabpanel"
-          [@fadeIn]
-        >
-          <div class="row">
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="mb-0">Revenue Overview</h5>
-                </div>
-                <div class="card-body">
-                  <div class="revenue-stats">
-                    <div class="stat-item">
-                      <h4 class="text-success">${{ monthlyRevenue }}</h4>
-                      <p class="mb-0">This Month</p>
-                    </div>
-                    <div class="stat-item">
-                      <h4 class="text-info">${{ yearlyRevenue }}</h4>
-                      <p class="mb-0">This Year</p>
-                    </div>
-                    <div class="stat-item">
-                      <h4 class="text-warning">${{ averagePerPatient }}</h4>
-                      <p class="mb-0">Avg Per Patient</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="mb-0">Payment Methods</h5>
-                </div>
-                <div class="card-body">
-                  <div class="payment-methods">
-                    <div
-                      class="payment-item"
-                      *ngFor="let method of paymentMethods"
-                    >
-                      <div
-                        class="d-flex justify-content-between align-items-center"
-                      >
-                        <span>{{ method.name }}</span>
-                        <span class="badge bg-primary"
-                          >{{ method.percentage }}%</span
-                        >
-                      </div>
-                      <div class="progress mt-1">
-                        <div
-                          class="progress-bar"
-                          [style.width.%]="method.percentage"
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- System Settings Tab -->
-        <div
-          class="tab-pane fade"
-          [class.show]="isActiveTab('system')"
-          [class.active]="isActiveTab('system')"
-          *ngIf="isActiveTab('system')"
-          role="tabpanel"
-          [@fadeIn]
-        >
-          <div class="row">
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="mb-0">System Configuration</h5>
-                </div>
-                <div class="card-body">
-                  <form>
-                    <div class="mb-3">
-                      <label class="form-label">System Name</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="ELIT ENT Center Management"
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Time Zone</label>
-                      <select class="form-select">
-                        <option>GMT+3 (Ethiopia)</option>
-                        <option>GMT+0 (UTC)</option>
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Default Language</label>
-                      <select class="form-select">
-                        <option value="en">English</option>
-                        <option value="am">Amharic</option>
-                      </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                      Save Settings
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="mb-0">Security Settings</h5>
-                </div>
-                <div class="card-body">
-                  <div class="security-options">
-                    <div class="form-check form-switch mb-3">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="twoFactorAuth"
-                        checked
-                      />
-                      <label class="form-check-label" for="twoFactorAuth">
-                        Two-Factor Authentication
-                      </label>
-                    </div>
-                    <div class="form-check form-switch mb-3">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="loginLogging"
-                        checked
-                      />
-                      <label class="form-check-label" for="loginLogging">
-                        Login Activity Logging
-                      </label>
-                    </div>
-                    <div class="form-check form-switch mb-3">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="autoLogout"
-                      />
-                      <label class="form-check-label" for="autoLogout">
-                        Auto Logout (30 min)
-                      </label>
-                    </div>
-                    <button class="btn btn-warning">
-                      <i class="fas fa-database me-2"></i>Backup System
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Lab Tests Tab -->
-        <div
-          class="tab-pane fade"
-          [class.show]="isActiveTab('lab-tests')"
-          [class.active]="isActiveTab('lab-tests')"
-          id="lab-tests"
-          role="tabpanel"
-          [@fadeIn]
-        >
-          <div class="card" [@slideInLeft]>
-            <div
-              class="card-header d-flex justify-content-between align-items-center"
-            >
-              <h5 class="mb-0">Lab Test Management</h5>
-              <button class="btn btn-primary" (click)="showAddLabTestForm()">
-                <i class="fas fa-plus me-1"></i>Add New Lab Test
-              </button>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Test Name</th>
-                      <th>Standard Price</th>
-                      <th>Alternative Price</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let testType of labTestTypes">
-                      <td>{{ testType.name }}</td>
-                      <td>${{ testType.standardPrice.toFixed(2) }}</td>
-                      <td>${{ testType.alternativePrice.toFixed(2) }}</td>
-                      <td>
-                        <button
-                          class="btn btn-sm btn-primary me-1"
-                          (click)="showEditLabTestForm(testType)"
-                        >
-                          <i class="fas fa-edit"></i>
-                        </button>
-                        <button
-                          class="btn btn-sm btn-danger"
-                          (click)="deleteLabTestType(testType.id)"
-                        >
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <app-super-admin-tab-content
+        [activeTab]="activeTab"
+        [staffMembers]="staffMembers"
+        [patients]="patients"
+        [recentActivities]="recentActivities"
+        [paymentMethods]="paymentMethods"
+        [labTestTypes]="labTestTypes"
+        [totalAppointments]="totalAppointments"
+        [newAppointments]="newAppointments"
+        [totalPatients]="totalPatients"
+        [activePatients]="activePatients"
+        [totalStaff]="totalStaff"
+        [activeStaff]="activeStaff"
+        [monthlyRevenue]="monthlyRevenue"
+        [yearlyRevenue]="yearlyRevenue"
+        [averagePerPatient]="averagePerPatient"
+        [revenueGrowth]="revenueGrowth"
+        [patientSearchTerm]="patientSearchTerm"
+        [patientFilter]="patientFilter"
+        [showStaffModal]="showStaffModal"
+        [showReportModal]="showReportModal"
+        [showBackupModal]="showBackupModal"
+        [showLabTestModal]="showLabTestModal"
+        [editingStaff]="editingStaff"
+        [isGeneratingReport]="isGeneratingReport"
+        [isBackingUp]="isBackingUp"
+        [newStaff]="newStaff"
+        [reportType]="reportType"
+        [reportStartDate]="reportStartDate"
+        [reportEndDate]="reportEndDate"
+        [newLabTestType]="newLabTestType"
+        [editingLabTestType]="editingLabTestType"
+        (switchTab)="switchTab($event)"
+        (addNewStaff)="addNewStaff()"
+        (editStaff)="editStaff($event)"
+        (deactivateStaff)="deactivateStaff($event)"
+        (viewPatientRecord)="viewPatientRecord($event)"
+        (scheduleAppointment)="scheduleAppointment($event)"
+        (showAddStaffForm)="showAddStaffForm()"
+        (showEditStaffForm)="showEditStaffForm($event)"
+        (saveStaff)="saveStaff()"
+        (closeStaffModal)="closeStaffModal()"
+        (approveTestimonial)="approveTestimonial($event)"
+        (rejectTestimonial)="rejectTestimonial($event)"
+        (removeTestimonial)="removeTestimonial($event)"
+        (viewPatientHistory)="viewPatientHistory($event)"
+        (downloadPatientList)="downloadPatientList()"
+        (showReportModalFunc)="showReportModalFunc()"
+        (closeReportModal)="closeReportModal()"
+        (generateReport)="generateReport()"
+        (showAddLabTestForm)="showAddLabTestForm()"
+        (showEditLabTestForm)="showEditLabTestForm($event)"
+        (saveLabTestType)="saveLabTestType()"
+        (deleteLabTestType)="deleteLabTestType($event)"
+        (closeLabTestModal)="closeLabTestModal()"
+        (closeBackupModal)="closeBackupModal()"
+        (performBackup)="performBackup()"
+        (logout)="logout()"
+        (goHome)="goHome()"
+        (goToAdminSelection)="goToAdminSelection()"
+        (refreshDashboard)="refreshDashboard()"
+        (searchPatients)="searchPatients($event)"
+        (filterPatients)="filterPatients($event)"
+      ></app-super-admin-tab-content>
     </div>
   </div>
 </div>

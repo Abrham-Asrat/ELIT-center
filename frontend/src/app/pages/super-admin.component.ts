@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LanguageService } from '../services/language.service';
+import { SuperAdminTabContentComponent } from '../components/super-admin-tab-content.component';
 import {
   pageEnter,
   fadeIn,
@@ -52,7 +53,12 @@ interface LabTestType {
 @Component({
   selector: 'app-super-admin',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    SuperAdminTabContentComponent,
+  ],
   templateUrl: './super-admin.component.html',
   styleUrls: ['./super-admin.component.scss'],
   animations: [pageEnter, fadeIn, slideUp, scaleIn, staggerCards],
@@ -79,6 +85,9 @@ export class SuperAdminComponent implements OnInit {
   // Search and filter
   patientSearchTerm = '';
   patientFilter = '';
+
+  // Store original patient list for search functionality
+  originalPatients: Patient[] = [];
 
   // Modal states
   showStaffModal = false;
@@ -249,6 +258,7 @@ export class SuperAdminComponent implements OnInit {
 
   ngOnInit() {
     // Initialize super admin dashboard
+    this.originalPatients = [...this.patients];
   }
 
   // Tab Management
@@ -311,15 +321,26 @@ export class SuperAdminComponent implements OnInit {
     }
   }
 
-  // Patient Management
-  viewPatientRecord(id: string) {
-    console.log('View patient record:', id);
-    // Implement view patient record
-  }
-
   scheduleAppointment(id: string) {
     console.log('Schedule appointment for patient:', id);
-    // Implement appointment scheduling
+    // Find the patient by ID
+    const patient = this.patients.find((p) => p.id === id);
+    if (patient) {
+      // In a real implementation, you would show a modal with appointment scheduling form
+      // For now, we'll show a more detailed modal with appointment options
+      const appointmentDetails = `
+        Scheduling appointment for patient: ${patient.name} (ID: ${patient.id})
+        
+        Please fill in the appointment details:
+        - Date: [Date Picker]
+        - Time: [Time Slot Selection]
+        - Service: [Service Type Dropdown]
+        - Doctor: [Doctor Selection]
+        - Notes: [Additional Notes Textarea]
+      `;
+
+      this.openModal('Schedule Appointment', appointmentDetails);
+    }
   }
 
   // Navigation and System Actions
@@ -348,6 +369,37 @@ export class SuperAdminComponent implements OnInit {
     });
   }
 
+  // Search and filter methods
+  searchPatients(searchTerm: string) {
+    this.patientSearchTerm = searchTerm;
+    if (!searchTerm) {
+      // If search term is empty, reset to original patients
+      this.patients = [...this.originalPatients];
+      return;
+    }
+
+    // Filter patients based on search term
+    this.patients = this.originalPatients.filter(
+      (patient: Patient) =>
+        patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient.id.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+
+  filterPatients(filter: string) {
+    this.patientFilter = filter;
+    if (!filter) {
+      // If no filter, reset to original patients
+      this.patients = [...this.originalPatients];
+      return;
+    }
+
+    // Filter patients based on status
+    this.patients = this.originalPatients.filter(
+      (patient: Patient) => patient.status === filter
+    );
+  }
+
   // Enhanced staff management methods
   showAddStaffForm() {
     this.editingStaff = false;
@@ -365,9 +417,13 @@ export class SuperAdminComponent implements OnInit {
 
   showEditStaffForm(staff: StaffMember) {
     this.editingStaff = true;
-    // In a real implementation, you would populate the form with staff data
     this.newStaff = { ...staff };
     this.showStaffModal = true;
+  }
+
+  closeStaffModal() {
+    this.showStaffModal = false;
+    this.editingStaff = false;
   }
 
   saveStaff() {
@@ -434,6 +490,17 @@ export class SuperAdminComponent implements OnInit {
   }
 
   // Patient management methods
+  viewPatientRecord(id: string) {
+    console.log('View patient record:', id);
+    // Find the patient by ID
+    const patient = this.patients.find((p) => p.id === id);
+    if (patient) {
+      console.log(
+        `Viewing record for patient: ${patient.name} (ID: ${patient.id})`
+      );
+    }
+  }
+
   viewPatientHistory(id: string) {
     console.log('Viewing patient history:', id);
     // Implement view patient history
@@ -461,12 +528,6 @@ export class SuperAdminComponent implements OnInit {
 
   closeReportModal() {
     this.showReportModal = false;
-  }
-
-  // Add the missing closeStaffModal method
-  closeStaffModal() {
-    this.showStaffModal = false;
-    this.editingStaff = false;
   }
 
   generateReport() {

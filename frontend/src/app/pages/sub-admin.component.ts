@@ -161,6 +161,11 @@ export class SubAdminComponent implements OnInit {
         this.calculateDoctorStats();
       }, 0);
     }
+
+    // Initialize nav offset after view is rendered
+    setTimeout(() => {
+      this.calculateNavOffset();
+    }, 0);
   }
 
   // Active tab management
@@ -1943,6 +1948,7 @@ export class SubAdminComponent implements OnInit {
   // Sticky nav state
   isNavSticky = false;
   stickyTabsHeight = 80; // Default height in pixels
+  private navOffsetTop = 150; // Offset position where nav becomes sticky
 
   @HostListener('window:resize', ['$event'])
   onWindowResize(event: Event) {
@@ -1955,14 +1961,31 @@ export class SubAdminComponent implements OnInit {
         }
       }, 0);
     }
+    // Recalculate the offset position on resize
+    this.calculateNavOffset();
+  }
+
+  // Calculate the offset position for sticky nav
+  private calculateNavOffset() {
+    const navElement = document.querySelector('.sub-admin-tabs');
+    if (navElement) {
+      const rect = navElement.getBoundingClientRect();
+      this.navOffsetTop = rect.top + window.scrollY;
+    }
   }
 
   // Handle scroll event for sticky nav
   handleScroll() {
     if (typeof window !== 'undefined') {
       const scrollPosition = window.scrollY;
+
+      // Calculate nav offset if not already done
+      if (this.navOffsetTop === 150) {
+        this.calculateNavOffset();
+      }
+
       const wasSticky = this.isNavSticky;
-      this.isNavSticky = scrollPosition > 100;
+      this.isNavSticky = scrollPosition >= this.navOffsetTop;
 
       // If tabs just became sticky, calculate their height
       if (this.isNavSticky && !wasSticky) {

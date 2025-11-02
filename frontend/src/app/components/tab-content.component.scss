@@ -80,6 +80,12 @@
   gap: 5px;
 }
 
+.patient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
 .patient-card {
   border: 1px solid #e9ecef;
   border-radius: 8px;
@@ -198,6 +204,67 @@
   }
 }
 
+// Modal overlay styles
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+  backdrop-filter: blur(2px);
+  padding: 20px;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 1200px; // Increased from 600px to allow more content
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Update existing styles to work with modals
+.appointment-form,
+.appointment-modal,
+.patient-modal,
+.task-modal {
+  // Remove any existing background styles that might conflict
+  &.modal-form {
+    background: transparent;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+// Ensure modals are hidden when not active
+.appointment-form:not(.modal-form),
+.appointment-modal:not(.modal-form),
+.patient-modal:not(.modal-form),
+.task-modal:not(.modal-form) {
+  display: block;
+}
+
 @media (max-width: 768px) {
   .appointment-item {
     flex-direction: column;
@@ -211,5 +278,13 @@
 
   .task-summary {
     grid-template-columns: 1fr;
+  }
+
+  .modal-overlay {
+    padding: 10px;
+  }
+
+  .modal-content {
+    max-width: 100%;
   }
 }
