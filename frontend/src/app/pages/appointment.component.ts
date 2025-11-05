@@ -46,6 +46,30 @@ export class AppointmentComponent {
   isSubmitted = false;
   isLoading = false;
 
+  // Appointment info cards data
+  appointmentInfo = [
+    {
+      icon: 'fas fa-clock',
+      title: 'Quick Response',
+      description: "We'll confirm within 24 hours",
+    },
+    {
+      icon: 'fas fa-calendar-check',
+      title: 'Flexible Scheduling',
+      description: 'Multiple time slots available',
+    },
+    {
+      icon: 'fas fa-shield-alt',
+      title: 'Safe Environment',
+      description: 'COVID-19 safety protocols',
+    },
+    {
+      icon: 'fas fa-user-md',
+      title: 'Expert Care',
+      description: "Dr. Abiy's specialized treatment",
+    },
+  ];
+
   services = [
     'General ENT Consultation',
     'Hearing Test',

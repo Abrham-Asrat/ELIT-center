@@ -49,8 +49,14 @@ interface Testimonial {
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   currentTestimonialIndex = 0;
   private observer!: IntersectionObserver;
+  private resizeListener!: () => void;
   @ViewChildren('animateCard') animateCards!: QueryList<ElementRef>;
   @ViewChildren('animateSection') animateSections!: QueryList<ElementRef>;
+
+  // Check if we're on a small screen where only one testimonial is shown
+  isSmallScreen(): boolean {
+    return window.innerWidth < 768;
+  }
 
   constructor(public languageService: LanguageService) {}
 
@@ -81,29 +87,68 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   get visibleTestimonials() {
     const visible = [];
-    for (let i = 0; i < 3; i++) {
-      const index =
-        (this.currentTestimonialIndex + i) % this.testimonials.length;
+
+    if (this.isSmallScreen()) {
+      // On small screens, show only one testimonial
+      const index = this.currentTestimonialIndex % this.testimonials.length;
       visible.push(this.testimonials[index]);
+    } else {
+      // On larger screens, show three testimonials
+      for (let i = 0; i < 3; i++) {
+        const index =
+          (this.currentTestimonialIndex + i) % this.testimonials.length;
+        visible.push(this.testimonials[index]);
+      }
     }
+
     return visible;
   }
 
   nextTestimonial() {
-    this.currentTestimonialIndex =
-      (this.currentTestimonialIndex + 1) % this.testimonials.length;
+    if (this.isSmallScreen()) {
+      // On small screens, move one testimonial at a time
+      this.currentTestimonialIndex =
+        (this.currentTestimonialIndex + 1) % this.testimonials.length;
+    } else {
+      // On larger screens, move three testimonials at a time
+      this.currentTestimonialIndex =
+        (this.currentTestimonialIndex + 3) % this.testimonials.length;
+    }
   }
 
   previousTestimonial() {
-    this.currentTestimonialIndex =
-      this.currentTestimonialIndex === 0
-        ? this.testimonials.length - 1
-        : this.currentTestimonialIndex - 1;
+    if (this.isSmallScreen()) {
+      // On small screens, move one testimonial at a time
+      this.currentTestimonialIndex =
+        this.currentTestimonialIndex === 0
+          ? this.testimonials.length - 1
+          : this.currentTestimonialIndex - 1;
+    } else {
+      // On larger screens, move three testimonials at a time
+      this.currentTestimonialIndex =
+        this.currentTestimonialIndex === 0
+          ? this.testimonials.length - 3
+          : this.currentTestimonialIndex - 3;
+      // Handle negative index
+      if (this.currentTestimonialIndex < 0) {
+        this.currentTestimonialIndex =
+          this.testimonials.length + this.currentTestimonialIndex;
+      }
+    }
   }
 
   ngOnInit() {
     this.setupIntersectionObserver();
     this.loadTestimonials();
+    this.setupResizeListener();
+  }
+
+  private setupResizeListener() {
+    this.resizeListener = () => {
+      // Reset carousel position when screen size changes significantly
+      this.currentTestimonialIndex = 0;
+    };
+    window.addEventListener('resize', this.resizeListener);
   }
 
   private loadTestimonials() {
@@ -140,6 +185,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     if (this.observer) {
       this.observer.disconnect();
+    }
+    if (this.resizeListener) {
+      window.removeEventListener('resize', this.resizeListener);
     }
   }
 

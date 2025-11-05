@@ -29,6 +29,11 @@
 
 // Welcome Title Animation
 .welcome-title {
+  // Move these declarations before nested rules to fix Sass warnings
+  will-change: background-position;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+
   background: linear-gradient(90deg, #ffffff, #0056b3, #eceeef, #0056b3);
   background-size: 300% 300%;
   -webkit-background-clip: text;
@@ -67,9 +72,8 @@
   }
 
   // Ensure animation works even on low-end devices
-  will-change: background-position;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+  // will-change: background-position;  // Moved up to fix Sass warning
+  // transform: translateZ(0);  // Moved up to fix Sass warning
 
   // Ensure the element is visible during animation
   visibility: visible !important;
