@@ -1,4 +1,4 @@
-// Sub Admin Dashboard Styles
+// Sub Admin Dashboard Styles - Optimized version
 .sub-admin-header {
   background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -17,18 +17,6 @@
     background: inherit;
     clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
     z-index: 3;
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 200%;
-    height: 200%;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3;
-    animation: float 20s infinite linear;
   }
 }
 
@@ -50,97 +38,53 @@
 
 // Stats Cards
 .stats-card {
-  padding: 2rem;
-  border-radius: 15px;
+  padding: 1.5rem;
+  border-radius: 12px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    z-index: 1;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(255, 255, 255, 0.1),
-      transparent
-    );
-    transform: rotate(45deg);
-    transition: all 0.6s ease;
-    z-index: 1;
-  }
+  gap: 1rem;
 
   &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-
-    &::after {
-      transform: rotate(45deg) translate(20%, 20%);
-    }
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
   }
 
   .stats-icon {
-    position: relative;
-    z-index: 2;
-    font-size: 3rem;
+    font-size: 2rem;
     opacity: 0.9;
 
     i {
-      width: 70px;
-      height: 70px;
+      width: 60px;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: rgba(255, 255, 255, 0.2);
       border-radius: 50%;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     }
   }
 
   .stats-content {
-    position: relative;
-    z-index: 2;
-
     h3 {
-      font-size: 2.2rem;
+      font-size: 1.8rem;
       font-weight: 700;
       margin-bottom: 0.25rem;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     p {
       margin-bottom: 0.25rem;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 500;
       opacity: 0.9;
     }
 
     small {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       opacity: 0.75;
     }
   }
@@ -148,23 +92,19 @@
 
 // Sub Admin Tabs
 .sub-admin-tabs {
-  // Add transition for smooth sticky effect
   transition: all 0.3s ease;
   position: relative;
-  z-index: 1000;
 
-  // When sticky, fix to top and add shadow
   &.sticky {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 10px 20px;
     margin: 0;
-    z-index: 1050; // Increased z-index to ensure it's above other elements
+    z-index: 1050;
     border-radius: 0;
 
     .nav-tabs {
@@ -173,11 +113,10 @@
   }
 
   .nav-tabs {
-    border-bottom: 3px solid #e9ecef;
+    border-bottom: 2px solid #e9ecef;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 0.5rem;
-    backdrop-filter: blur(10px);
     margin-bottom: 1.5rem;
 
     .nav-link {
@@ -185,38 +124,15 @@
       background: none;
       color: #6c757d;
       font-weight: 600;
-      padding: 1.2rem 1.8rem;
-      border-radius: 10px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
       border: 2px solid transparent;
-
-      &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.1),
-          rgba(255, 255, 255, 0.05)
-        );
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        z-index: 1;
-      }
 
       &:hover {
         color: #495057;
         background: rgba(17, 153, 142, 0.15);
-        transform: translateY(-2px);
-
-        &::before {
-          opacity: 1;
-        }
+        transform: translateY(-1px);
       }
 
       &.active {
@@ -224,26 +140,23 @@
         background: white;
         border-bottom: 3px solid #11998e;
         font-weight: 700;
-        box-shadow: 0 5px 15px rgba(17, 153, 142, 0.3);
-        transform: translateY(-3px);
-        border-color: rgba(17, 15   3, 142, 0.3);
+        box-shadow: 0 3px 10px rgba(17, 153, 142, 0.3);
       }
 
       i {
         margin-right: 0.5rem;
-        transition: all 0.3s ease;
       }
     }
   }
 }
 
-.dropdown-item{ 
+.dropdown-item {
   cursor: pointer;
 }
 
 // Placeholder for sticky tabs to maintain layout
 .sticky-tabs-placeholder {
-  height: 80px; // Default height, will be overridden by component
+  height: 70px;
   margin-bottom: 1.5rem;
 }
 
@@ -252,35 +165,35 @@
   .appointment-item {
     display: flex;
     align-items: center;
-    padding: 1.5rem;
+    padding: 1.2rem;
     border: 1px solid #e9ecef;
-    border-radius: 12px;
-    margin-bottom: 1.2rem;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
     background: white;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
 
     &:hover {
       background: #f8f9fa;
       border-color: #11998e;
-      transform: translateX(8px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
     .appointment-time {
       text-align: center;
-      margin-right: 1.5rem;
-      min-width: 80px;
+      margin-right: 1.2rem;
+      min-width: 70px;
 
       .time {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         font-weight: 700;
         color: #11998e;
         margin-bottom: 0.25rem;
       }
 
       .duration {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         color: #6c757d;
         font-weight: 500;
       }
@@ -290,40 +203,34 @@
       flex: 1;
 
       .patient-name {
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.4rem;
         color: #495057;
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 600;
       }
 
       .service-type {
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.6rem;
         color: #6c757d;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
       }
 
       .appointment-meta {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: 0.6rem;
         flex-wrap: wrap;
       }
     }
 
     .appointment-actions {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.4rem;
 
       .btn {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.85rem;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-
-        &:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+        border-radius: 6px;
       }
     }
   }
@@ -332,16 +239,15 @@
 // Waiting List
 .waiting-list {
   .waiting-item {
-    padding: 1.2rem;
+    padding: 1rem;
     border-bottom: 1px solid #f1f3f4;
     transition: all 0.3s ease;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
+    border-radius: 6px;
+    margin-bottom: 0.4rem;
 
     &:hover {
       background: #f8f9fa;
-      transform: translateX(5px);
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      transform: translateX(3px);
     }
 
     &:last-child {
@@ -350,61 +256,67 @@
     }
 
     h6 {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
       color: #495057;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
     small {
       color: #6c757d;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
   }
 }
 
 // Patient Grid
+.patient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
 
 .patient-card {
   border: 1px solid #e9ecef;
-  border-radius: 10px;
-  padding: 1rem;
+  border-radius: 8px;
+  padding: 0.9rem;
   transition: all 0.3s ease;
   background: #fff;
 
   &:hover {
     border-color: #11998e;
-    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.1);
+    box-shadow: 0 3px 12px rgba(17, 153, 142, 0.1);
     transform: translateY(-2px);
   }
 
   .patient-header {
     display: flex;
-    justify-content: between;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 
     .patient-name {
       margin: 0;
       color: #495057;
+      font-size: 1.1rem;
     }
 
     .patient-id {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: #6c757d;
     }
   }
 
   .patient-info {
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 
     p {
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
       color: #6c757d;
 
       i {
-        width: 20px;
+        width: 18px;
         color: #11998e;
       }
     }
@@ -412,28 +324,28 @@
 
   .patient-actions {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 }
 
 // Testimonial Cards
 .testimonial-card {
   border: 1px solid #e9ecef;
-  border-radius: 10px;
-  padding: 1rem;
+  border-radius: 8px;
+  padding: 0.9rem;
   background: #fff;
   transition: all 0.3s ease;
 
   &:hover {
     border-color: #11998e;
-    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.1);
+    box-shadow: 0 3px 12px rgba(17, 153, 142, 0.1);
   }
 
   .testimonial-header {
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 
     .rating {
-      margin-top: 0.5rem;
+      margin-top: 0.4rem;
     }
   }
 
@@ -441,18 +353,19 @@
     .testimonial-text {
       font-style: italic;
       color: #6c757d;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
       line-height: 1.5;
+      font-size: 0.9rem;
     }
 
     .testimonial-footer {
       display: flex;
-      justify-content: between;
+      justify-content: space-between;
       align-items: center;
 
       .testimonial-actions {
         display: flex;
-        gap: 0.25rem;
+        gap: 0.2rem;
       }
     }
   }
@@ -463,11 +376,11 @@
   .task-item {
     display: flex;
     align-items: center;
-    justify-content: between;
-    padding: 1rem;
+    justify-content: space-between;
+    padding: 0.9rem;
     border: 1px solid #e9ecef;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
+    border-radius: 6px;
+    margin-bottom: 0.4rem;
     transition: all 0.3s ease;
 
     &:hover {
@@ -477,24 +390,25 @@
 
     .form-check {
       flex: 1;
-      margin-right: 1rem;
+      margin-right: 0.8rem;
 
       .form-check-label {
         font-weight: 500;
         color: #495057;
+        font-size: 0.9rem;
       }
     }
 
     .task-meta {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      margin-right: 1rem;
+      gap: 0.4rem;
+      margin-right: 0.8rem;
     }
 
     .task-actions {
       display: flex;
-      gap: 0.25rem;
+      gap: 0.2rem;
     }
   }
 }
@@ -503,22 +417,22 @@
 .task-summary {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: 0.8rem;
 
   .summary-item {
     text-align: center;
-    padding: 1rem;
-    border-radius: 8px;
+    padding: 0.8rem;
+    border-radius: 6px;
     background: #f8f9fa;
 
     .summary-count {
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-weight: bold;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
     }
 
     .summary-label {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       color: #6c757d;
     }
   }
@@ -527,20 +441,15 @@
 // Enhanced Cards
 .card {
   border: none;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
-
-  // &:hover {
-  //   transform: translateY(-2px);
-  //   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  // }
 
   .card-header {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     border-bottom: 1px solid #dee2e6;
-    border-radius: 12px 12px 0 0;
-    padding: 1.25rem;
+    border-radius: 10px 10px 0 0;
+    padding: 1rem;
 
     h5 {
       margin: 0;
@@ -550,31 +459,26 @@
   }
 
   .card-body {
-    padding: 1.25rem;
+    padding: 1rem;
   }
 }
 
 // Button Enhancements
 .btn {
-  border-radius: 6px;
+  border-radius: 5px;
   font-weight: 500;
   transition: all 0.3s ease;
 
-  // &:hover {
-  //   transform: translateY(-1px);
-  // }
-
   &.btn-sm {
     padding: 0.25rem 0.5rem;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 }
 
 // Form Enhancements
 .form-control {
-  border-radius: 6px;
+  border-radius: 5px;
   border: 1px solid #ced4da;
-  transition: all 0.3s ease;
 
   &:focus {
     border-color: #11998e;
@@ -584,32 +488,32 @@
 
 // Badge Enhancements
 .badge {
-  font-size: 0.75rem;
-  padding: 0.35em 0.65em;
+  font-size: 0.7rem;
+  padding: 0.3em 0.5em;
   border-radius: 4px;
 }
 
 // Responsive Design
 @media (max-width: 1200px) {
   .patient-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   }
 }
 
 @media (max-width: 992px) {
   .sub-admin-header {
     clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
-    padding: 1.5rem 0;
+    padding: 1.2rem 0;
   }
 
   .stats-card {
-    padding: 1.5rem;
+    padding: 1.2rem;
     flex-direction: column;
     text-align: center;
 
     .stats-icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
 
       i {
         width: 50px;
@@ -619,11 +523,11 @@
 
     .stats-content {
       h3 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
       }
 
       p {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
       }
     }
   }
@@ -634,7 +538,7 @@
 
     .appointment-time {
       margin-right: 0;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -642,7 +546,7 @@
 
     .appointment-actions {
       width: 100%;
-      margin-top: 1rem;
+      margin-top: 0.8rem;
       justify-content: flex-end;
     }
   }
@@ -650,32 +554,27 @@
   .task-summary {
     grid-template-columns: repeat(4, 1fr);
   }
-
-  .container.subAdmin {
-    margin-right: 0;
-    max-width: 100%;
-  }
 }
 
 @media (max-width: 768px) {
   .sub-admin-header {
     clip-path: polygon(0 0, 100% 0, 100% 97%, 0 100%);
-    padding: 1rem 0;
+    padding: 0.9rem 0;
 
     h2 {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
     }
 
     small {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
     }
   }
 
   .stats-card {
-    padding: 1.25rem;
+    padding: 1rem;
 
     .stats-icon {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
 
       i {
         width: 45px;
@@ -685,59 +584,51 @@
 
     .stats-content {
       h3 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
       }
 
       p {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
       }
     }
   }
 
   .nav-tabs {
     .nav-link {
-      padding: 0.8rem 1rem !important;
-      font-size: 0.9rem;
+      padding: 0.7rem 1rem !important;
+      font-size: 0.85rem;
     }
   }
 
   .patient-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   }
 
   .task-summary {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .testimonial-card {
-    .testimonial-footer {
-      flex-direction: column;
-      gap: 0.5rem;
-      align-items: flex-start;
-    }
   }
 }
 
 @media (max-width: 576px) {
   .sub-admin-header {
     clip-path: polygon(0 0, 100% 0, 100% 98%, 0 100%);
-    padding: 0.75rem 0;
+    padding: 0.7rem 0;
 
     h2 {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
     }
 
     small {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
     }
   }
 
   .stats-card {
-    padding: 1rem;
-    gap: 1rem;
+    padding: 0.8rem;
+    gap: 0.8rem;
 
     .stats-icon {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
 
       i {
         width: 40px;
@@ -747,43 +638,43 @@
 
     .stats-content {
       h3 {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
       }
 
       p {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
       }
 
       small {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
       }
     }
   }
 
   .appointment-item {
-    padding: 1rem;
+    padding: 0.8rem;
 
     .appointment-time {
       .time {
-        font-size: 1.1rem;
+        font-size: 1rem;
       }
 
       .duration {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
       }
     }
 
     .patient-name {
-      font-size: 0.95rem !important;
+      font-size: 0.9rem !important;
     }
 
     .service-type {
-      font-size: 0.85rem !important;
+      font-size: 0.8rem !important;
     }
 
     .btn {
-      padding: 0.4rem 0.6rem !important;
-      font-size: 0.75rem !important;
+      padding: 0.3rem 0.5rem !important;
+      font-size: 0.7rem !important;
     }
   }
 
@@ -791,7 +682,7 @@
     flex-direction: column;
 
     .nav-item {
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
 
       .nav-link {
         width: 100%;
@@ -808,7 +699,7 @@
     .task-item {
       flex-direction: column;
       align-items: flex-start;
-      gap: 0.5rem;
+      gap: 0.4rem;
 
       .task-meta {
         width: 100%;
@@ -821,41 +712,8 @@
       }
     }
   }
-
-  .testimonial-card {
-    .testimonial-header {
-      .rating {
-        span {
-          font-size: 0.8rem;
-        }
-      }
-    }
-
-    .testimonial-body {
-      .testimonial-text {
-        font-size: 0.9rem;
-      }
-    }
-  }
 }
 
-.testimonial-card {
-  .testimonial-header {
-    .rating {
-      span {
-        font-size: 0.8rem;
-      }
-    }
-  }
-
-  .testimonial-body {
-    .testimonial-text {
-      font-size: 0.9rem;
-    }
-  }
-}
-
-// Extra small devices (portrait phones, less than 400px)
 @media (max-width: 399px) {
   .col-6 {
     flex: 0 0 auto;
@@ -864,12 +722,11 @@
 }
 
 .subAdmin {
-  padding-top: 5rem;
+  padding-top: 4rem;
   transition: padding-top 0.3s ease;
 
-  // Add extra padding when tabs are sticky to account for the fixed navbar
   &.tabs-sticky {
-    padding-top: calc(5rem + 80px); // Original padding + height of sticky tabs
+    padding-top: calc(4rem + 70px);
   }
 }
 
@@ -878,18 +735,18 @@
   z-index: 1050;
 
   .modal-dialog {
-    margin: 1.75rem auto;
+    margin: 1.5rem auto;
 
     .modal-content {
       border: none;
-      border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 
       .modal-header {
         background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         border-bottom: 1px solid #dee2e6;
-        border-radius: 10px 10px 0 0;
-        padding: 1rem 1.5rem;
+        border-radius: 8px 8px 0 0;
+        padding: 0.9rem 1.2rem;
 
         .modal-title {
           font-weight: 600;
@@ -902,20 +759,21 @@
       }
 
       .modal-body {
-        padding: 1.5rem;
+        padding: 1.2rem;
 
         p {
           margin: 0;
-          line-height: 1.6;
+          line-height: 1.5;
           color: #6c757d;
+          font-size: 0.9rem;
         }
       }
 
       .modal-footer {
         background: #f8f9fa;
         border-top: 1px solid #dee2e6;
-        border-radius: 0 0 10px 10px;
-        padding: 1rem 1.5rem;
+        border-radius: 0 0 8px 8px;
+        padding: 0.9rem 1.2rem;
       }
     }
   }
@@ -930,7 +788,7 @@
 .appointment-form {
   .card {
     border: 1px solid #11998e;
-    box-shadow: 0 5px 15px rgba(17, 153, 142, 0.1);
+    box-shadow: 0 4px 12px rgba(17, 153, 142, 0.1);
 
     .card-header {
       background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
@@ -941,351 +799,19 @@
     .form-label {
       font-weight: 500;
       color: #495057;
-    }
-
-    .form-control,
-    .form-select {
-      border: 1px solid #ced4da;
-      border-radius: 6px;
-      padding: 0.5rem 0.75rem;
-
-      &:focus {
-        border-color: #11998e;
-        box-shadow: 0 0 0 0.2rem rgba(17, 153, 142, 0.25);
-      }
-    }
-  }
-}
-
-// Waiting List
-.waiting-list {
-  .waiting-item {
-    padding: 1.2rem;
-    border-bottom: 1px solid #f1f3f4;
-    transition: all 0.3s ease;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-
-    &:hover {
-      background: #f8f9fa;
-      transform: translateX(5px);
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-    }
-
-    &:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-    }
-
-    h6 {
-      margin-bottom: 0.5rem;
-      color: #495057;
-      font-weight: 600;
-      font-size: 1rem;
-    }
-
-    small {
-      color: #6c757d;
-      font-size: 0.85rem;
-    }
-  }
-}
-
-// Patient Grid
-.patient-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
-}
-
-.patient-card {
-  border: 1px solid #e9ecef;
-  border-radius: 10px;
-  padding: 1rem;
-  transition: all 0.3s ease;
-  background: #fff;
-
-  &:hover {
-    border-color: #11998e;
-    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.1);
-    transform: translateY(-2px);
-  }
-
-  .patient-header {
-    display: flex;
-    justify-content: between;
-    align-items: center;
-    margin-bottom: 1rem;
-
-    .patient-name {
-      margin: 0;
-      color: #495057;
-    }
-
-    .patient-id {
-      font-size: 0.8rem;
-      color: #6c757d;
-    }
-  }
-
-  .patient-info {
-    margin-bottom: 1rem;
-
-    p {
-      margin-bottom: 0.5rem;
       font-size: 0.9rem;
-      color: #6c757d;
-
-      i {
-        width: 20px;
-        color: #11998e;
-      }
-    }
-  }
-
-  .patient-actions {
-    display: flex;
-    gap: 0.5rem;
-  }
-}
-
-// Testimonial Cards
-.testimonial-card {
-  border: 1px solid #e9ecef;
-  border-radius: 10px;
-  padding: 1rem;
-  background: #fff;
-  transition: all 0.3s ease;
-
-  &:hover {
-    border-color: #11998e;
-    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.1);
-  }
-
-  .testimonial-header {
-    margin-bottom: 1rem;
-
-    .rating {
-      margin-top: 0.5rem;
-    }
-  }
-
-  .testimonial-body {
-    .testimonial-text {
-      font-style: italic;
-      color: #6c757d;
-      margin-bottom: 1rem;
-      line-height: 1.5;
     }
 
-    .testimonial-footer {
-      display: flex;
-      justify-content: between;
-      align-items: center;
-
-      .testimonial-actions {
-        display: flex;
-        gap: 0.25rem;
-      }
-    }
-  }
-}
-
-// Task List
-.task-list {
-  .task-item {
-    display: flex;
-    align-items: center;
-    justify-content: between;
-    padding: 1rem;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background: #f8f9fa;
-      border-color: #11998e;
-    }
-
-    .form-check {
-      flex: 1;
-      margin-right: 1rem;
-
-      .form-check-label {
-        font-weight: 500;
-        color: #495057;
-      }
-    }
-
-    .task-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-right: 1rem;
-    }
-
-    .task-actions {
-      display: flex;
-      gap: 0.25rem;
-    }
-  }
-}
-
-// Task Summary
-.task-summary {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-
-  .summary-item {
-    text-align: center;
-    padding: 1rem;
-    border-radius: 8px;
-    background: #f8f9fa;
-
-    .summary-count {
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 0.25rem;
-    }
-
-    .summary-label {
+    .form-control,
+    .form-select {
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      padding: 0.4rem 0.6rem;
       font-size: 0.9rem;
-      color: #6c757d;
-    }
-  }
-}
-
-// Task Modal
-.task-modal {
-  .card {
-    border: 1px solid #11998e;
-    box-shadow: 0 5px 15px rgba(17, 153, 142, 0.1);
-
-    .card-header {
-      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-      color: white;
-      font-weight: 600;
-    }
-
-    .form-label {
-      font-weight: 500;
-      color: #495057;
-    }
-
-    .form-control,
-    .form-select {
-      border: 1px solid #ced4da;
-      border-radius: 6px;
-      padding: 0.5rem 0.75rem;
 
       &:focus {
         border-color: #11998e;
         box-shadow: 0 0 0 0.2rem rgba(17, 153, 142, 0.25);
-      }
-    }
-  }
-}
-
-// Appointment Modal
-.appointment-modal {
-  .card {
-    border: 1px solid #11998e;
-    box-shadow: 0 5px 15px rgba(17, 153, 142, 0.1);
-
-    .card-header {
-      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-      color: white;
-      font-weight: 600;
-
-      .btn-close {
-        background: transparent;
-        border: none;
-        color: white;
-        opacity: 0.8;
-
-        &:hover {
-          opacity: 1;
-        }
-      }
-    }
-
-    .form-label {
-      font-weight: 500;
-      color: #495057;
-    }
-
-    .form-control,
-    .form-select {
-      border: 1px solid #ced4da;
-      border-radius: 6px;
-      padding: 0.5rem 0.75rem;
-
-      &:focus {
-        border-color: #11998e;
-        box-shadow: 0 0 0 0.2rem rgba(17, 153, 142, 0.25);
-      }
-    }
-
-    .form-control-plaintext {
-      padding: 0.5rem 0;
-      color: #495057;
-      font-weight: 500;
-    }
-  }
-}
-
-// Patient Modal
-.patient-modal {
-  .card {
-    border: 1px solid #11998e;
-    box-shadow: 0 5px 15px rgba(17, 153, 142, 0.1);
-
-    .card-header {
-      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-      color: white;
-      font-weight: 600;
-
-      .btn-close {
-        background: transparent;
-        border: none;
-        color: white;
-        opacity: 0.8;
-
-        &:hover {
-          opacity: 1;
-        }
-      }
-    }
-
-    .form-label {
-      font-weight: 500;
-      color: #495057;
-    }
-
-    .form-control,
-    .form-select,
-    .form-control-plaintext {
-      border: 1px solid #ced4da;
-      border-radius: 6px;
-      padding: 0.5rem 0.75rem;
-
-      &:focus {
-        border-color: #11998e;
-        box-shadow: 0 0 0 0.2rem rgba(17, 153, 142, 0.25);
-      }
-    }
-
-    .form-control-plaintext {
-      padding: 0.5rem 0;
-      color: #495057;
-      font-weight: 500;
-    }
-
-    .history-item {
-      &:last-child {
-        border-bottom: none;
       }
     }
   }
