@@ -19,6 +19,7 @@ import {
   bounceIn,
   slideInLeft,
   slideInRight,
+  welcomeTitleAnimation,
 } from '../shared/animations';
 
 interface Testimonial {
@@ -42,6 +43,7 @@ interface Testimonial {
     bounceIn,
     slideInLeft,
     slideInRight,
+    welcomeTitleAnimation,
   ],
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {

@@ -204,3 +204,14 @@ export const shake = trigger('shake', [
     ),
   ]),
 ]);
+
+// Welcome title animation for all screens
+export const welcomeTitleAnimation = trigger('welcomeTitleAnimation', [
+  transition(':enter', [
+    style({ opacity: 0, transform: 'translateY(20px) scale(0.95)' }),
+    animate(
+      '800ms cubic-bezier(0.2, 0.8, 0.4, 1)',
+      style({ opacity: 1, transform: 'translateY(0) scale(1)' })
+    ),
+  ]),
+]);
