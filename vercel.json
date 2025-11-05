@@ -11,6 +11,13 @@
   ],
   "routes": [
     {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|json))",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "dest": "/frontend/dist/elit-ent-center/browser/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/frontend/dist/elit-ent-center/browser/index.html"
     }
