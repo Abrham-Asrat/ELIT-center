@@ -448,6 +448,18 @@
       }
     }
   }
+
+  // Stats grid layout
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: 575.98px) {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+  }
 }
 
 .bg-light {

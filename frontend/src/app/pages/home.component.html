@@ -4,7 +4,7 @@
     <div class="row align-items-center">
       <div class="col-lg-6">
         <div class="hero-content-wrapper position-relative" [@slideInLeft]>
-          <div class="hero-text position-relative">
+          <div class="hero-text position-relative pt-4 pt-md-0">
             <h1
               class="display-4 fw-bold mb-4 welcome-title"
               [@welcomeTitleAnimation]
@@ -20,18 +20,18 @@
             >
               <a
                 routerLink="/appointment"
-                class="btn btn-light btn-lg px-4 w-100 w-sm-auto"
+                class="btn btn-outline-light btn-lg px-4 w-50 w-sm-auto m-auto m-md-0"
                 [@bounceIn]
               >
                 {{ languageService.getTranslation("bookAppointment") }}
               </a>
-              <a
+              <!-- <a
                 routerLink="/services"
                 class="btn btn-outline-light btn-lg px-4 w-100 w-sm-auto"
                 [@scaleIn]
               >
                 {{ languageService.getTranslation("ourServices") }}
-              </a>
+              </a> -->
             </div>
           </div>
         </div>
@@ -145,8 +145,8 @@
           <p class="mb-4 mb-md-3">
             {{ languageService.getTranslation("meetSpecialistDesc") }}
           </p>
-          <div class="row g-3 g-sm-2" [@staggerCards]>
-            <div class="col-6">
+          <div class="stats-grid" [@staggerCards]>
+            <div class="stat-item">
               <div class="text-center p-3 bg-white rounded" [@scaleIn]>
                 <h4 class="text-primary mb-1">15+</h4>
                 <small class="text-muted">{{
@@ -154,7 +154,7 @@
                 }}</small>
               </div>
             </div>
-            <div class="col-6">
+            <div class="stat-item">
               <div class="text-center p-3 bg-white rounded" [@scaleIn]>
                 <h4 class="text-primary mb-1">5000+</h4>
                 <small class="text-muted">{{
