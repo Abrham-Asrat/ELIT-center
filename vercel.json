@@ -5,14 +5,14 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist/elit-ent-center"
+        "distDir": "frontend/dist/elit-ent-center/browser"
       }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "frontend/index.html"
+      "dest": "/frontend/dist/elit-ent-center/browser/index.html"
     }
   ]
 }
