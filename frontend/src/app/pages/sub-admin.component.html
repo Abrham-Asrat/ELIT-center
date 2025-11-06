@@ -5,7 +5,16 @@
     <div class="container">
       <a class="navbar-brand" href="#" [@slideInLeft]>
         <i class="fas fa-user-cog me-2"></i>
-        ELIT ENT - {{ getPortalTitle() }}
+         <ng-container *ngIf="isLargeScreen; else smallBrand">
+    ELIT ENT - {{ getPortalTitle() }}
+  </ng-container>
+
+  <ng-template #smallBrand>
+    <ng-container *ngIf="currentUser?.workType; else portalLabel">
+      ELIT-{{ currentUser.workType | titlecase }}
+    </ng-container>
+    <ng-template #portalLabel>ELIT-Portal</ng-template>
+  </ng-template>
       </a>
 
       <div class="navbar-nav ms-auto">
@@ -26,15 +35,7 @@
             (clickOutside)="closeDropdown()"
             [@fadeIn]
           >
-            <li>
-              <a
-                class="dropdown-item"
-                (click)="refreshDashboard(); closeDropdown()"
-                [@slideInRight]
-              >
-                <i class="fas fa-sync-alt me-2"></i>Refresh Dashboard
-              </a>
-            </li>
+           
             <li>
               <a
                 class="dropdown-item"
@@ -70,7 +71,7 @@
   </nav>
 
   <!-- Main Content Area with Sub Admin Stats Cards -->
-  <div class="main-content-wrapper">
+  <div class="main-content-wrapper mt-3">
     <!-- Sub Admin Stats Cards -->
     <div
       class="container-fluid subAdmin"

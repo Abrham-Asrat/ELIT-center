@@ -137,6 +137,8 @@ interface Medicine {
   ],
 })
 export class SubAdminComponent implements OnInit {
+
+  isLargeScreen = window.innerWidth >= 992;
   ngOnInit() {
     // Store original patient list for search functionality
     this.originalPatients = [...this.patients];
@@ -166,6 +168,8 @@ export class SubAdminComponent implements OnInit {
     setTimeout(() => {
       this.calculateNavOffset();
     }, 0);
+    
+    this.isLargeScreen = window.innerWidth >= 992;
   }
 
   // Active tab management
@@ -1359,15 +1363,6 @@ export class SubAdminComponent implements OnInit {
     this.router.navigate(['/admin']);
   }
 
-  refreshDashboard() {
-    // Reload current route
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      // Get current route from work type
-      const dashboardRoute = `/${this.currentUser.workType}-dashboard`;
-      this.router.navigate([dashboardRoute]);
-    });
-  }
-
   // Tab Management
   switchTab(tabName: string) {
     // Check if user has access to this tab
@@ -1963,6 +1958,8 @@ export class SubAdminComponent implements OnInit {
     }
     // Recalculate the offset position on resize
     this.calculateNavOffset();
+    
+    
   }
 
   // Calculate the offset position for sticky nav
